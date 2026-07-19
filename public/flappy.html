@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Bird | Adem Uçar</title>
+    <link rel="icon" href="aucr.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .content-container {
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .score-panel {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+
+        .score-box {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 10px;
+            padding: 8px 24px;
+            text-align: center;
+        }
+
+        .score-box-label {
+            font-size: 0.68rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .score-box-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #38bdf8;
+            line-height: 1.2;
+        }
+
+        #flappyCanvas {
+            background: rgba(10, 18, 35, 0.97);
+            border: 1.5px solid rgba(56, 189, 248, 0.35);
+            border-radius: 14px;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.08);
+            touch-action: none;
+            cursor: pointer;
+        }
+
+        .game-hint {
+            margin-top: 12px;
+            color: #475569;
+            font-size: 0.8rem;
+            font-weight: 300;
+        }
+
+        .game-hint strong {
+            color: #38bdf8;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-wrapper">
+        <header class="top-header">
+            <nav class="nav-menu">
+                <a href="index.html">ANA SAYFA</a>
+                <a href="hakkimda.html">HAKKIMDA</a>
+                <a href="projeler.html">PROJELER</a>
+                <div class="dropdown">
+                    <button class="dropbtn">ARAÇLAR</button>
+                    <div class="dropdown-content">
+                        <a href="calismaprogramıolusturucu.html"><i class="fas fa-calendar-alt"></i> Çalışma Programı Oluştur</a>
+                        <a href="hesaplama.html"><i class="fas fa-calculator"></i> Gano Hesapla</a>
+                        <a href="donemsayac.html"><i class="fas fa-hourglass-half"></i> Dönem Sayacı</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">OYUNLAR</button>
+                    <div class="dropdown-content">
+                        <a href="oyun.html"><i class="fas fa-gamepad"></i> Neon Snake</a>
+                        <a href="flappy.html"><i class="fas fa-dove"></i> Neon Bird</a>
+                        <a href="wordle.html"><i class="fas fa-font"></i> Neon Wordle</a>
+                        <a href="tetris.html"><i class="fas fa-cubes"></i> Neon Tetris</a>
+                        <a href="flagle.html"><i class="fas fa-flag"></i> Neon Flagle</a>
+                        <a href="birkelimebirislem.html"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
+                    </div>
+                </div>
+                <a href="iletisim.html">İLETİŞİM</a>
+            </nav>
+
+            <div class="social-icons">
+                <a href="https://www.instagram.com/ademucarr_/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/adem-u%C3%A7ar-39501731a/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </header>
+
+        <div class="content-container">
+            <h1 class="page-title" style="letter-spacing: 4px; margin-bottom: 14px;">Neon Bird</h1>
+
+            <div class="score-panel">
+                <div class="score-box">
+                    <div class="score-box-label">Skor</div>
+                    <div class="score-box-value" id="currentScore">0</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-box-label">En Yüksek</div>
+                    <div class="score-box-value" id="bestScore">0</div>
+                </div>
+            </div>
+
+            <canvas id="flappyCanvas" width="320" height="480"></canvas>
+
+            <p class="game-hint">
+                <i class="fas fa-keyboard"></i> <strong>SPACE</strong> veya ekrana dokun &nbsp;·&nbsp;
+                <i class="fas fa-mobile-alt"></i> Mobil destekli
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const canvas  = document.getElementById("flappyCanvas");
+        const ctx     = canvas.getContext("2d");
+        const scoreEl = document.getElementById("currentScore");
+        const bestEl  = document.getElementById("bestScore");
+
+        const CW = canvas.width;
+        const CH = canvas.height;
+
+        // ── Sabitler ────────────────────────────────────────────────
+        const GRAVITY      = 0.15;     
+        const JUMP_FORCE   = -4.2;     
+        const MAX_VELOCITY = 4;        
+        const PIPE_SPEED   = 1.1;      
+        const PIPE_GAP     = 160;      
+        const PIPE_WIDTH   = 46;       
+        const PIPE_INTERVAL= 160;      
+        const BIRD_R       = 12;
+        const BIRD_X       = 70;
+
+        // ── Durum ───────────────────────────────────────────────────
+        let bird, pipes, frame, score, bestScore, state, animId, lastTime;
+        // state: "idle" | "playing" | "dead"
+
+        bestScore = parseInt(localStorage.getItem("flappyBest") || "0");
+        bestEl.textContent = bestScore;
+
+        // ── Başlat ──────────────────────────────────────────────────
+        function init() {
+            cancelAnimationFrame(animId);
+            bird  = { y: CH / 2, vy: 0 };
+            pipes = [];
+            frame = 0;
+            score = 0;
+            state = "idle";
+            scoreEl.textContent = 0;
+            lastTime = performance.now();
+            loop(lastTime);
+        }
+
+        // ── Zıpla / etkileşim ───────────────────────────────────────
+        function interact() {
+            if (state === "idle") {
+                state = "playing";
+                bird.vy = JUMP_FORCE;
+            } else if (state === "playing") {
+                bird.vy = JUMP_FORCE;
+            } else if (state === "dead") {
+                init();
+            }
+        }
+
+        // Klavye
+        document.addEventListener("keydown", (e) => {
+            if (e.code === "Space") { e.preventDefault(); interact(); }
+        });
+
+        // Dokunmatik & tıklama (pointerdown mobilde çok daha hızlı tepki verir)
+        canvas.addEventListener("pointerdown", (e) => { e.preventDefault(); interact(); });
+
+        // ── Boru oluştur ─────────────────────────────────────────────
+        function addPipe() {
+            const minTop = 50;
+            const maxTop = CH - PIPE_GAP - 50;
+            const top    = Math.floor(Math.random() * (maxTop - minTop)) + minTop;
+            pipes.push({ x: CW, top, passed: false });
+        }
+
+        // ── Çarpışma (daire - dikdörtgen) ────────────────────────────
+        function hitsPipe(p) {
+            const bx = BIRD_X;
+            const by = bird.y;
+            const nearX = Math.max(p.x, Math.min(bx, p.x + PIPE_WIDTH));
+            const nearYt = Math.max(0,          Math.min(by, p.top));
+            const nearYb = Math.max(p.top + PIPE_GAP, Math.min(by, CH));
+
+            const distT = Math.hypot(bx - nearX, by - nearYt);
+            const distB = Math.hypot(bx - nearX, by - nearYb);
+            return distT < BIRD_R || distB < BIRD_R;
+        }
+
+        // ── Update (Delta Time Entegre Edildi) ───────────────────────
+        function update(dt) {
+            if (state !== "playing") return;
+
+            // Fiziği kare hızına (dt) göre hesapla (Cihaz ne kadar yavaşsa dt o kadar artar)
+            bird.vy = Math.min(bird.vy + (GRAVITY * dt), MAX_VELOCITY);
+            bird.y += bird.vy * dt;
+
+            // Tavan / zemin
+            if (bird.y - BIRD_R <= 0 || bird.y + BIRD_R >= CH) {
+                die(); return;
+            }
+
+            // Yeni boru zamanlayıcısı
+            frame += dt;
+            if (frame >= PIPE_INTERVAL) {
+                addPipe();
+                frame -= PIPE_INTERVAL; // Kesin zamanlama için sıfırlamak yerine çıkarıyoruz
+            }
+
+            // Boru güncelle
+            for (let i = pipes.length - 1; i >= 0; i--) {
+                const p = pipes[i];
+                p.x -= PIPE_SPEED * dt;
+
+                if (hitsPipe(p)) { die(); return; }
+
+                if (!p.passed && BIRD_X > p.x + PIPE_WIDTH) {
+                    p.passed = true;
+                    score++;
+                    scoreEl.textContent = score;
+                    if (score > bestScore) {
+                        bestScore = score;
+                        localStorage.setItem("flappyBest", bestScore);
+                        bestEl.textContent = bestScore;
+                    }
+                }
+
+                if (p.x + PIPE_WIDTH < 0) pipes.splice(i, 1);
+            }
+        }
+
+        function die() {
+            state = "dead";
+        }
+
+        // ── Çizim ────────────────────────────────────────────────────
+        function draw() {
+            // Arkaplan
+            ctx.fillStyle = "rgba(8, 15, 30, 0.97)";
+            ctx.fillRect(0, 0, CW, CH);
+
+            // Izgara
+            ctx.strokeStyle = "rgba(56, 189, 248, 0.05)";
+            ctx.lineWidth = 0.5;
+            for (let x = 0; x < CW; x += 20) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CH); ctx.stroke(); }
+            for (let y = 0; y < CH; y += 20) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CW,y); ctx.stroke(); }
+
+            // Borular
+            pipes.forEach(p => {
+                // Gövde
+                ctx.fillStyle = "#1e3a52";
+                ctx.fillRect(p.x, 0, PIPE_WIDTH, p.top);
+                ctx.fillRect(p.x, p.top + PIPE_GAP, PIPE_WIDTH, CH - p.top - PIPE_GAP);
+
+                // Kenar çizgisi
+                ctx.strokeStyle = "rgba(56,189,248,0.2)";
+                ctx.lineWidth = 1;
+                ctx.strokeRect(p.x, 0, PIPE_WIDTH, p.top);
+                ctx.strokeRect(p.x, p.top + PIPE_GAP, PIPE_WIDTH, CH - p.top - PIPE_GAP);
+
+                // Başlık şeritler
+                ctx.fillStyle = "#38bdf8";
+                ctx.fillRect(p.x - 3, p.top - 6, PIPE_WIDTH + 6, 6);
+                ctx.fillRect(p.x - 3, p.top + PIPE_GAP, PIPE_WIDTH + 6, 6);
+            });
+
+            // Kuş
+            const tilt = Math.max(-0.5, Math.min(bird.vy * 0.08, 1.0));
+            ctx.save();
+            ctx.translate(BIRD_X, bird.y);
+            ctx.rotate(tilt);
+
+            // Glow
+            ctx.shadowBlur  = 18;
+            ctx.shadowColor = "#38bdf8";
+            ctx.fillStyle   = "#38bdf8";
+            ctx.beginPath();
+            ctx.arc(0, 0, BIRD_R, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // Göz
+            ctx.fillStyle = "#0f172a";
+            ctx.beginPath();
+            ctx.arc(5, -3, 3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(6, -4, 1.2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Kanat
+            ctx.fillStyle = "rgba(2, 132, 199, 0.7)";
+            ctx.beginPath();
+            ctx.ellipse(-4, 4, 7, 4, 0.3, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+
+            // Overlay: idle
+            if (state === "idle") {
+                ctx.fillStyle = "rgba(0,0,0,0.5)";
+                ctx.fillRect(0, 0, CW, CH);
+                ctx.textAlign = "center";
+                ctx.fillStyle = "#f1f5f9";
+                ctx.font = "700 18px 'Inter', sans-serif";
+                ctx.fillText("Başlamak için dokun", CW / 2, CH / 2 - 12);
+                ctx.fillStyle = "rgba(203,213,225,0.65)";
+                ctx.font = "400 13px 'Inter', sans-serif";
+                ctx.fillText("veya SPACE tuşuna bas", CW / 2, CH / 2 + 14);
+                ctx.textAlign = "left";
+            }
+
+            // Overlay: dead
+            if (state === "dead") {
+                ctx.fillStyle = "rgba(0,0,0,0.62)";
+                ctx.fillRect(0, 0, CW, CH);
+                ctx.textAlign = "center";
+                ctx.fillStyle = "#f1f5f9";
+                ctx.font = "700 22px 'Inter', sans-serif";
+                ctx.fillText("OYUN BİTTİ", CW / 2, CH / 2 - 30);
+                ctx.fillStyle = "#38bdf8";
+                ctx.font = "700 28px 'Inter', sans-serif";
+                ctx.fillText(score + " puan", CW / 2, CH / 2 + 10);
+                ctx.fillStyle = "rgba(203,213,225,0.65)";
+                ctx.font = "400 13px 'Inter', sans-serif";
+                ctx.fillText("Tekrar oynamak için dokun veya SPACE", CW / 2, CH / 2 + 44);
+                ctx.textAlign = "left";
+            }
+        }
+
+        // ── Ana döngü (Zaman Denetleyicisi Eklendi) ────────────────────
+        function loop(timestamp) {
+            if (!timestamp) timestamp = performance.now();
+            
+            // 144Hz referans alınarak dt (zaman farkı) hesaplanır
+            let dt = (timestamp - lastTime) / 6.944; 
+            lastTime = timestamp;
+
+            
+            if (dt > 3) dt = 3; 
+
+            update(dt);
+            draw();
+            animId = requestAnimationFrame(loop);
+        }
+
+        // ── Başlat ───────────────────────────────────────────────────
+        init();
+    </script>
+</body>
+</html>

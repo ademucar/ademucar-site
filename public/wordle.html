@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Wordle | Adem Uçar</title>
+    <link rel="icon" href="aucr.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .content-container {
+            max-width: 600px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Skor Paneli */
+        .score-panel {
+            display: none; 
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .score-box {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 10px;
+            padding: 8px 24px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .score-box-label {
+            font-size: 0.68rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .score-box-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #38bdf8;
+            line-height: 1.2;
+        }
+
+        /* Başlangıç Ekranı */
+        #start-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .difficulty-btn {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid #38bdf8;
+            color: #38bdf8;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+        }
+
+        .difficulty-btn:hover {
+            background: #38bdf8;
+            color: #0f172a;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Oyun Alanı */
+        #game-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        #board {
+            display: grid;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .tile {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #334155;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #f8fafc;
+            text-transform: uppercase;
+            border-radius: 8px;
+            transition: transform 0.4s ease;
+        }
+
+        /* Klavye Alanı */
+        #keyboard {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .key-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .key {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #f8fafc;
+            padding: 12px 0;
+            flex: 1;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            user-select: none;
+            transition: all 0.2s;
+        }
+        
+        .key.large {
+            flex: 1.5;
+            font-size: 0.85rem;
+        }
+
+        .correct { background: #10b981 !important; border-color: #10b981 !important; color: white !important; }
+        .present { background: #f59e0b !important; border-color: #f59e0b !important; color: white !important; }
+        .absent { background: #334155 !important; border-color: #334155 !important; color: #94a3b8 !important; }
+        .active { border-color: #38bdf8 !important; }
+        
+        .pop { animation: pop 0.1s ease-in-out; }
+        @keyframes pop { 50% { transform: scale(1.1); } }
+        
+        .shake { animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+        .flip { transform: rotateX(90deg); }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            background: #e2e8f0;
+            color: #0f172a;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 800;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        #action-buttons {
+            display: none;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        /* Yeni Ana Menü Butonu Tasarımı */
+        .back-btn {
+            margin-top: 25px;
+            background: transparent;
+            border: 1px solid #475569;
+            color: #94a3b8;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #334155;
+            color: #f8fafc;
+            border-color: #64748b;
+        }
+
+        /* Süre kutusu uyarı durumları */
+        .score-box-value.uyari { color: #ef4444; }
+        .score-box-value.nabiz { animation: sureNabiz 0.6s ease-in-out infinite; }
+        @keyframes sureNabiz { 50% { transform: scale(1.12); } }
+    </style>
+</head>
+<body>
+
+    <div class="background-wrapper">
+        <header class="top-header">
+            <nav class="nav-menu">
+                <a href="index.html">ANA SAYFA</a>
+                <a href="hakkimda.html">HAKKIMDA</a>
+                <a href="projeler.html">PROJELER</a>
+                <div class="dropdown">
+                    <button class="dropbtn">ARAÇLAR</button>
+                    <div class="dropdown-content">
+                        <a href="calismaprogramıolusturucu.html"><i class="fas fa-calendar-alt"></i> Çalışma Programı Oluştur</a>
+                        <a href="hesaplama.html"><i class="fas fa-calculator"></i> Gano Hesapla</a>
+                        <a href="donemsayac.html"><i class="fas fa-hourglass-half"></i> Dönem Sayacı</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">OYUNLAR</button>
+                    <div class="dropdown-content">
+                        <a href="oyun.html"><i class="fas fa-gamepad"></i> Neon Snake</a>
+                        <a href="flappy.html"><i class="fas fa-dove"></i> Neon Bird</a>
+                        <a href="wordle.html"><i class="fas fa-font"></i> Neon Wordle</a>
+                        <a href="tetris.html"><i class="fas fa-cubes"></i> Neon Tetris</a>
+                        <a href="flagle.html"><i class="fas fa-flag"></i> Neon Flagle</a>
+                        <a href="birkelimebirislem.html"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
+                    </div>
+                </div>
+                <a href="iletisim.html">İLETİŞİM</a>
+            </nav>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/ademucarr_/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/adem-u%C3%A7ar-39501731a/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </header>
+
+        <div class="content-container">
+            <h1 class="page-title" style="letter-spacing: 5px; margin-bottom: 10px;">Neon Wordle</h1>
+            
+            <div class="score-panel" id="score-panel">
+                <div class="score-box">
+                    <div class="score-box-label">Mevcut Seri</div>
+                    <div class="score-box-value" id="currentScoreEl">0</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-box-label">En Yüksek</div>
+                    <div class="score-box-value" id="bestScoreEl">0</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-box-label">Süre</div>
+                    <div class="score-box-value" id="timerEl">--:--</div>
+                </div>
+            </div>
+
+            <div id="notification" class="notification"></div>
+
+            <div id="start-screen">
+                <button class="difficulty-btn" onclick="startGame(4)">4 Harfle Oyna</button>
+                <button class="difficulty-btn" onclick="startGame(5)">5 Harfle Oyna</button>
+                <button class="difficulty-btn" onclick="startGame(6)">6 Harfle Oyna</button>
+            </div>
+
+            <div id="game-screen">
+                <div id="board"></div>
+                <div id="keyboard"></div>
+                
+                <!-- Oyun bittiğinde çıkan Sonraki Kelime butonu -->
+                <div id="action-buttons">
+                    <button class="difficulty-btn" id="next-btn" style="font-size:1rem; padding: 10px 20px;" onclick="nextWord()">Sonraki Kelime</button>
+                </div>
+
+                <!-- Her zaman en altta duran Ana Menü Butonu -->
+                <button class="back-btn" onclick="location.reload()">
+                    <i class="fas fa-home"></i> Ana Menüye Dön
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const WORDS_4 = "ADIM,AFET,AĞAÇ,AĞIR,AİLE,AKIL,AKIM,AKIN,ALAN,ALAY,ALET,ALEV,ALGI,AMAÇ,AMCA,ANNE,ARAÇ,ARKA,ARPA,ARSA,ASIL,ASIR,ASKI,ASLA,AŞIK,ATEŞ,ATOM,AVCI,AYAK,AYAR,AYAZ,AYNA,BABA,BACA,BAHT,BANK,BANT,BATI,BELA,BİNA,BORÇ,BORU,BOYA,BURS,CADI,CANİ,CEZA,CİLT,CİNS,CUMA,ÇABA,ÇALI,ÇARE,ÇARK,ÇATI,ÇETE,ÇİNİ,ÇİVİ,DAHA,DAHİ,DANA,DANS,DAVA,DAYI,DEFA,DEHA,DELİ,DEPO,DERE,DERİ,DERT,DEVA,DEVE,DİRİ,DİSK,DİŞİ,DİZE,DİZİ,DOĞA,DOĞU,DOKU,DOLU,DOST,DÖRT,DRAM,ECEL,EDAT,EDEP,EĞER,EKİM,EKİN,EKİP,EKSİ,ELMA,EMEK,EMEL,EMİN,EMİR,ENSE,ERİK,ESAS,ESER,ESKİ,EŞİT,EŞYA,ETEK,ETKİ,EVET,EZAN,FARE,FARK,FARZ,FEDA,FELÇ,FENA,FİDE,FİLE,FİLM,FİLO,FOTO,FUAR,GAYE,GECE,GEMİ,GENÇ,GERİ,GEZİ,GIDA,HALI,HALK,HATA,HAVA,HECE,KALE,KAPI,KARA,KARE,KASA,KATI,KEDİ,KISA,KİRA,KOCA,KOKU,KONU,KORU,KÖTÜ,KURS,KURT,KUTU,KUYU,KUZU,KALP".split(",");
+        const WORDS_5 = "ACELE,ADANA,ADRES,AHMET,AHŞAP,AKRAN,AKREP,AKŞAM,AKTİF,ALACA,ALAKA,ALARM,ALBÜM,AMPUL,ANKET,ANLAM,ARABA,ARIZA,ARMUT,ARŞİV,ASKER,ASLAN,AŞAĞI,AŞAMA,ATLET,AYDIN,AYRAN,BADEM,BAHAR,BAHÇE,BAHİS,BAKAN,BAKIR,BALIK,BALON,BALTA,BANKA,BANYO,BARAJ,BARIŞ,BASIN,BASKI,BAŞKA,BATAK,BAVUL,BAYAN,BAYAT,BEBEK,BEDEL,BEDEN,BEKAR,BELGE,BELKİ,BENCE,BENEK,BESİN,BEŞİK,BETER,BEYAZ,BEYİN,BIÇAK,BIYIK,BİBER,BİÇİM,BİLET,BİLGİ,BİLİM,BİRAZ,BİREY,BİRİM,BİTKİ,BİZİM,BOĞAZ,BOMBA,BORDO,BORSA,BOYUN,BOYUT,BOZUK,BÖCEK,BÖLGE,BÖLUM,BULGU,BULUŞ,BULUT,BURUN,BÜTÜN,CADDE,CANLI,CASUS,CEKET,CESUR,CEVAP,CEVİZ,CİDDİ,CİHAZ,CİMRİ,CİVAR,COŞKU,CÜMLE,ÇABUK,ÇADIR,ÇAKAL,ÇAKIL,ÇALGI,ÇAMUR,ÇANTA,ÇARŞI,ÇATAL,ÇAVUŞ,ÇAYIR,ÇEKİÇ,ÇELİK,ÇEVRE,ÇİÇEK,ÇİZGİ,ÇOCUK,ÇORAP,ÇUVAL,DALGA,DAMAR,DARBE,DAVET,DAYAK,DEĞER,DELİK,DEMİR,DENEY,DENİZ,DERİN,DERYA,DESEN,DESTE,DETAY,DEVAM,DEVİR,DİĞER,DİLEK,DİLİM,DİREK,DOĞAL,DOĞRU,DOKUZ,DOLAP,DOLAR,DOLGU,DOMUZ,DOSYA,DÖNEM,DÖNÜŞ,DÜNYA,DÜZEN,DÜZEY,EKRAN,EKSİK,EMLAK,ENGEL,ERKEK,ERKEN,ESNAF,ESPRİ,ETKEN,EVLAT,EVREN,EYLEM,EYLÜL,EZBER,FAKAT,FAKİR,FAYDA,FENER,FERAH,FESAT,FİDAN,FİKİR,FİNAL,FİRMA,FİYAT,FİZİK,FORMA,FORUM,GALİP,GARİP,GEÇİT,GELİR,GENEL,GENİŞ,GEREK,GİDER,GİRİŞ,GİTAR,GURUR,GÜNEŞ,GÜVEN,GÜZEL,HABER".split(",");
+        const WORDS_6 = "AFİYET,ALFABE,AMATÖR,AMBLEM,ANKARA,ANONİM,ANTİKA,ARALIK,ASGARİ,AVUKAT,BAHANE,BAKKAL,BALANS,BALAYI,BALKAN,BANKER,BARDAK,BASINÇ,BASKET,BAŞARI,BAŞKAN,BAYRAK,BAYRAM,BEDAVA,BERBER,BİNBİR,BİRKAÇ,BİRLİK,BODRUM,BOSTAN,BUĞDAY,BUHRAN,BULGUR,BULVAR,BÜLBÜL,BÜLTEN,CENAZE,CENGİZ,CENNET,CERRAH,CETVEL,CEVHER,CEYLAN,CÜZDAN,ÇAĞDAŞ,ÇAKMAK,ÇARŞAF,ÇAVDAR,ÇEMBER,ÇENGEL,ÇEYREK,ÇIPLAK,DALGIÇ,DEFTER,DEKONT,DERECE,DESTEK,DEVRİM,DİKKAT,DİRSEK,DOKTOR,DÜKKAN,DÜRBÜN,EFSANE,EKSTRA,ELBİSE,FAYANS,FİNCAN,FORMÜL,GALERİ,GARSON,GAZETE,GERÇEK,GÖMLEK,GRAFİK,GÜNCEL,GÜNDEM,HARİKA,HASRET,HATIRA,HAYVAN,HEDİYE,HEYKEL,HİKAYE,İBADET,İHANET,İSKELE,İŞARET,KAİNAT,KALKAN,KAMERA,KAMPÜS,KANSER,KANTİN,KAPLAN,KAPTAN,KARDEŞ,KARTAL,KARTON,KAUÇUK,KAYISI,KAZANÇ,KELİME,KLAVYE,KOLTUK,KOMEDİ,KONGRE,KONSER,KORSAN,KOSTÜM,KUAFÖR,KURBAN,KURŞUN,KUVVET,KÜKÜRT,LEOPAR,LEYLEK,MACERA,MAĞAZA,MAHSUL,MAKİNE,MAKSAT,MANTAR,MASRAF,MATBAA,MAYMUN,MEÇHUL,MELODİ,MENDİL,MERCEK,MERKEZ,MERMER,MESAFE,MESLEK,MEYDAN,MİKTAR,MİLYON,MİTİNG,MUCİZE,MUSLUK,NANKÖR,NEFRET,NORMAL,OTOBÜS,OTOMAT,ORKİDE,OTOYOL,ÖDENEK,PANCAR,PARFÜM,PARMAK,PETROL,PEYNİR,PİYANO,PUSULA,REKLAM,RESSAM,RÜZGAR,SAADET,SALATA,SANDAL,SEKSEN,SENTEZ,SİNCAP,SİSTEM,SOHBET,SULTAN,SÜNGER,SÜTLAÇ,ŞAHANE,ŞELALE,ŞEYTAN,ŞİRKET,ŞÖMİNE,TABLET,TAHMİN,TAVŞAN,TEDAVİ,TEMSİL,TOPRAK,TÜRKÇE,VİCDAN,VİTRİN,VİZYON,VOLKAN,YAĞMUR,YANGIN,YAPRAK,YARDIM,YENGEÇ,YILDIZ,YOĞURT,YORGAN,ZEYTİN,ZİRAAT".split(",");
+
+        let validDictionary = new Set(); 
+        
+        window.onload = async () => {
+            try {
+                let res = await fetch("https://raw.githubusercontent.com/mertemin/turkish-word-list/master/words.txt");
+                let text = await res.text();
+                text.split('\n').forEach(w => {
+                    let cleanWord = w.trim().toLocaleUpperCase('tr-TR')
+                                     .replace(/Â/g, 'A').replace(/Û/g, 'U').replace(/Î/g, 'İ');
+                    if (cleanWord.length >= 4 && cleanWord.length <= 6) {
+                        validDictionary.add(cleanWord);
+                    }
+                });
+                console.log("64.000+ Kelimelik devasa sözlük başarıyla yüklendi!");
+            } catch(e) {
+                console.warn("Devasa sözlük yüklenemedi, oyun sadece kendi hafızasını kullanacak.");
+            }
+        };
+
+        let wordLength = 5;
+        let targetWord = "";
+        let currentRow = 0;
+        let currentCol = 0;
+        let guesses = [];
+        let isGameOver = false;
+        let isChecking = false; 
+        let timedOut = false;
+
+        let currentScore = 0;
+        let bestScore = parseInt(localStorage.getItem("wordleBest")) || 0;
+        
+        const board = document.getElementById("board");
+        const keyboard = document.getElementById("keyboard");
+        const notif = document.getElementById("notification");
+        const scorePanel = document.getElementById("score-panel");
+        const actionBtns = document.getElementById("action-buttons");
+        
+        document.getElementById("bestScoreEl").innerText = bestScore;
+
+        const keys = [
+            ["E","R","T","Y","U","I","O","P","Ğ","Ü"],
+            ["A","S","D","F","G","H","J","K","L","Ş","İ"],
+            ["ENTER","Z","C","V","B","N","M","Ö","Ç","SİL"]
+        ];
+
+        function showNotification(msg) {
+            notif.innerText = msg;
+            notif.style.opacity = "1";
+            setTimeout(() => notif.style.opacity = "0", 2500);
+        }
+
+        // --- SÜRE ---
+        const TIME_LIMITS = { 4: 180, 5: 240, 6: 300 }; // saniye: 4 harf 3dk, 5 harf 4dk, 6 harf 5dk
+        let timeLeft = 0;
+        let timerInterval = null;
+        const timerEl = document.getElementById("timerEl");
+
+        function formatTime(s) {
+            const m = Math.floor(s / 60);
+            const ss = s % 60;
+            return `${m}:${String(ss).padStart(2, "0")}`;
+        }
+
+        function updateTimerUI() {
+            timerEl.innerText = formatTime(Math.max(0, timeLeft));
+            timerEl.classList.toggle("uyari", timeLeft <= 30);
+            timerEl.classList.toggle("nabiz", timeLeft <= 10 && timeLeft > 0);
+        }
+
+        function startTimer() {
+            stopTimer();
+            timeLeft = TIME_LIMITS[wordLength];
+            updateTimerUI();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerUI();
+                if (timeLeft <= 0) {
+                    stopTimer();
+                    timeUp();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+        }
+
+        function timeUp() {
+            if (isGameOver) return;
+            isGameOver = true;
+            isChecking = false;
+            timedOut = true;
+            currentScore = 0;
+            document.getElementById("currentScoreEl").innerText = currentScore;
+            showNotification(`Süre doldu! Kelime: ${targetWord}`);
+            document.getElementById("next-btn").innerText = "Tekrar Dene";
+            actionBtns.style.display = "flex";
+        }
+
+        function startGame(length) {
+            wordLength = length;
+            currentScore = 0; 
+            document.getElementById("currentScoreEl").innerText = currentScore;
+            
+            document.getElementById("start-screen").style.display = "none";
+            scorePanel.style.display = "flex";
+            document.getElementById("game-screen").style.display = "flex";
+            
+            setupGame();
+        }
+
+        function nextWord() {
+            setupGame();
+        }
+
+        function setupGame() {
+            let dict = wordLength === 4 ? WORDS_4 : (wordLength === 5 ? WORDS_5 : WORDS_6);
+            targetWord = dict[Math.floor(Math.random() * dict.length)];
+            
+            currentRow = 0;
+            currentCol = 0;
+            isGameOver = false;
+            isChecking = false;
+            timedOut = false;
+            actionBtns.style.display = "none";
+            
+            board.style.gridTemplateColumns = `repeat(${wordLength}, 1fr)`;
+            initBoard();
+            initKeyboard();
+            startTimer();
+        }
+
+        function initBoard() {
+            board.innerHTML = "";
+            guesses = Array(6).fill().map(() => Array(wordLength).fill(""));
+            for (let r = 0; r < 6; r++) {
+                for (let c = 0; c < wordLength; c++) {
+                    let tile = document.createElement("div");
+                    tile.id = `tile-${r}-${c}`;
+                    tile.className = "tile";
+                    board.appendChild(tile);
+                }
+            }
+        }
+
+        function initKeyboard() {
+            keyboard.innerHTML = "";
+            keys.forEach(row => {
+                let rowEl = document.createElement("div");
+                rowEl.className = "key-row";
+                row.forEach(key => {
+                    let btn = document.createElement("div");
+                    btn.className = "key";
+                    btn.id = `key-${key}`;
+                    btn.innerText = key;
+                    if(key === "ENTER" || key === "SİL") btn.classList.add("large");
+                    
+                    btn.onclick = () => handleInput(key);
+                    rowEl.appendChild(btn);
+                });
+                keyboard.appendChild(rowEl);
+            });
+        }
+
+        function handleInput(key) {
+            if (isGameOver || isChecking) return; 
+
+            if (key === "SİL" || key === "Backspace") {
+                if (currentCol > 0) {
+                    currentCol--;
+                    guesses[currentRow][currentCol] = "";
+                    let tile = document.getElementById(`tile-${currentRow}-${currentCol}`);
+                    tile.innerText = "";
+                    tile.classList.remove("active");
+                }
+                return;
+            }
+
+            if (key === "ENTER" || key === "Enter") {
+                if (currentCol === wordLength) {
+                    isChecking = true; 
+                    checkGuess(); 
+                }
+                else {
+                    showNotification("Yeterli harf yok!");
+                    shakeRow();
+                }
+                return;
+            }
+
+            if (/^[A-ZÇĞİIÖŞÜ]$/.test(key) && currentCol < wordLength) {
+                guesses[currentRow][currentCol] = key;
+                let tile = document.getElementById(`tile-${currentRow}-${currentCol}`);
+                tile.innerText = key;
+                tile.classList.add("pop", "active");
+                setTimeout(() => tile.classList.remove("pop"), 100);
+                currentCol++;
+            }
+        }
+
+        function shakeRow() {
+            for (let c = 0; c < wordLength; c++) {
+                let tile = document.getElementById(`tile-${currentRow}-${c}`);
+                tile.classList.add("shake");
+                setTimeout(() => tile.classList.remove("shake"), 400);
+            }
+        }
+
+        function checkGuess() {
+            let guess = guesses[currentRow].join("");
+            let dict = wordLength === 4 ? WORDS_4 : (wordLength === 5 ? WORDS_5 : WORDS_6);
+            
+            if (!validDictionary.has(guess) && !dict.includes(guess)) {
+                showNotification("Sözlükte bulunamadı!");
+                shakeRow();
+                isChecking = false; 
+                return; 
+            }
+
+            // Bu tahminle oyun bitecekse (doğru cevap ya da son satır) süreyi hemen durdur
+            if (guess === targetWord || currentRow === 5) stopTimer();
+
+            let targetArr = targetWord.split("");
+            let guessArr = guess.split("");
+            let tileColors = Array(wordLength).fill("absent");
+            
+            let activeRow = currentRow; 
+
+            for (let i = 0; i < wordLength; i++) {
+                if (guessArr[i] === targetArr[i]) {
+                    tileColors[i] = "correct";
+                    targetArr[i] = null; 
+                }
+            }
+
+            for (let i = 0; i < wordLength; i++) {
+                if (tileColors[i] !== "correct" && targetArr.includes(guessArr[i])) {
+                    tileColors[i] = "present";
+                    targetArr[targetArr.indexOf(guessArr[i])] = null;
+                }
+            }
+
+            for (let i = 0; i < wordLength; i++) {
+                setTimeout(() => {
+                    let tile = document.getElementById(`tile-${activeRow}-${i}`);
+                    tile.classList.add("flip");
+                    setTimeout(() => {
+                        tile.classList.remove("flip", "active");
+                        tile.classList.add(tileColors[i]);
+                        updateKeyboardColor(guessArr[i], tileColors[i]);
+                    }, 200); 
+                }, i * 250); 
+            }
+
+            setTimeout(() => {
+                if (timedOut) { isChecking = false; return; }
+                if (guess === targetWord) {
+                    let earnedPoints = (6 - currentRow) * 10; 
+                    currentScore += earnedPoints;
+                    document.getElementById("currentScoreEl").innerText = currentScore;
+                    
+                    if (currentScore > bestScore) {
+                        bestScore = currentScore;
+                        localStorage.setItem("wordleBest", bestScore);
+                        document.getElementById("bestScoreEl").innerText = bestScore;
+                    }
+
+                    showNotification(`TEBRİKLER! +${earnedPoints} Puan`);
+                    document.getElementById("next-btn").innerText = "Sonraki Kelime";
+                    isGameOver = true;
+                    actionBtns.style.display = "flex";
+
+                } else if (currentRow === 5) {
+                    showNotification(`OYUN BİTTİ! Kelime: ${targetWord}`);
+                    currentScore = 0; 
+                    document.getElementById("currentScoreEl").innerText = currentScore;
+                    
+                    document.getElementById("next-btn").innerText = "Tekrar Dene";
+                    isGameOver = true;
+                    actionBtns.style.display = "flex";
+
+                } else {
+                    currentRow++;
+                    currentCol = 0;
+                }
+                
+                isChecking = false; 
+                
+            }, wordLength * 250);
+        }
+
+        function updateKeyboardColor(letter, colorClass) {
+            let keyBtn = document.getElementById(`key-${letter}`);
+            if (!keyBtn) return;
+            if (keyBtn.classList.contains("correct")) return;
+            if (keyBtn.classList.contains("present") && colorClass === "absent") return;
+
+            keyBtn.classList.remove("correct", "present", "absent");
+            keyBtn.classList.add(colorClass);
+        }
+
+        document.addEventListener("keydown", (e) => {
+            let key = e.key;
+            if (key === "Enter" || key === "Backspace") {
+                handleInput(key);
+            } else {
+                let upperKey = key.toLocaleUpperCase('tr-TR');
+                if (upperKey.length === 1 && /^[A-ZÇĞİIÖŞÜ]$/.test(upperKey)) {
+                    handleInput(upperKey);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

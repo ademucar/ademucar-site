@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dönem Sayacı | Adem Uçar</title>
+    <link rel="icon" href="aucr.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .content-container { max-width: 760px; text-align: center; }
+
+        .donem-baslik {
+            font-size: 2rem; font-weight: 800; color: #f8fafc; letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.5); margin-bottom: 4px;
+        }
+        .donem-alt { color: #94a3b8; font-size: 0.9rem; margin-bottom: 26px; letter-spacing: 1px; }
+
+        .sayac-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px; margin-bottom: 34px;
+        }
+
+        .sayac-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 14px; padding: 22px 18px;
+            display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.08);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .sayac-card .ust {
+            display: flex; align-items: center; gap: 8px; color: #cbd5e1;
+            font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 12px;
+        }
+        .sayac-card .ust i { color: #38bdf8; font-size: 1rem; }
+        .sayac-card .gun {
+            font-size: 3.4rem; font-weight: 800; color: #38bdf8; line-height: 1;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+        }
+        .sayac-card .birim { font-size: 0.7rem; letter-spacing: 3px; color: #64748b; text-transform: uppercase; margin-top: 2px; }
+        .sayac-card .alt {
+            margin-top: 12px; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600;
+            color: #e2e8f0; letter-spacing: 1px; font-variant-numeric: tabular-nums;
+        }
+        .sayac-card .tarih { margin-top: 12px; font-size: 0.78rem; color: #94a3b8; }
+        .sayac-card .tarih i { color: #64748b; margin-right: 4px; }
+        .sayac-card .durum {
+            margin-top: 12px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px;
+            padding: 4px 12px; border-radius: 999px;
+            background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.25);
+        }
+
+        /* Aciliyet durumları */
+        .sayac-card.acil { border-color: rgba(245, 158, 11, 0.5); box-shadow: 0 0 22px rgba(245, 158, 11, 0.12); }
+        .sayac-card.acil .gun { color: #f59e0b; text-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
+        .sayac-card.acil .durum { background: rgba(245, 158, 11, 0.12); color: #f59e0b; border-color: rgba(245, 158, 11, 0.3); }
+
+        .sayac-card.cok-acil { border-color: rgba(239, 68, 68, 0.55); box-shadow: 0 0 22px rgba(239, 68, 68, 0.15); }
+        .sayac-card.cok-acil .gun { color: #ef4444; text-shadow: 0 0 20px rgba(239, 68, 68, 0.45); }
+        .sayac-card.cok-acil .durum { background: rgba(239, 68, 68, 0.12); color: #f87171; border-color: rgba(239, 68, 68, 0.3); }
+
+        .sayac-card.devam .gun { color: #10b981; text-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+        .sayac-card.devam .durum { background: rgba(16, 185, 129, 0.12); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
+
+        .sayac-card.bitti { opacity: 0.55; }
+        .sayac-card.bitti .gun { color: #10b981; font-size: 2.6rem; }
+        .sayac-card.bitti .durum { background: rgba(148, 163, 184, 0.12); color: #94a3b8; border-color: rgba(148, 163, 184, 0.3); }
+
+        /* Tatil listesi */
+        .tatil-bolum { text-align: left; }
+        .tatil-baslik {
+            display: flex; align-items: center; gap: 10px; justify-content: center;
+            color: #cbd5e1; font-size: 1rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 16px;
+        }
+        .tatil-baslik i { color: #38bdf8; }
+        .tatil-liste { display: flex; flex-direction: column; gap: 8px; }
+        .tatil-item {
+            display: grid; grid-template-columns: 130px 1fr auto; gap: 12px; align-items: center;
+            background: rgba(30, 41, 59, 0.6); border: 1px solid #334155;
+            border-left: 3px solid #38bdf8; border-radius: 8px; padding: 10px 14px;
+        }
+        .tatil-item .t-tarih { font-weight: 700; color: #f8fafc; font-size: 0.88rem; }
+        .tatil-item .t-ad { color: #cbd5e1; font-size: 0.85rem; }
+        .tatil-item .t-gun {
+            font-size: 0.72rem; color: #38bdf8; font-weight: 600; background: rgba(56, 189, 248, 0.1);
+            padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+        }
+
+        @media (max-width: 560px) {
+            .tatil-item { grid-template-columns: 1fr auto; }
+            .tatil-item .t-ad { grid-column: 1 / -1; order: 3; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-wrapper">
+        <header class="top-header">
+            <nav class="nav-menu">
+                <a href="index.html">ANA SAYFA</a>
+                <a href="hakkimda.html">HAKKIMDA</a>
+                <a href="projeler.html">PROJELER</a>
+
+                <div class="dropdown">
+                    <button class="dropbtn">ARAÇLAR</button>
+                    <div class="dropdown-content">
+                        <a href="calismaprogramıolusturucu.html"><i class="fas fa-calendar-alt"></i> Çalışma Programı Oluştur</a>
+                        <a href="hesaplama.html"><i class="fas fa-calculator"></i> Gano Hesapla</a>
+                        <a href="donemsayaci.html"><i class="fas fa-hourglass-half"></i> Dönem Sayacı</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">OYUNLAR</button>
+                    <div class="dropdown-content">
+                        <a href="oyun.html"><i class="fas fa-gamepad"></i> Neon Snake</a>
+                        <a href="flappy.html"><i class="fas fa-dove"></i> Neon Bird</a>
+                        <a href="wordle.html"><i class="fas fa-font"></i> Neon Wordle</a>
+                        <a href="tetris.html"><i class="fas fa-cubes"></i> Neon Tetris</a>
+                        <a href="flagle.html"><i class="fas fa-flag"></i> Neon Flagle</a>
+                        <a href="birkelimebirislem.html"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
+                    </div>
+                </div>
+
+                <a href="iletisim.html">İLETİŞİM</a>
+            </nav>
+
+            <div class="social-icons">
+                <a href="https://www.instagram.com/ademucarr_/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/adem-u%C3%A7ar-39501731a/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </header>
+
+        <div class="content-container">
+            <h1 class="donem-baslik">GÜZ DÖNEMİ</h1>
+            <p class="donem-alt">2026 – 2027 Akademik Yılı · Güz Yarıyılı</p>
+
+            <div class="sayac-grid" id="sayacGrid"></div>
+
+            <div class="tatil-bolum">
+                <h3 class="tatil-baslik"><i class="fas fa-umbrella-beach"></i> Resmi Tatil Günleri</h3>
+                <div class="tatil-liste" id="tatilListe"></div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const AYLAR = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+
+    // Geri sayım hedefleri — [yıl, ay(1-12), gün]
+    const hedefler = [
+        { etiket: "Okulun Açılması", not: "Derslerin başlangıcı", ikon: "fa-school",          bas: [2026, 9, 21],  bit: [2026, 9, 21] },
+        { etiket: "Vize (Ara Sınavlar)", not: "Ara sınav haftası", ikon: "fa-pen-to-square",   bas: [2026, 11, 9],  bit: [2026, 11, 14] },
+        { etiket: "Final (Yarıyıl Sonu)", not: "Yarıyıl sonu sınavları", ikon: "fa-graduation-cap", bas: [2027, 1, 4], bit: [2027, 1, 15] }
+    ];
+
+    const tatiller = [
+        { tarih: [2026, 10, 28], gun: "Çarşamba", ad: "Cumhuriyet Bayramı Arifesi (yarım gün)" },
+        { tarih: [2026, 10, 29], gun: "Perşembe", ad: "Cumhuriyet Bayramı" },
+        { tarih: [2027, 1, 1],   gun: "Cuma",     ad: "Yılbaşı" }
+    ];
+
+    const tarihYap = a => new Date(a[0], a[1] - 1, a[2]);
+    const iki = n => String(n).padStart(2, "0");
+
+    // Kartları bir kez oluştur
+    const grid = document.getElementById("sayacGrid");
+    grid.innerHTML = hedefler.map((h, i) => `
+        <div class="sayac-card" id="card-${i}">
+            <div class="ust"><i class="fas ${h.ikon}"></i><span>${h.etiket}</span></div>
+            <div class="gun" id="gun-${i}">--</div>
+            <div class="birim">GÜN</div>
+            <div class="alt" id="alt-${i}">--:--:--</div>
+            <div class="tarih" id="tarih-${i}"></div>
+            <div class="durum" id="durum-${i}"></div>
+        </div>
+    `).join("");
+
+    // Tatilleri listele
+    document.getElementById("tatilListe").innerHTML = tatiller.map(t => `
+        <div class="tatil-item">
+            <div class="t-tarih">${t.tarih[2]} ${AYLAR[t.tarih[1] - 1]} ${t.tarih[0]}</div>
+            <div class="t-ad">${t.ad}</div>
+            <div class="t-gun">${t.gun}</div>
+        </div>
+    `).join("");
+
+    function guncelle() {
+        const now = new Date();
+        hedefler.forEach((h, i) => {
+            const bas = tarihYap(h.bas);
+            const bit = tarihYap(h.bit);
+            const bitSon = new Date(bit.getFullYear(), bit.getMonth(), bit.getDate(), 23, 59, 59, 999);
+
+            const gunEl = document.getElementById("gun-" + i);
+            const altEl = document.getElementById("alt-" + i);
+            const tarihEl = document.getElementById("tarih-" + i);
+            const durumEl = document.getElementById("durum-" + i);
+            const cardEl = document.getElementById("card-" + i);
+
+            const haftaGunu = bas.toLocaleDateString("tr-TR", { weekday: "long" });
+            tarihEl.innerHTML = `<i class="fas fa-calendar-day"></i> ${h.bas[2]} ${AYLAR[h.bas[1] - 1]} ${h.bas[0]} · ${haftaGunu}`;
+
+            cardEl.classList.remove("acil", "cok-acil", "devam", "bitti");
+
+            if (now > bitSon) {
+                gunEl.textContent = "✓";
+                altEl.textContent = h.not;
+                durumEl.textContent = "Tamamlandı";
+                cardEl.classList.add("bitti");
+            } else if (now >= bas) {
+                gunEl.textContent = "●";
+                altEl.textContent = h.not;
+                durumEl.textContent = "Şu an devam ediyor";
+                cardEl.classList.add("devam");
+            } else {
+                const ms = bas - now;
+                const gun = Math.floor(ms / 86400000);
+                const saat = Math.floor((ms % 86400000) / 3600000);
+                const dk = Math.floor((ms % 3600000) / 60000);
+                const sn = Math.floor((ms % 60000) / 1000);
+
+                gunEl.textContent = gun;
+                altEl.textContent = `${iki(saat)} sa : ${iki(dk)} dk : ${iki(sn)} sn`;
+                durumEl.textContent = gun === 0 ? "Son 24 saat!" : `${gun} gün kaldı`;
+
+                if (gun <= 1) cardEl.classList.add("cok-acil");
+                else if (gun <= 7) cardEl.classList.add("acil");
+            }
+        });
+    }
+
+    guncelle();
+    setInterval(guncelle, 1000);
+</script>
+</body>
+</html>

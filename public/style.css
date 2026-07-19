@@ -1,0 +1,433 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body, html {
+    min-height: 100vh;
+    background-color: #0f172a; /* Sayfa kaydığında veya esnediğinde beyaz görünmesini engeller */
+    overflow-x: hidden; 
+}
+
+.background-wrapper {
+    width: 100%; /* 100vw yerine 100% kullanmak yatay kayma hatalarını önler */
+    min-height: 100vh; 
+    /* Yumuşak, sakin koyu zemin (üstte hafif mavi parıltı) */
+    background:
+        radial-gradient(1000px 650px at 50% -5%, rgba(56, 189, 248, 0.08), transparent 60%),
+        linear-gradient(180deg, #0f172a 0%, #0b1120 100%);
+    background-attachment: fixed;
+    position: relative;
+}
+
+/* Üst Header (Menü + Sosyal) */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 50px;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 40px;
+    align-items: center; 
+}
+
+.nav-menu a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+    color: #38bdf8;
+}
+
+/* --- AÇILIR MENÜ (DROPDOWN) STİLLERİ --- */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    transition: color 0.3s;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.dropbtn:hover {
+    color: #38bdf8;
+}
+
+/* Aşağı ok işareti */
+.dropbtn::after {
+    content: '\25BC'; 
+    font-size: 0.6rem;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    min-width: 230px;
+    box-shadow: 0px 8px 24px 0px rgba(0,0,0,0.6);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%); 
+    margin-top: 15px; 
+    overflow: hidden;
+}
+
+/* Menüye giderken farenin boşa düşmemesi için görünmez köprü */
+.dropdown::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 15px;
+}
+
+.dropdown-content a {
+    color: #cbd5e1;
+    padding: 14px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+/* Hover efekti: Hem renk değişir hem hafif sağa kayar */
+.dropdown-content a:hover {
+    background-color: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    padding-left: 25px; 
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+/* --- AÇILIR MENÜ SONU --- */
+
+.social-icons {
+    display: flex;
+    gap: 25px;
+}
+
+.social-icons a {
+    color: #ffffff;
+    font-size: 1.3rem;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+    color: #38bdf8;
+    transform: translateY(-3px);
+}
+
+/* Orta Hero Alanı */
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff;
+    width: 90%;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    white-space: nowrap; 
+}
+
+.hero-text p {
+    font-size: 1rem;
+    color: #cbd5e1;
+    letter-spacing: 1px;
+}
+
+/* İletişim Özel Tasarım */
+.contact-title {
+    font-size: 3rem !important;
+    margin-bottom: 30px !important;
+}
+
+.contact-details p {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: 300;
+}
+
+.contact-data {
+    color: #38bdf8;
+    font-weight: 600;
+}
+
+.content-container {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 900px;
+    background: rgba(15, 23, 42, 0.75); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 40px 50px;
+    color: #f1f5f9;
+    max-height: 80vh;
+    overflow-y: auto; 
+}
+
+/* Sayfa Başlığı */
+.page-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 2px;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 15px;
+}
+
+/* Biyografi Metni */
+.about-text p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #cbd5e1;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.about-details {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.detail-box {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.detail-box h3 {
+    color: #38bdf8;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.detail-box ul {
+    list-style: none;
+}
+
+.detail-box ul li {
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    border-left: 2px solid #38bdf8;
+    padding-left: 15px;
+}
+
+.detail-box ul li strong {
+    color: #ffffff;
+    font-size: 1.05rem;
+}
+
+.skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skills-tags span {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.project-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(56, 189, 248, 0.4);
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.folder-icon {
+    font-size: 2rem;
+    color: #38bdf8;
+}
+
+.github-link {
+    font-size: 1.4rem;
+    color: #cbd5e1;
+    transition: color 0.3s;
+}
+
+.github-link:hover {
+    color: #ffffff;
+}
+
+.project-title {
+    font-size: 1.25rem;
+    color: #f8fafc;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.project-desc {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    flex-grow: 1;
+}
+
+.project-meta {
+    display: flex;
+    align-items: center;
+}
+
+.language-tag {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 400;
+}
+
+.lang-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.html-color {
+    background-color: #e34c26;
+}
+
+@media (max-width: 768px) {
+    body, html {
+        overflow-y: auto; 
+    }
+
+    .top-header {
+        flex-direction: column; 
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .nav-menu {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-menu a {
+        font-size: 0.7rem;
+    }
+
+    .dropdown-content {
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: 180px;
+    }
+
+    .hero-text h1 {
+        font-size: 2.2rem; 
+    }
+
+    .content-container {
+        position: relative; 
+        top: 0;
+        left: 0;
+        transform: none;
+        margin: 20px auto;
+        padding: 20px;
+        max-height: none; 
+    }
+
+    .about-details {
+        flex-direction: column; 
+        gap: 20px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr; 
+    }
+
+    .contact-title {
+        font-size: 2.2rem !important;
+    }
+
+    .contact-details p {
+        font-size: 1rem;
+    }
+}

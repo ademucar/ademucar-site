@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bir Kelime Bir İşlem | Adem Uçar</title>
+    <link rel="icon" href="aucr.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* ---- Panel ---- */
+        .content-container {
+            max-width: 640px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ---- Bilgi (i) butonu + modal ---- */
+        .info-btn {
+            position: absolute; top: 16px; right: 16px;
+            width: 34px; height: 34px; border-radius: 50%;
+            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #38bdf8; cursor: pointer; font-size: .85rem;
+            display: none; align-items: center; justify-content: center;
+            transition: all .2s; z-index: 5;
+        }
+        .info-btn.acik { display: flex; }
+        .info-btn:hover { background: #38bdf8; color: #0f172a; box-shadow: 0 0 15px rgba(56, 189, 248, 0.45); }
+
+        .modal {
+            position: fixed; inset: 0; z-index: 2000;
+            background: rgba(2, 6, 23, 0.7); backdrop-filter: blur(6px);
+            display: none; align-items: center; justify-content: center; padding: 24px;
+        }
+        .modal.acik { display: flex; }
+        .modal-card {
+            position: relative; width: 100%; max-width: 460px; max-height: 85vh; overflow-y: auto;
+            background: rgba(15, 23, 42, 0.97); border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 14px; padding: 28px 26px; text-align: left; color: #cbd5e1;
+            box-shadow: 0 20px 60px rgba(0,0,0,.6);
+        }
+        .modal-card h3 { color: #38bdf8; font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; letter-spacing: .5px; }
+        .modal-card p { font-size: .92rem; line-height: 1.6; margin-bottom: 12px; }
+        .modal-card ul { list-style: none; margin: 6px 0 14px; }
+        .modal-card ul li { font-size: .9rem; line-height: 1.5; color: #cbd5e1; padding-left: 16px; margin-bottom: 9px; position: relative; }
+        .modal-card ul li::before { content: '›'; position: absolute; left: 0; color: #38bdf8; font-weight: 800; }
+        .modal-card b { color: #f8fafc; }
+        .modal-card .ornek { background: rgba(56,189,248,.08); border: 1px solid rgba(56,189,248,.25);
+            border-radius: 8px; padding: 10px 12px; font-size: .88rem; color: #cbd5e1; margin-top: 4px; }
+        .modal-kapat {
+            position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 8px;
+            background: transparent; border: 1px solid #334155; color: #94a3b8; cursor: pointer; transition: all .2s;
+        }
+        .modal-kapat:hover { background: #334155; color: #f8fafc; }
+
+        /* ---- Skor Paneli (wordle ile aynı dil) ---- */
+        .score-panel {
+            display: none;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 22px;
+            width: 100%;
+        }
+        .score-box {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 10px;
+            padding: 8px 24px;
+            text-align: center;
+            min-width: 100px;
+        }
+        .score-box-label {
+            font-size: 0.68rem; color: #64748b; text-transform: uppercase;
+            letter-spacing: 0.08em; font-weight: 600;
+        }
+        .score-box-value {
+            font-size: 1.5rem; font-weight: 800; color: #38bdf8; line-height: 1.2;
+        }
+
+        /* ---- Başlangıç / mod seçimi ---- */
+        #start-screen { display: flex; flex-direction: column; gap: 15px; margin-top: 6px; width: 100%; }
+        #start-screen .desc { color: #94a3b8; font-size: 0.95rem; margin-bottom: 8px; line-height: 1.5; }
+
+        .difficulty-btn {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid #38bdf8; color: #38bdf8;
+            padding: 15px 30px; font-size: 1.2rem; font-weight: 800;
+            border-radius: 12px; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+        }
+        .difficulty-btn:hover:not(:disabled) {
+            background: #38bdf8; color: #0f172a;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4); transform: translateY(-2px);
+        }
+        .difficulty-btn:disabled { opacity: .5; cursor: not-allowed; }
+        .difficulty-btn .kucuk { display:block; font-size:.72rem; font-weight:600; letter-spacing:1px; color:#94a3b8; margin-top:4px; }
+        .difficulty-btn:hover:not(:disabled) .kucuk { color: rgba(15,23,42,.75); }
+
+        /* ---- Oyun ekranları ---- */
+        .oyun-ekran { display: none; flex-direction: column; align-items: center; width: 100%; }
+        .oyun-ekran.acik { display: flex; }
+        .oyun-baslik { font-size: .72rem; letter-spacing: 3px; text-transform: uppercase; color: #64748b; font-weight: 700; margin-bottom: 6px; }
+        .oyun-ipucu { color: #94a3b8; font-size: .88rem; line-height: 1.5; margin-bottom: 20px; max-width: 460px; }
+        .oyun-ipucu b { color: #38bdf8; }
+
+        /* ---- Karolar ---- */
+        .karo-sira { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; min-height: 58px; }
+        .karo {
+            width: 50px; height: 56px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.7rem; font-weight: 800; color: #f8fafc;
+            background: rgba(15, 23, 42, 0.85); border: 2px solid #38bdf8;
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
+            animation: karoIn .3s ease both;
+        }
+        .karo.sayi { font-size: 1.4rem; }
+        .karo.bos { border: 2px dashed #334155; box-shadow: none; color: #334155; }
+        @keyframes karoIn { from { transform: translateY(-10px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+        /* ---- Hedef (İşlem) ---- */
+        .hedef-kutu { margin: -4px 0 18px; }
+        .hedef-kutu .et { font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; color: #64748b; font-weight: 600; }
+        .hedef-kutu .no { font-size: 2.6rem; font-weight: 800; color: #38bdf8; line-height: 1.1; text-shadow: 0 0 20px rgba(56,189,248,.4); }
+
+        /* ---- Kontrol butonları ---- */
+        .kontrol-sira { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 18px; }
+        .mini-btn {
+            background: #1e293b; border: 1px solid #334155; color: #f8fafc;
+            padding: 10px 16px; border-radius: 8px; font-family: 'Inter', sans-serif;
+            font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .2s;
+        }
+        .mini-btn:hover:not(:disabled) { border-color: #38bdf8; color: #38bdf8; }
+        .mini-btn:disabled { opacity: .4; cursor: not-allowed; }
+        .mini-btn.secili { background: rgba(56,189,248,.15); border-color: #38bdf8; color: #38bdf8; }
+
+        /* ---- Saat ---- */
+        .saat-sar { position: relative; width: 150px; height: 150px; margin: 6px 0 14px; }
+        .saat-sar svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .saat-iz { fill: none; stroke: #1e293b; stroke-width: 8; }
+        .saat-ilerleme { fill: none; stroke: #38bdf8; stroke-width: 8; stroke-linecap: round;
+            filter: drop-shadow(0 0 6px rgba(56,189,248,.6)); transition: stroke-dashoffset .95s linear; }
+        .saat-rakam { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .saat-rakam .sn { font-size: 2.8rem; font-weight: 800; color: #f8fafc; line-height: 1; }
+        .saat-rakam .brm { font-size: .6rem; letter-spacing: 3px; color: #64748b; margin-top: 3px; text-transform: uppercase; }
+        .saat-sar.son .saat-ilerleme { stroke: #ef4444; filter: drop-shadow(0 0 6px rgba(239,68,68,.6)); }
+        .saat-sar.son .sn { color: #ef4444; animation: nabiz .5s ease-in-out infinite; }
+        @keyframes nabiz { 50% { transform: scale(1.12); } }
+
+        /* ---- Giriş ---- */
+        .giris-sira { display: flex; gap: 10px; width: 100%; max-width: 440px; margin-bottom: 6px; }
+        .oyun-giris {
+            flex: 1; min-width: 0; background: rgba(15, 23, 42, 0.9);
+            border: 2px solid #334155; border-radius: 10px; color: #f8fafc;
+            padding: 12px 16px; font-family: 'Inter', sans-serif; font-size: 1.1rem;
+            font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+        }
+        .oyun-giris::placeholder { color: #64748b; letter-spacing: normal; text-transform: none; font-weight: 400; }
+        .oyun-giris:focus { outline: none; border-color: #38bdf8; box-shadow: 0 0 12px rgba(56,189,248,.2); }
+        .oyun-giris:disabled { opacity: .45; }
+        .gonder-btn {
+            background: #38bdf8; border: none; color: #0f172a; font-weight: 800;
+            padding: 0 22px; border-radius: 10px; cursor: pointer; font-family: 'Inter', sans-serif;
+            font-size: .9rem; letter-spacing: 1px; transition: all .2s;
+        }
+        .gonder-btn:hover:not(:disabled) { box-shadow: 0 0 20px rgba(56,189,248,.5); transform: translateY(-1px); }
+        .gonder-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+        /* ---- Sonuç ---- */
+        .sonuc {
+            display: none; margin-top: 18px; width: 100%; max-width: 460px;
+            background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,.08);
+            border-radius: 10px; padding: 16px 18px; font-size: .9rem; line-height: 1.55; color: #cbd5e1;
+        }
+        .sonuc.acik { display: block; }
+        .sonuc b { color: #38bdf8; }
+        .rozet { display: inline-block; font-weight: 800; font-size: .72rem; letter-spacing: 1px;
+            padding: 3px 10px; border-radius: 999px; margin-right: 8px; }
+        .rozet.ok { background: rgba(16,185,129,.16); color: #10b981; }
+        .rozet.no { background: rgba(239,68,68,.16); color: #f87171; }
+        .cozum-etiket { display:inline-block; background: rgba(56,189,248,.1); border:1px solid rgba(56,189,248,.3);
+            color:#38bdf8; border-radius: 8px; padding: 3px 9px; margin: 3px 4px 0 0; font-weight: 700; letter-spacing: 1px; }
+
+        /* ---- Alt / geri ---- */
+        .back-btn {
+            margin-top: 25px; background: transparent; border: 1px solid #475569; color: #94a3b8;
+            padding: 10px 20px; border-radius: 8px; font-family: 'Inter', sans-serif;
+            font-size: .9rem; font-weight: 600; cursor: pointer; transition: all .3s ease;
+        }
+        .back-btn:hover { background: #334155; color: #f8fafc; border-color: #64748b; }
+
+        .ses-dug { margin-top: 10px; background: none; border: none; color: #64748b; font-size: .78rem;
+            cursor: pointer; font-family: 'Inter', sans-serif; }
+        .ses-dug:hover { color: #94a3b8; }
+
+        .notification {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: #e2e8f0; color: #0f172a; padding: 12px 24px; border-radius: 8px;
+            font-weight: 800; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 1000;
+        }
+
+        @media (max-width: 480px) {
+            .karo { width: 42px; height: 48px; font-size: 1.4rem; }
+            .karo.sayi { font-size: 1.1rem; }
+            .difficulty-btn { font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-wrapper">
+        <header class="top-header">
+            <nav class="nav-menu">
+                <a href="index.html">ANA SAYFA</a>
+                <a href="hakkimda.html">HAKKIMDA</a>
+                <a href="projeler.html">PROJELER</a>
+                <div class="dropdown">
+                    <button class="dropbtn">ARAÇLAR</button>
+                    <div class="dropdown-content">
+                        <a href="calismaprogramıolusturucu.html"><i class="fas fa-calendar-alt"></i> Çalışma Programı Oluştur</a>
+                        <a href="hesaplama.html"><i class="fas fa-calculator"></i> Gano Hesapla</a>
+                        <a href="donemsayac.html"><i class="fas fa-hourglass-half"></i> Dönem Sayacı</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">OYUNLAR</button>
+                    <div class="dropdown-content">
+                        <a href="oyun.html"><i class="fas fa-gamepad"></i> Neon Snake</a>
+                        <a href="flappy.html"><i class="fas fa-dove"></i> Neon Bird</a>
+                        <a href="wordle.html"><i class="fas fa-font"></i> Neon Wordle</a>
+                        <a href="tetris.html"><i class="fas fa-cubes"></i> Neon Tetris</a>
+                        <a href="flagle.html"><i class="fas fa-flag"></i> Neon Flagle</a>
+                        <a href="birkelimebirislem.html"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
+                    </div>
+                </div>
+                <a href="iletisim.html">İLETİŞİM</a>
+            </nav>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/ademucarr_/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/adem-u%C3%A7ar-39501731a/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </header>
+
+        <div class="content-container">
+            <button class="info-btn" id="infoBtn" title="Nasıl oynanır?" aria-label="Nasıl oynanır?"><i class="fas fa-info"></i></button>
+            <h1 class="page-title" style="letter-spacing: 4px; margin-bottom: 14px;">Bir Kelime Bir İşlem</h1>
+
+            <div class="score-panel" id="score-panel">
+                <div class="score-box">
+                    <div class="score-box-label">Toplam Puan</div>
+                    <div class="score-box-value" id="toplamEl">0</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-box-label">En İyi</div>
+                    <div class="score-box-value" id="bestEl">0</div>
+                </div>
+            </div>
+
+            <div id="notification" class="notification"></div>
+
+            <!-- ===== MOD SEÇİMİ ===== -->
+            <div id="start-screen">
+                <p class="desc" id="startDesc">Klasik “Bir Kelime Bir İşlem”. Bir tur seç ve geri sayım başlasın.</p>
+                <button class="difficulty-btn" id="btnModKelime" disabled>
+                    <span>Bir Kelime<span class="kucuk">9 harften en uzun kelimeyi bul!</span></span>
+                </button>
+                <button class="difficulty-btn" id="btnModIslem" disabled>
+                    <span>Bir İşlem<span class="kucuk">6 sayıyla hedefe ulaşmaya çalış!</span></span>
+                </button>
+            </div>
+
+            <!-- ===== BİR KELİME ===== -->
+            <div class="oyun-ekran" id="kelime-screen">
+                <div class="oyun-baslik">Bir Kelime</div>
+                <p class="oyun-ipucu">Sesli/sessiz harf iste, 9 harfi topla. Süre dolmadan bu harflerden <b>en uzun Türkçe kelimeyi</b> yaz.</p>
+
+                <div class="karo-sira" id="kelimeKarolar" aria-live="polite"></div>
+
+                <div class="kontrol-sira">
+                    <button class="mini-btn" id="btnSesli">Sesli harf</button>
+                    <button class="mini-btn" id="btnSessiz">Sessiz harf</button>
+                    <button class="mini-btn" id="btnOto">Otomatik</button>
+                    <button class="mini-btn" id="btnYeniK">Yeni tur</button>
+                </div>
+
+                <div class="saat-sar" id="kSaatSar">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="saat-iz" cx="60" cy="60" r="52"></circle>
+                        <circle class="saat-ilerleme" id="kHalka" cx="60" cy="60" r="52"></circle>
+                    </svg>
+                    <div class="saat-rakam"><span class="sn" id="kSn">60</span><span class="brm">saniye</span></div>
+                </div>
+                <button class="difficulty-btn" id="btnKBasla" style="font-size:1rem;padding:12px 26px;" disabled>SÜREYİ BAŞLAT</button>
+
+                <div class="giris-sira" style="margin-top:16px;">
+                    <input class="oyun-giris" id="kGiris" placeholder="Kelimeni yaz…" autocomplete="off" spellcheck="false" disabled>
+                    <button class="gonder-btn" id="btnKGonder" disabled>GÖNDER</button>
+                </div>
+
+                <div class="sonuc" id="kSonuc"></div>
+                
+                <button class="back-btn" id="geri1"><i class="fas fa-home"></i> Ana Menüye Dön</button>
+            </div>
+
+            <!-- ===== BİR İŞLEM ===== -->
+            <div class="oyun-ekran" id="islem-screen">
+                <div class="oyun-baslik">Bir İşlem</div>
+                <p class="oyun-ipucu">Her sayıyı en fazla bir kez kullanarak (+,−,×,÷ ve parantez) <b>hedefe ulaş</b>. Bölmeler tam olmalı.</p>
+
+                <div class="karo-sira" id="islemKarolar" aria-live="polite"></div>
+
+                <div class="hedef-kutu">
+                    <div class="et">Hedef</div>
+                    <div class="no" id="hedefNo">—</div>
+                </div>
+
+                <div class="kontrol-sira" id="buyukSecim">
+                    <button class="mini-btn" data-b="0">0 büyük sayı</button>
+                    <button class="mini-btn secili" data-b="2">2 büyük sayı</button>
+                    <button class="mini-btn" data-b="4">4 büyük sayı</button>
+                    <button class="mini-btn" id="btnYeniI">Yeni tur</button>
+                </div>
+
+                <div class="saat-sar" id="iSaatSar">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="saat-iz" cx="60" cy="60" r="52"></circle>
+                        <circle class="saat-ilerleme" id="iHalka" cx="60" cy="60" r="52"></circle>
+                    </svg>
+                    <div class="saat-rakam"><span class="sn" id="iSn">60</span><span class="brm">saniye</span></div>
+                </div>
+                <button class="difficulty-btn" id="btnIBasla" style="font-size:1rem;padding:12px 26px;" disabled>SÜREYİ BAŞLAT</button>
+
+                <div class="giris-sira" style="margin-top:16px;">
+                    <input class="oyun-giris" id="iGiris" placeholder="örn: (50+3)×7−4" autocomplete="off" spellcheck="false" style="letter-spacing:1px;text-transform:none;" disabled>
+                    <button class="gonder-btn" id="btnIGonder" disabled>GÖNDER</button>
+                </div>
+
+                <div class="sonuc" id="iSonuc"></div>
+                
+                <button class="back-btn" id="geri2"><i class="fas fa-home"></i> Ana Menüye Dön</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bilgi kartı -->
+    <div class="modal" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="modalBaslik">
+        <div class="modal-card">
+            <button class="modal-kapat" id="modalKapat" aria-label="Kapat"><i class="fas fa-xmark"></i></button>
+            <h3 id="modalBaslik">Nasıl Oynanır?</h3>
+            <div id="modalIcerik"></div>
+        </div>
+    </div>
+
+<script>
+
+
+const trBuyuk = s => s.toLocaleUpperCase('tr-TR');
+const trKucuk = s => s.toLocaleLowerCase('tr-TR');
+const TR_HARF = new Set("abcçdefgğhıijklmnoöprsştuvyz");
+
+/* ---- Bildirim ---- */
+const notif = document.getElementById('notification');
+function bildir(msg){ notif.innerText = msg; notif.style.opacity = '1'; setTimeout(()=>notif.style.opacity='0', 2200); }
+
+/* ---- Sözlük ---- */
+let SOZLUK_SET = new Set(), SOZLUK_DIZI = [];
+const SOZLUK_URL = "https://raw.githubusercontent.com/mertemin/turkish-word-list/master/words.txt";
+async function sozlukYukle(){
+  try{
+    const res = await fetch(SOZLUK_URL);
+    const text = await res.text();
+    for(let ham of text.split('\n')){
+      let w = trKucuk(ham.trim()).replace(/â/g,'a').replace(/î/g,'i').replace(/û/g,'u');
+      if(w.length < 2 || w.length > 10) continue;
+      let ok = true; for(const c of w){ if(!TR_HARF.has(c)){ ok=false; break; } }
+      if(ok) SOZLUK_DIZI.push(w);
+    }
+    SOZLUK_DIZI = [...new Set(SOZLUK_DIZI)];
+    SOZLUK_SET = new Set(SOZLUK_DIZI);
+    document.getElementById('btnModKelime').disabled = false;
+    document.getElementById('btnModIslem').disabled = false;
+    document.getElementById('startDesc').innerText = 'Klasik “Bir Kelime Bir İşlem”. Bir tur seç ve geri sayım başlasın.';
+    console.log('Sözlük yüklendi:', SOZLUK_DIZI.length, 'kelime');
+  }catch(e){
+    // Sözlük gelmezse İşlem turu sözlük gerektirmez, yine de açılsın
+    document.getElementById('btnModIslem').disabled = false;
+    document.getElementById('startDesc').innerText = 'Sözlük yüklenemedi — Bir İşlem turu yine de oynanabilir.';
+    console.warn('Sözlük yüklenemedi:', e);
+  }
+}
+document.getElementById('startDesc').innerText = 'Sözlük yükleniyor…';
+
+/* ---- Ekran yönetimi ---- */
+const scorePanel = document.getElementById('score-panel');
+const infoBtn = document.getElementById('infoBtn');
+let aktifMod = 'start';
+function ekranGoster(ad){
+  aktifMod = ad;
+  document.getElementById('start-screen').style.display = ad==='start' ? 'flex' : 'none';
+  document.getElementById('kelime-screen').classList.toggle('acik', ad==='kelime');
+  document.getElementById('islem-screen').classList.toggle('acik', ad==='islem');
+  scorePanel.style.display = ad==='start' ? 'none' : 'flex';
+  infoBtn.classList.toggle('acik', ad==='kelime' || ad==='islem');
+  kapatInfo();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ---- Bilgi kartı ---- */
+const KELIME_INFO = `
+  <p>Sana 9 harf verilir; bu harflerin izin verdiği <b>en uzun Türkçe kelimeyi</b> süre dolmadan yazarsın.</p>
+  <ul>
+    <li><b>Harf topla:</b> “Sesli harf” ve “Sessiz harf” butonlarıyla 9 harfi çek. En az 2 sesli, 3 sessiz almak kelime çıkma şansını artırır.</li>
+    <li><b>Süreyi başlat:</b> 9 harf hazırsa saat 60 saniyeden geri saymaya başlar.</li>
+    <li><b>Kelimeni yaz:</b> Sadece elindeki harfleri, her birini karodaki adedince kullanabilirsin. Kelime Türkçe sözlükte olmalı.</li>
+  </ul>
+  <p><b>Puan:</b> Her harf 1 puan. 9 harfin hepsini kullanırsan puan iki katına çıkar. Süre sonunda oyun, o harflerden çıkabilecek en uzun kelimeyi de gösterir.</p>
+  <div class="ornek">Örnek: A R A B A C I L I K → “ARABACI”, “KABALACI”…</div>
+`;
+const ISLEM_INFO = `
+  <p>6 sayı ve bir <b>hedef</b> verilir. Sayıları kullanarak hedefe ulaş ya da mümkün olduğunca yaklaş.</p>
+  <ul>
+    <li><b>Kurallar:</b> + − × ÷ ve parantez kullanabilirsin. Her sayı en fazla karoda verildiği kadar kullanılır.</li>
+    <li><b>Bölme:</b> Sadece tam bölmeye izin var (ör. 100÷4 ✓, 100÷3 ✗). Ara sonuçlar pozitif tam sayı olmalı.</li>
+    <li><b>Büyük sayı:</b> “0 / 2 / 4 büyük” ile 25-50-75-100’den kaç tane geleceğini seçersin; gerisi 1–10 arası küçük sayılardır.</li>
+  </ul>
+  <p><b>Puan:</b> Tam isabet 10, hedeften ≤5 fark 7, ≤10 fark 5 puan. Süre sonunda oyun olası en iyi çözümü de gösterir.</p>
+  <div class="ornek">Örnek: sayılar 50, 3, 7, 4… hedef 367 → (50+3)×7−4 = 367 🎯</div>
+`;
+function acInfo(mod){
+  if(mod!=='kelime' && mod!=='islem') return;
+  document.getElementById('modalBaslik').innerText = mod==='kelime' ? 'Bir Kelime — Nasıl Oynanır?' : 'Bir İşlem — Nasıl Oynanır?';
+  document.getElementById('modalIcerik').innerHTML = mod==='kelime' ? KELIME_INFO : ISLEM_INFO;
+  document.getElementById('infoModal').classList.add('acik');
+}
+function kapatInfo(){ document.getElementById('infoModal').classList.remove('acik'); }
+infoBtn.onclick = ()=>acInfo(aktifMod);
+document.getElementById('modalKapat').onclick = kapatInfo;
+document.getElementById('infoModal').addEventListener('click', e=>{ if(e.target.id==='infoModal') kapatInfo(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') kapatInfo(); });
+
+/* ---- Puan ---- */
+let toplam = 0;
+let best = parseInt(localStorage.getItem('kelimeIslemBest') || '0', 10);
+document.getElementById('bestEl').innerText = best;
+function puanEkle(p){
+  toplam += p; document.getElementById('toplamEl').innerText = toplam;
+  if(toplam > best){ best = toplam; localStorage.setItem('kelimeIslemBest', best); document.getElementById('bestEl').innerText = best; }
+}
+
+
+
+/* ---- Saat ---- */
+const CEVRE = 2*Math.PI*52;
+function SaatKur(halkaId, snId, sarId){
+  const halka=document.getElementById(halkaId), snEl=document.getElementById(snId), sar=document.getElementById(sarId);
+  halka.style.strokeDasharray = CEVRE;
+  let sure=0, kalan=0, timer=null, bitCb=null;
+  function ciz(){ halka.style.strokeDashoffset = CEVRE*(1 - kalan/sure); snEl.textContent = kalan; sar.classList.toggle('son', kalan<=5 && kalan>0); }
+  return {
+    ayarla(s){ sure=s; kalan=s; ciz(); },
+    baslat(s, cb){ sure=s; kalan=s; bitCb=cb; ciz(); clearInterval(timer);
+      timer=setInterval(()=>{ kalan--; ciz(); if(kalan<=5&&kalan>0) tik(true); else if(kalan>0) tik(false);
+        if(kalan<=0){ clearInterval(timer); timer=null; if(bitCb) bitCb(); } },1000); },
+    durdur(){ clearInterval(timer); timer=null; }
+  };
+}
+
+/* ============================================================
+   BİR KELİME
+   ============================================================ */
+const SESLI=["a","e","i","ı","u","o","ü","ö"], SESLI_A=[120,90,85,50,32,25,20,10];
+const SESSIZ=["n","r","l","k","d","m","y","t","s","b","ş","z","g","ç","h","c","v","ğ","p","f","j"], SESSIZ_A=[75,69,59,47,47,37,34,33,30,28,18,15,13,12,12,11,10,11,9,4,1];
+const K_KARO=9, K_SURE=60;
+let kHarfler=[], kBitti=false;
+const kSaat=SaatKur('kHalka','kSn','kSaatSar'); kSaat.ayarla(K_SURE);
+
+function agirlikliSec(d,a){ const t=a.reduce((x,y)=>x+y,0); let r=Math.random()*t; for(let i=0;i<d.length;i++){ r-=a[i]; if(r<=0) return d[i]; } return d[d.length-1]; }
+function kKarolarCiz(){ const el=document.getElementById('kelimeKarolar'); el.innerHTML='';
+  for(let i=0;i<K_KARO;i++){ const c=document.createElement('div');
+    if(kHarfler[i]){ c.className='karo'; c.textContent=trBuyuk(kHarfler[i]); } else { c.className='karo bos'; }
+    el.appendChild(c); } }
+function kDurum(){ const dolu=kHarfler.length>=K_KARO;
+  document.getElementById('btnSesli').disabled=dolu; document.getElementById('btnSessiz').disabled=dolu;
+  document.getElementById('btnKBasla').disabled=!dolu||kBitti; }
+function kHarfEkle(sesli){ if(kHarfler.length>=K_KARO) return;
+  kHarfler.push(sesli?agirlikliSec(SESLI,SESLI_A):agirlikliSec(SESSIZ,SESSIZ_A)); kKarolarCiz(); kDurum(); }
+function kYeniTur(){ kSaat.durdur(); kSaat.ayarla(K_SURE); kHarfler=[]; kBitti=false;
+  const g=document.getElementById('kGiris'); g.value=''; g.disabled=true; document.getElementById('btnKGonder').disabled=true;
+  document.getElementById('kSonuc').className='sonuc'; kKarolarCiz(); kDurum(); }
+document.getElementById('btnSesli').onclick=()=>kHarfEkle(true);
+document.getElementById('btnSessiz').onclick=()=>kHarfEkle(false);
+document.getElementById('btnYeniK').onclick=kYeniTur;
+document.getElementById('btnOto').onclick=()=>{ kYeniTur(); for(let i=0;i<4;i++) kHarfEkle(true); while(kHarfler.length<K_KARO) kHarfEkle(false); };
+document.getElementById('btnKBasla').onclick=()=>{ if(kHarfler.length<K_KARO) return;
+  document.getElementById('btnKBasla').disabled=true; const g=document.getElementById('kGiris'); g.disabled=false; g.focus();
+  document.getElementById('btnKGonder').disabled=false; kSaat.baslat(K_SURE, ()=>{ if(!kBitti){ bildir('Süre doldu!'); kDegerlendir(); } }); };
+
+function harfSay(a){ const m={}; for(const c of a) m[c]=(m[c]||0)+1; return m; }
+function yapilabilir(w,s){ const t={...s}; for(const c of w){ if(!t[c]) return false; t[c]--; } return true; }
+function enUzunlar(harfler,adet=3){ const s=harfSay(harfler); const b=[];
+  for(const w of SOZLUK_DIZI){ if(w.length<4||w.length>harfler.length) continue; if(yapilabilir(w,s)) b.push(w); }
+  b.sort((x,y)=>y.length-x.length||x.localeCompare(y,'tr')); const e=b.length?b[0].length:0;
+  return b.filter(w=>w.length===e).slice(0,adet); }
+
+function kDegerlendir(){
+  if(kBitti) return; kBitti=true; kSaat.durdur();
+  const g=document.getElementById('kGiris'); g.disabled=true; document.getElementById('btnKGonder').disabled=true;
+  const sonuc=document.getElementById('kSonuc'); sonuc.className='sonuc acik';
+  const kelime=trKucuk(g.value.trim()), say=harfSay(kHarfler), enler=enUzunlar(kHarfler);
+  const enlerHtml = enler.length ? enler.map(w=>`<span class="cozum-etiket">${trBuyuk(w)}</span>`).join('') : '<i>(kelime bulunamadı)</i>';
+  let rozet='', mesaj='', puan=0;
+  if(!kelime){ rozet='<span class="rozet no">SÜRE DOLDU</span>'; mesaj='Kelime yazılmadı.'; }
+  else if(!yapilabilir(kelime,say)){ rozet='<span class="rozet no">GEÇERSİZ</span>'; mesaj=`<b>${trBuyuk(kelime)}</b> bu harflerle yazılamaz.`; }
+  else if(!SOZLUK_SET.has(kelime)){ rozet='<span class="rozet no">SÖZLÜKTE YOK</span>'; mesaj=`<b>${trBuyuk(kelime)}</b> sözlükte bulunamadı.`; }
+  else { puan=kelime.length; if(kelime.length===K_KARO) puan*=2;
+    rozet=`<span class="rozet ok">+${puan} PUAN</span>`;
+    mesaj=`<b>${trBuyuk(kelime)}</b> — ${kelime.length} harf${kelime.length===K_KARO?' (tüm harfler, çift puan!)':''}.`;
+    puanEkle(puan); bildir(`+${puan} puan!`); }
+  sonuc.innerHTML=`${rozet}${mesaj}<div style="margin-top:12px;color:#64748b">En uzun olası kelime${enler.length>1?'ler':''}: ${enlerHtml}</div>`;
+}
+document.getElementById('btnKGonder').onclick=kDegerlendir;
+document.getElementById('kGiris').addEventListener('keydown', e=>{ if(e.key==='Enter') kDegerlendir(); });
+
+/* ============================================================
+   BİR İŞLEM
+   ============================================================ */
+const BUYUKLER=[25,50,75,100], I_SURE=60;
+let iSayilar=[], iHedef=0, iBuyuk=2, iBitti=false;
+const iSaat=SaatKur('iHalka','iSn','iSaatSar'); iSaat.ayarla(I_SURE);
+
+function iKarolarCiz(){ const el=document.getElementById('islemKarolar'); el.innerHTML='';
+  if(iSayilar.length===0){ for(let i=0;i<6;i++){ const c=document.createElement('div'); c.className='karo sayi bos'; el.appendChild(c); } return; }
+  for(const n of iSayilar){ const c=document.createElement('div'); c.className='karo sayi'; c.textContent=n; el.appendChild(c); } }
+function karistir(a){ for(let i=a.length-1;i>0;i--){ const j=(Math.random()*(i+1))|0; [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function iYeniTur(buyuk){ iSaat.durdur(); iSaat.ayarla(I_SURE); iBuyuk=buyuk; iBitti=false;
+  const bh=karistir([...BUYUKLER]), kh=[]; for(let n=1;n<=10;n++) kh.push(n,n); karistir(kh);
+  iSayilar=[]; for(let i=0;i<buyuk;i++) iSayilar.push(bh[i]); for(let i=0;i<6-buyuk;i++) iSayilar.push(kh[i]); karistir(iSayilar);
+  iHedef=101+((Math.random()*899)|0); document.getElementById('hedefNo').textContent=iHedef; iKarolarCiz();
+  const g=document.getElementById('iGiris'); g.value=''; g.disabled=true; document.getElementById('btnIGonder').disabled=true;
+  document.getElementById('btnIBasla').disabled=false; document.getElementById('iSonuc').className='sonuc';
+  document.querySelectorAll('#buyukSecim [data-b]').forEach(b=>b.classList.toggle('secili', parseInt(b.dataset.b,10)===buyuk)); }
+document.querySelectorAll('#buyukSecim [data-b]').forEach(b=>{ b.onclick=()=>iYeniTur(parseInt(b.dataset.b,10)); });
+document.getElementById('btnYeniI').onclick=()=>iYeniTur(iBuyuk);
+document.getElementById('btnIBasla').onclick=()=>{ if(iSayilar.length===0) return;
+  document.getElementById('btnIBasla').disabled=true; const g=document.getElementById('iGiris'); g.disabled=false; g.focus();
+  document.getElementById('btnIGonder').disabled=false; iSaat.baslat(I_SURE, ()=>{ if(!iBitti){ bildir('Süre doldu!'); iDegerlendir(); } }); };
+
+function ifadeCoz(ifade){
+  const s=ifade.replace(/\s+/g,'').replace(/×/g,'*').replace(/[xX]/g,'*').replace(/÷/g,'/').replace(/[:∶]/g,'/').replace(/−/g,'-').replace(/,/g,'');
+  const toks=[]; let i=0;
+  while(i<s.length){ const c=s[i];
+    if(c>='0'&&c<='9'){ let j=i; while(j<s.length&&s[j]>='0'&&s[j]<='9') j++; toks.push({t:'n',v:parseInt(s.slice(i,j),10)}); i=j; }
+    else if('+-*/()'.includes(c)){ toks.push({t:'o',v:c}); i++; }
+    else throw new Error('Geçersiz karakter: “'+c+'”'); }
+  let p=0; const used=[]; const bak=()=>toks[p], al=()=>toks[p++];
+  function E(){ let v=T(); while(bak()&&bak().t==='o'&&(bak().v==='+'||bak().v==='-')){ const op=al().v; const r=T(); v=op==='+'?v+r:v-r; } return v; }
+  function T(){ let v=F(); while(bak()&&bak().t==='o'&&(bak().v==='*'||bak().v==='/')){ const op=al().v; const r=F();
+      if(op==='*') v=v*r; else { if(r===0) throw new Error('Sıfıra bölme var.'); if(v%r!==0) throw new Error('Sadece tam bölmeye izin var.'); v=v/r; } } return v; }
+  function F(){ const tk=bak(); if(!tk) throw new Error('İfade eksik.');
+    if(tk.t==='n'){ al(); used.push(tk.v); return tk.v; }
+    if(tk.v==='('){ al(); const v=E(); if(!bak()||bak().v!==')') throw new Error('Parantez kapanmamış.'); al(); return v; }
+    if(tk.v==='-'){ al(); return -F(); } throw new Error('Beklenmeyen “'+tk.v+'”'); }
+  const deger=E(); if(p!==toks.length) throw new Error('İfade hatalı.'); return {deger, used};
+}
+function altKume(kul, mev){ const m={}; for(const n of mev) m[n]=(m[n]||0)+1; for(const n of kul){ if(!m[n]) return false; m[n]--; } return true; }
+function enIyiCozum(sayilar, hedef){
+  let best={val:sayilar[0], expr:String(sayilar[0]), dist:Math.abs(sayilar[0]-hedef)};
+  const bak=(v,e)=>{ const d=Math.abs(v-hedef); if(d<best.dist) best={val:v,expr:e,dist:d}; };
+  function ele(items){ for(const it of items) bak(it.v,it.e); if(best.dist===0) return; const n=items.length;
+    for(let i=0;i<n;i++) for(let j=0;j<n;j++){ if(i===j) continue; const a=items[i], b=items[j];
+      const rest=[]; for(let k=0;k<n;k++) if(k!==i&&k!==j) rest.push(items[k]); const yeni=[];
+      if(i<j){ yeni.push({v:a.v+b.v,e:'('+a.e+'+'+b.e+')'}); yeni.push({v:a.v*b.v,e:'('+a.e+'×'+b.e+')'}); }
+      if(a.v>b.v) yeni.push({v:a.v-b.v,e:'('+a.e+'−'+b.e+')'});
+      if(b.v!==0&&a.v%b.v===0) yeni.push({v:a.v/b.v,e:'('+a.e+'÷'+b.e+')'});
+      for(const r of yeni){ if(r.v<=0) continue; ele([...rest,r]); if(best.dist===0) return; } } }
+  ele(sayilar.map(n=>({v:n,e:String(n)}))); return best;
+}
+function iDegerlendir(){
+  if(iBitti) return; iBitti=true; iSaat.durdur();
+  const g=document.getElementById('iGiris'); g.disabled=true; document.getElementById('btnIGonder').disabled=true;
+  const sonuc=document.getElementById('iSonuc'); sonuc.className='sonuc acik';
+  const cozum=enIyiCozum(iSayilar, iHedef);
+  const cozumHtml=`<div style="margin-top:12px;color:#64748b">En iyi çözüm: <span class="cozum-etiket">${cozum.expr} = ${cozum.val}</span>${cozum.dist>0?` (hedeften ${cozum.dist} uzak)`:' 🎯'}</div>`;
+  const ifade=g.value.trim(); let rozet='', mesaj='', puan=0;
+  if(!ifade){ rozet='<span class="rozet no">SÜRE DOLDU</span>'; mesaj='İşlem yazılmadı.'; }
+  else{ try{ const {deger, used}=ifadeCoz(ifade);
+      if(!altKume(used, iSayilar)){ rozet='<span class="rozet no">GEÇERSİZ</span>'; mesaj='Kullandığın sayılar elindeki karolarla uyuşmuyor.'; }
+      else if(!Number.isInteger(deger)||deger<=0){ rozet='<span class="rozet no">GEÇERSİZ</span>'; mesaj='Sonuç pozitif tam sayı olmalı.'; }
+      else{ const fark=Math.abs(deger-iHedef);
+        if(fark===0) puan=10; else if(fark<=5) puan=7; else if(fark<=10) puan=5; else puan=0;
+        if(puan>0){ rozet=`<span class="rozet ok">+${puan} PUAN</span>`; mesaj=`Sonucun <b>${deger}</b>`+(fark===0?' — tam isabet!':` — hedeften ${fark} uzak.`); puanEkle(puan); bildir(`+${puan} puan!`); }
+        else{ rozet='<span class="rozet no">UZAK</span>'; mesaj=`Sonucun <b>${deger}</b> — hedeften ${fark} uzak, puan yok.`; } }
+    }catch(err){ rozet='<span class="rozet no">HATA</span>'; mesaj=err.message; } }
+  sonuc.innerHTML=`${rozet}${mesaj}${cozumHtml}`;
+}
+document.getElementById('btnIGonder').onclick=iDegerlendir;
+document.getElementById('iGiris').addEventListener('keydown', e=>{ if(e.key==='Enter') iDegerlendir(); });
+
+/* ---- Mod geçişleri ---- */
+document.getElementById('btnModKelime').onclick=()=>{ ekranGoster('kelime'); kYeniTur(); };
+document.getElementById('btnModIslem').onclick=()=>{ ekranGoster('islem'); iYeniTur(2); };
+document.getElementById('geri1').onclick=()=>{ kSaat.durdur(); ekranGoster('start'); };
+document.getElementById('geri2').onclick=()=>{ iSaat.durdur(); ekranGoster('start'); };
+
+/* ---- Başlangıç ---- */
+kKarolarCiz(); kDurum(); iKarolarCiz();
+ekranGoster('start');
+sozlukYukle();
+</script>
+</body>
+</html>

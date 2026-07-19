@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Flagle | Adem Uçar</title>
+    <link rel="icon" href="aucr.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* EKRAMA SIĞMASI İÇİN BOŞLUKLAR DARALTILDI */
+        .game-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 15px;
+            padding-bottom: 20px;
+            animation: fadeIn 0.8s ease-out;
+            color: #f8fafc;
+        }
+
+        .game-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #f8fafc;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        /* --- KÜÇÜLTÜLMÜŞ SKOR TABLOSU --- */
+        .score-board {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .score-box {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 8px;
+            padding: 6px 20px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .score-title {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .score-value {
+            color: #38bdf8;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* --- BAYRAK CONTAINER (ORANTILI KÜÇÜLTÜLDÜ) --- */
+        .flag-container {
+            width: 285px;
+            height: 190px;
+            position: relative;
+            border: 2px solid rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            background-color: #0f172a;
+        }
+
+        .flag-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        .flag-grid {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            z-index: 2;
+        }
+
+        .flag-piece {
+            background-color: #1e293b;
+            box-shadow: inset 0 0 0 1px #0f172a;
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .flag-piece.revealed {
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        /* ARAMA VE AUTOCOMPLETE */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 15px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .neon-input {
+            flex-grow: 1;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            color: #f8fafc;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .neon-input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+            background: rgba(15, 23, 42, 1);
+        }
+
+        .btn-guess {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 0 15px;
+            border-radius: 6px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .btn-guess:hover {
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-guess:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .autocomplete-list {
+            position: absolute;
+            top: 100%; left: 0; right: 0;
+            background: #1e293b;
+            border: 1px solid #38bdf8;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            z-index: 100;
+            max-height: 180px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .autocomplete-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #334155;
+            color: #f8fafc;
+            font-size: 0.9rem;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .autocomplete-item:hover {
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+        }
+
+        /* SONUÇLAR - DAHA KOMPAKT YAPI */
+        .results-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .result-row {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 8px;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid #475569;
+            padding: 8px 12px;
+            border-radius: 6px;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .result-name { font-weight: 600; font-size: 0.9rem; }
+        .result-dist { color: #cbd5e1; font-size: 0.85rem; white-space: nowrap; }
+
+        .result-dir {
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .result-dir .dir-arrow {
+            display: inline-block;
+        }
+
+        .result-row.win {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .result-row.win .result-dir {
+            background: #10b981;
+            color: #fff;
+        }
+
+        .game-over-msg {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-align: center;
+            display: none;
+        }
+
+        .btn-restart {
+            margin-top: 10px;
+            background: #f59e0b;
+            color: #0f172a;
+            display: none;
+            padding: 10px 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-wrapper">
+        <header class="top-header">
+            <nav class="nav-menu">
+                <a href="index.html">ANA SAYFA</a>
+                <a href="hakkimda.html">HAKKIMDA</a>
+                <a href="projeler.html">PROJELER</a>
+                <div class="dropdown">
+                    <button class="dropbtn">ARAÇLAR</button>
+                    <div class="dropdown-content">
+                        <a href="calismaprogramıolusturucu.html"><i class="fas fa-calendar-alt"></i> Çalışma Programı Oluştur</a>
+                        <a href="hesaplama.html"><i class="fas fa-calculator"></i> Gano Hesapla</a>
+                        <a href="donemsayac.html"><i class="fas fa-hourglass-half"></i> Dönem Sayacı</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">OYUNLAR</button>
+                    <div class="dropdown-content">
+                        <a href="oyun.html"><i class="fas fa-gamepad"></i> Neon Snake</a>
+                        <a href="flappy.html"><i class="fas fa-dove"></i> Neon Bird</a>
+                        <a href="wordle.html"><i class="fas fa-font"></i> Neon Wordle</a>
+                        <a href="tetris.html"><i class="fas fa-cubes"></i> Neon Tetris</a>
+                        <a href="flagle.html"><i class="fas fa-flag"></i> Neon Flagle</a>
+                        <a href="birkelimebirislem.html"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
+                    </div>
+                </div>
+                <a href="iletisim.html">İLETİŞİM</a>
+            </nav>
+        </header>
+
+        <div class="game-wrapper">
+            <h1 class="game-title">Neon Flagle</h1>
+            
+            <div class="score-board">
+                <div class="score-box">
+                    <div class="score-title">TOPLAM SKOR</div>
+                    <div class="score-value" id="currentScore">0</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-title">EN İYİ SKOR</div>
+                    <div class="score-value" id="bestScore">0</div>
+                </div>
+            </div>
+
+            <p class="subtitle">Tahmin et ve bayrağı bul.</p>
+
+            <div class="flag-container">
+                <div class="flag-bg" id="flagBg"></div>
+                <div class="flag-grid" id="flagGrid">
+                    <div class="flag-piece" id="p-0"></div>
+                    <div class="flag-piece" id="p-1"></div>
+                    <div class="flag-piece" id="p-2"></div>
+                    <div class="flag-piece" id="p-3"></div>
+                    <div class="flag-piece" id="p-4"></div>
+                    <div class="flag-piece" id="p-5"></div>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="countryInput" class="neon-input" placeholder="Ülke adı girin..." autocomplete="off">
+                    <button class="btn-guess" id="btnGuess" onclick="submitGuess()">GÖNDER</button>
+                </div>
+                <div class="autocomplete-list" id="autocompleteList"></div>
+            </div>
+
+            <div class="results-container" id="resultsContainer"></div>
+
+            <div class="game-over-msg" id="gameOverMsg"></div>
+            <button class="btn-guess btn-restart" id="btnRestart" onclick="initGame()">SONRAKİ BAYRAK <i class="fas fa-arrow-right"></i></button>
+
+        </div>
+    </div>
+
+    <script>
+        const countries = [
+            { name: "Afganistan", code: "af", lat: 33.9391, lon: 67.7099 },
+            { name: "Almanya", code: "de", lat: 51.1657, lon: 10.4515 },
+            { name: "Amerika Birleşik Devletleri", code: "us", lat: 37.0902, lon: -95.7129 },
+            { name: "Andorra", code: "ad", lat: 42.5063, lon: 1.5218 },
+            { name: "Angola", code: "ao", lat: -11.2027, lon: 17.8739 },
+            { name: "Arjantin", code: "ar", lat: -38.4161, lon: -63.6167 },
+            { name: "Arnavutluk", code: "al", lat: 41.1533, lon: 20.1683 },
+            { name: "Avustralya", code: "au", lat: -25.2744, lon: 133.7751 },
+            { name: "Avusturya", code: "at", lat: 47.5162, lon: 14.5501 },
+            { name: "Azerbaycan", code: "az", lat: 40.1431, lon: 47.5769 },
+            { name: "Bahamalar", code: "bs", lat: 25.0343, lon: -77.3963 },
+            { name: "Bangladeş", code: "bd", lat: 23.6850, lon: 90.3563 },
+            { name: "Belçika", code: "be", lat: 50.5039, lon: 4.4699 },
+            { name: "Beyaz Rusya", code: "by", lat: 53.7098, lon: 27.9534 },
+            { name: "Birleşik Arap Emirlikleri", code: "ae", lat: 23.4241, lon: 53.8478 },
+            { name: "Birleşik Krallık", code: "gb", lat: 55.3781, lon: -3.4360 },
+            { name: "Bolivya", code: "bo", lat: -16.2902, lon: -63.5887 },
+            { name: "Bosna Hersek", code: "ba", lat: 43.9159, lon: 17.6791 },
+            { name: "Brezilya", code: "br", lat: -14.2350, lon: -51.9253 },
+            { name: "Bulgaristan", code: "bg", lat: 42.7339, lon: 25.4858 },
+            { name: "Cezayir", code: "dz", lat: 28.0339, lon: 1.6596 },
+            { name: "Çad", code: "td", lat: 15.4542, lon: 18.7322 },
+            { name: "Çekya", code: "cz", lat: 49.8175, lon: 15.4730 },
+            { name: "Çin", code: "cn", lat: 35.8617, lon: 104.1954 },
+            { name: "Danimarka", code: "dk", lat: 56.2639, lon: 9.5018 },
+            { name: "Dominik Cumhuriyeti", code: "do", lat: 18.7357, lon: -70.1627 },
+            { name: "Ekvador", code: "ec", lat: -1.8312, lon: -78.1834 },
+            { name: "Endonezya", code: "id", lat: -0.7893, lon: 113.9213 },
+            { name: "Ermenistan", code: "am", lat: 40.0691, lon: 45.0382 },
+            { name: "Estonya", code: "ee", lat: 58.5953, lon: 25.0136 },
+            { name: "Fas", code: "ma", lat: 31.7917, lon: -7.0926 },
+            { name: "Filipinler", code: "ph", lat: 12.8797, lon: 121.7740 },
+            { name: "Finlandiya", code: "fi", lat: 61.9241, lon: 25.7482 },
+            { name: "Fransa", code: "fr", lat: 46.2276, lon: 2.2137 },
+            { name: "Güney Afrika", code: "za", lat: -30.5595, lon: 22.9375 },
+            { name: "Güney Kore", code: "kr", lat: 35.9078, lon: 127.7669 },
+            { name: "Gürcistan", code: "ge", lat: 42.3154, lon: 43.3569 },
+            { name: "Hırvatistan", code: "hr", lat: 45.1000, lon: 15.2000 },
+            { name: "Hindistan", code: "in", lat: 20.5937, lon: 78.9629 },
+            { name: "Hollanda", code: "nl", lat: 52.1326, lon: 5.2913 },
+            { name: "Honduras", code: "hn", lat: 15.2000, lon: -86.2419 },
+            { name: "Irak", code: "iq", lat: 33.2232, lon: 43.6793 },
+            { name: "İngiltere", code: "gb", lat: 52.3555, lon: -1.1743 },
+            { name: "İran", code: "ir", lat: 32.4279, lon: 53.6880 },
+            { name: "İrlanda", code: "ie", lat: 53.1424, lon: -7.6921 },
+            { name: "İspanya", code: "es", lat: 40.4637, lon: -3.7492 },
+            { name: "İsrail", code: "il", lat: 31.0461, lon: 34.8516 },
+            { name: "İsveç", code: "se", lat: 60.1282, lon: 18.6435 },
+            { name: "İsviçre", code: "ch", lat: 46.8182, lon: 8.2275 },
+            { name: "İtalya", code: "it", lat: 41.8719, lon: 12.5674 },
+            { name: "İzlanda", code: "is", lat: 64.9631, lon: -19.0208 },
+            { name: "Jamaika", code: "jm", lat: 18.1096, lon: -77.2975 },
+            { name: "Japonya", code: "jp", lat: 36.2048, lon: 138.2529 },
+            { name: "Kamboçya", code: "kh", lat: 12.5657, lon: 104.9910 },
+            { name: "Kamerun", code: "cm", lat: 3.8480, lon: 11.5021 },
+            { name: "Kanada", code: "ca", lat: 56.1304, lon: -106.3468 },
+            { name: "Karadağ", code: "me", lat: 42.7087, lon: 19.3744 },
+            { name: "Katar", code: "qa", lat: 25.3548, lon: 51.1839 },
+            { name: "Kazakistan", code: "kz", lat: 48.0196, lon: 66.9237 },
+            { name: "Kenya", code: "ke", lat: -0.0236, lon: 37.9062 },
+            { name: "Kıbrıs", code: "cy", lat: 35.1264, lon: 33.4299 },
+            { name: "Kırgızistan", code: "kg", lat: 41.2044, lon: 74.7661 },
+            { name: "Kolombiya", code: "co", lat: 4.5709, lon: -74.2973 },
+            { name: "Kosta Rika", code: "cr", lat: 9.7489, lon: -83.7534 },
+            { name: "Kuveyt", code: "kw", lat: 29.3117, lon: 47.4818 },
+            { name: "Kuzey Kore", code: "kp", lat: 40.3399, lon: 127.5101 },
+            { name: "Kuzey Makedonya", code: "mk", lat: 41.6086, lon: 21.7453 },
+            { name: "Küba", code: "cu", lat: 21.5218, lon: -77.7812 },
+            { name: "Letonya", code: "lv", lat: 56.8796, lon: 24.6032 },
+            { name: "Libya", code: "ly", lat: 26.3351, lon: 17.2283 },
+            { name: "Litvanya", code: "lt", lat: 55.1694, lon: 23.8813 },
+            { name: "Lübnan", code: "lb", lat: 33.8547, lon: 35.8623 },
+            { name: "Lüksemburg", code: "lu", lat: 49.8153, lon: 6.1296 },
+            { name: "Macaristan", code: "hu", lat: 47.1625, lon: 19.5033 },
+            { name: "Madagaskar", code: "mg", lat: -18.7669, lon: 46.8691 },
+            { name: "Malezya", code: "my", lat: 4.2105, lon: 101.9758 },
+            { name: "Mali", code: "ml", lat: 17.5707, lon: -3.9962 },
+            { name: "Malta", code: "mt", lat: 35.9375, lon: 14.3754 },
+            { name: "Meksika", code: "mx", lat: 23.6345, lon: -102.5528 },
+            { name: "Mısır", code: "eg", lat: 26.8206, lon: 30.8025 },
+            { name: "Moğolistan", code: "mn", lat: 46.8625, lon: 103.8467 },
+            { name: "Moldova", code: "md", lat: 47.4116, lon: 28.3699 },
+            { name: "Monako", code: "mc", lat: 43.7384, lon: 7.4246 },
+            { name: "Nepal", code: "np", lat: 28.3949, lon: 84.1240 },
+            { name: "Nijer", code: "ne", lat: 17.6078, lon: 8.0817 },
+            { name: "Nijerya", code: "ng", lat: 9.0820, lon: 8.6753 },
+            { name: "Nikaragua", code: "ni", lat: 12.8654, lon: -85.2072 },
+            { name: "Norveç", code: "no", lat: 60.4720, lon: 8.4689 },
+            { name: "Özbekistan", code: "uz", lat: 41.3775, lon: 64.5853 },
+            { name: "Pakistan", code: "pk", lat: 30.3753, lon: 69.3451 },
+            { name: "Panama", code: "pa", lat: 8.5380, lon: -80.7821 },
+            { name: "Paraguay", code: "py", lat: -23.4425, lon: -58.4438 },
+            { name: "Peru", code: "pe", lat: -9.1900, lon: -75.0152 },
+            { name: "Polonya", code: "pl", lat: 51.9194, lon: 19.1451 },
+            { name: "Portekiz", code: "pt", lat: 39.3999, lon: -8.2245 },
+            { name: "Romanya", code: "ro", lat: 45.9432, lon: 24.9668 },
+            { name: "Ruanda", code: "rw", lat: -1.9403, lon: 29.8739 },
+            { name: "Rusya", code: "ru", lat: 61.5240, lon: 105.3188 },
+            { name: "Senegal", code: "sn", lat: 14.4974, lon: -14.4524 },
+            { name: "Sırbistan", code: "rs", lat: 44.0165, lon: 21.0059 },
+            { name: "Singapur", code: "sg", lat: 1.3521, lon: 103.8198 },
+            { name: "Slovakya", code: "sk", lat: 48.6690, lon: 19.6990 },
+            { name: "Slovenya", code: "si", lat: 46.1512, lon: 14.9955 },
+            { name: "Somali", code: "so", lat: 5.1521, lon: 46.1996 },
+            { name: "Sri Lanka", code: "lk", lat: 7.8731, lon: 80.7718 },
+            { name: "Sudan", code: "sd", lat: 12.8628, lon: 30.2176 },
+            { name: "Suriye", code: "sy", lat: 34.8021, lon: 38.9968 },
+            { name: "Suudi Arabistan", code: "sa", lat: 23.8859, lon: 45.0792 },
+            { name: "Şili", code: "cl", lat: -35.6751, lon: -71.5430 },
+            { name: "Tacikistan", code: "tj", lat: 38.8610, lon: 71.2761 },
+            { name: "Tayland", code: "th", lat: 15.8700, lon: 100.9925 },
+            { name: "Tayvan", code: "tw", lat: 23.6978, lon: 120.9605 },
+            { name: "Tunus", code: "tn", lat: 33.8869, lon: 9.5375 },
+            { name: "Türkiye", code: "tr", lat: 38.9637, lon: 35.2433 },
+            { name: "Türkmenistan", code: "tm", lat: 38.9697, lon: 59.5563 },
+            { name: "Ukrayna", code: "ua", lat: 48.3794, lon: 31.1656 },
+            { name: "Umman", code: "om", lat: 21.5126, lon: 55.9233 },
+            { name: "Uruguay", code: "uy", lat: -32.5228, lon: -55.7658 },
+            { name: "Ürdün", code: "jo", lat: 30.5852, lon: 36.2384 },
+            { name: "Venezuela", code: "ve", lat: 6.4238, lon: -66.5897 },
+            { name: "Vietnam", code: "vn", lat: 14.0583, lon: 108.2772 },
+            { name: "Yemen", code: "ye", lat: 15.5527, lon: 48.5164 },
+            { name: "Yeni Zelanda", code: "nz", lat: -40.9006, lon: 174.8860 },
+            { name: "Yunanistan", code: "gr", lat: 39.0742, lon: 21.8243 },
+            { name: "Zambiya", code: "zm", lat: -13.1339, lon: 27.8493 },
+            { name: "Zimbabve", code: "zw", lat: -19.0154, lon: 29.1549 }
+        ];
+
+        function normalizeTR(str) {
+            return str
+                .toLocaleLowerCase('tr-TR')
+                .replace(/ğ/g, 'g')
+                .replace(/ü/g, 'u')
+                .replace(/ş/g, 's')
+                .replace(/ı/g, 'i')
+                .replace(/ö/g, 'o')
+                .replace(/ç/g, 'c');
+        }
+
+        let targetCountry = null;
+        let guesses = 0;
+        const maxGuesses = 6;
+        let pieceOrder = [0, 1, 2, 3, 4, 5];
+        
+        let totalScore = parseInt(localStorage.getItem('flagleTotalScore')) || 0;
+        let bestScore = parseInt(localStorage.getItem('flagleBestScore')) || 0;
+
+        const inputEl = document.getElementById('countryInput');
+        const listEl = document.getElementById('autocompleteList');
+        const resultsEl = document.getElementById('resultsContainer');
+        const flagBg = document.getElementById('flagBg');
+        const currentScoreEl = document.getElementById('currentScore');
+        const bestScoreEl = document.getElementById('bestScore');
+
+        function updateScoreUI() {
+            currentScoreEl.innerText = totalScore;
+            bestScoreEl.innerText = bestScore;
+        }
+
+        function deg2rad(deg) { return deg * (Math.PI / 180); }
+
+        function getDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = deg2rad(lat2 - lat1);
+            const dLon = deg2rad(lon2 - lon1);
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+        }
+
+        function getBearing(lat1, lon1, lat2, lon2) {
+            const l1 = deg2rad(lat1), l2 = deg2rad(lat2);
+            const dLon = deg2rad(lon2 - lon1);
+            const y = Math.sin(dLon) * Math.cos(l2);
+            const x = Math.cos(l1) * Math.sin(l2) - Math.sin(l1) * Math.cos(l2) * Math.cos(dLon);
+            return Math.round((Math.atan2(y, x) * 180 / Math.PI + 360) % 360);
+        }
+
+        function initGame() {
+            targetCountry = countries[Math.floor(Math.random() * countries.length)];
+            guesses = 0;
+            resultsEl.innerHTML = '';
+            inputEl.value = '';
+            inputEl.disabled = false;
+            document.getElementById('btnGuess').disabled = false;
+            document.getElementById('gameOverMsg').style.display = 'none';
+            document.getElementById('btnRestart').style.display = 'none';
+            listEl.style.display = 'none';
+
+            updateScoreUI();
+
+            // Izgaraları ANINDA (animasyonsuz) kapat — böylece yeni bayrak bir an görünüp kaybolmaz
+            for (let i = 0; i < 6; i++) {
+                const p = document.getElementById(`p-${i}`);
+                p.style.transition = 'none';
+                p.classList.remove('revealed');
+            }
+            // Değişikliğin animasyonsuz uygulanması için reflow'u zorla
+            void document.getElementById('flagGrid').offsetWidth;
+
+            // Yeni bayrağı kapalı ızgaranın altına yerleştir
+            flagBg.style.backgroundImage = `url('https://flagcdn.com/w320/${targetCountry.code}.png')`;
+
+            // Transition'ı geri ver: tahmin sırasında parça açılışları yumuşak olsun
+            requestAnimationFrame(() => {
+                for (let i = 0; i < 6; i++) {
+                    document.getElementById(`p-${i}`).style.transition = '';
+                }
+            });
+
+            pieceOrder = [0, 1, 2, 3, 4, 5].sort(() => Math.random() - 0.5);
+        }
+
+        inputEl.addEventListener('input', function () {
+            const val = normalizeTR(this.value.trim());
+            listEl.innerHTML = '';
+
+            if (!val) {
+                listEl.style.display = 'none';
+                return;
+            }
+
+            const starts = countries.filter(c => normalizeTR(c.name).startsWith(val));
+            const includes = countries.filter(c =>
+                !normalizeTR(c.name).startsWith(val) && normalizeTR(c.name).includes(val)
+            );
+            const matches = [...starts, ...includes].slice(0, 8);
+
+            if (matches.length > 0) {
+                listEl.style.display = 'block';
+                matches.forEach(match => {
+                    const div = document.createElement('div');
+                    div.className = 'autocomplete-item';
+                    div.innerText = match.name;
+                    div.addEventListener('mousedown', function (e) {
+                        e.preventDefault();
+                        inputEl.value = match.name;
+                        listEl.style.display = 'none';
+                    });
+                    listEl.appendChild(div);
+                });
+            } else {
+                listEl.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.target !== inputEl && e.target !== listEl) {
+                listEl.style.display = 'none';
+            }
+        });
+
+        inputEl.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') submitGuess();
+        });
+
+        function submitGuess() {
+            const guessName = inputEl.value.trim().toLocaleLowerCase('tr-TR');
+            const guessedObj = countries.find(c =>
+                c.name.toLocaleLowerCase('tr-TR') === guessName
+            );
+
+            if (!guessedObj) {
+                alert("Lütfen listeden geçerli bir ülke seçin!");
+                return;
+            }
+
+            listEl.style.display = 'none';
+            inputEl.value = '';
+
+            const distance = getDistance(guessedObj.lat, guessedObj.lon, targetCountry.lat, targetCountry.lon);
+            const bearing = getBearing(guessedObj.lat, guessedObj.lon, targetCountry.lat, targetCountry.lon);
+
+            const row = document.createElement('div');
+            row.className = 'result-row';
+
+            if (guessedObj.name === targetCountry.name) {
+                row.classList.add('win');
+                row.innerHTML = `
+                    <div class="result-name">${guessedObj.name}</div>
+                    <div class="result-dist">0 km</div>
+                    <div class="result-dir"><i class="fas fa-check"></i></div>
+                `;
+                resultsEl.prepend(row);
+                endGame(true);
+            } else {
+                row.innerHTML = `
+                    <div class="result-name">${guessedObj.name}</div>
+                    <div class="result-dist">${distance.toLocaleString('tr-TR')} km</div>
+                    <div class="result-dir">
+                        <span class="dir-arrow" style="display:inline-block; transform: rotate(${bearing}deg)">
+                            <i class="fas fa-arrow-up"></i>
+                        </span>
+                    </div>
+                `;
+                resultsEl.prepend(row);
+
+                document.getElementById(`p-${pieceOrder[guesses]}`).classList.add('revealed');
+                guesses++;
+
+                if (guesses >= maxGuesses) endGame(false);
+            }
+        }
+
+        function endGame(win) {
+            inputEl.disabled = true;
+            document.getElementById('btnGuess').disabled = true;
+
+            for (let i = 0; i < 6; i++) {
+                document.getElementById(`p-${i}`).classList.add('revealed');
+            }
+
+            const msgEl = document.getElementById('gameOverMsg');
+            msgEl.style.display = 'block';
+
+            if (win) {
+                const pointsArray = [100, 80, 60, 40, 20, 10];
+                const pointsEarned = pointsArray[guesses];
+                
+                totalScore += pointsEarned;
+                if (totalScore > bestScore) {
+                    bestScore = totalScore;
+                    localStorage.setItem('flagleBestScore', bestScore);
+                }
+                
+                msgEl.style.color = '#10b981';
+                msgEl.innerText = `Tebrikler! ${guesses + 1}. denemede buldun. (+${pointsEarned} Puan) 🎉`;
+            } else {
+                totalScore = 0;
+                msgEl.style.color = '#ef4444';
+                msgEl.innerText = `Maalesef bilemedin! Doğru cevap: ${targetCountry.name}`;
+            }
+
+            localStorage.setItem('flagleTotalScore', totalScore);
+            updateScoreUI();
+
+            document.getElementById('btnRestart').style.display = 'inline-block';
+        }
+
+        initGame();
+    </script>
+</body>
+</html>
