@@ -2,7 +2,7 @@
 
 Kendi geliştirdiğim **interaktif web oyunları** ve günlük hayatı kolaylaştıran **hesaplama araçlarını** bir araya getirdiğim kişisel portfolyo sitem.
 
-🔗 **Canlı site:** [ademucarr.netlify.app](https://ademucarr.netlify.app/)
+🔗 **Canlı site:** [ademucar.com.tr](https://ademucar.com.tr/)
 
 ---
 
