@@ -23,6 +23,16 @@ app.get("/api/health", async (req, res) => {
   }
 });
 
+
+// Uzantısız URL'leri .html dosyalarına çöz (ör. /projeler → projeler.html)
+app.get("/:sayfa", (req, res, next) => {
+  if (req.params.sayfa.includes(".")) return next(); // dosya (css, png) ise dokunma
+  res.sendFile(path.join(__dirname, "public", req.params.sayfa + ".html"), (err) => {
+    if (err) next();
+  });
+});
+
+
 // Statik site (birazdan buraya kendi dosyalarını koyacağız)
 app.use(express.static(path.join(__dirname, "public")));
 
