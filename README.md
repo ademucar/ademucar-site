@@ -31,16 +31,7 @@ Kendi geliştirdiğim **interaktif web oyunları** ve günlük hayatı kolaylaş
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 
-## 🚀 Çalıştırma
 
-Projeyi indirdikten sonra `index.html` dosyasını herhangi bir tarayıcıda açman yeterli.
-
-```bash
-# veya basit bir yerel sunucu ile
-python -m http.server
-```
-
----
 
 ## 📫 İletişim
 
