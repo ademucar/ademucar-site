@@ -28,7 +28,7 @@
 
         .score-box {
             background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            border: 1px solid rgba(45, 212, 191, 0.25);
             border-radius: 10px;
             padding: 8px 24px;
             text-align: center;
@@ -45,17 +45,17 @@
         .score-box-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #38bdf8;
+            color: #2dd4bf;
             line-height: 1.2;
         }
 
         #flappyCanvas {
             background: rgba(10, 18, 35, 0.97);
-            border: 1.5px solid rgba(56, 189, 248, 0.35);
+            border: 1.5px solid rgba(45, 212, 191, 0.35);
             border-radius: 14px;
             display: block;
             margin: 0 auto;
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.08);
+            box-shadow: 0 0 30px rgba(45, 212, 191, 0.08);
             touch-action: none;
             cursor: pointer;
         }
@@ -68,7 +68,7 @@
         }
 
         .game-hint strong {
-            color: #38bdf8;
+            color: #2dd4bf;
             font-weight: 600;
         }
     </style>
@@ -269,7 +269,7 @@
             ctx.fillRect(0, 0, CW, CH);
 
             // Izgara
-            ctx.strokeStyle = "rgba(56, 189, 248, 0.05)";
+            ctx.strokeStyle = "rgba(45, 212, 191, 0.05)";
             ctx.lineWidth = 0.5;
             for (let x = 0; x < CW; x += 20) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CH); ctx.stroke(); }
             for (let y = 0; y < CH; y += 20) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CW,y); ctx.stroke(); }
@@ -282,13 +282,13 @@
                 ctx.fillRect(p.x, p.top + PIPE_GAP, PIPE_WIDTH, CH - p.top - PIPE_GAP);
 
                 // Kenar çizgisi
-                ctx.strokeStyle = "rgba(56,189,248,0.2)";
+                ctx.strokeStyle = "rgba(45,212,191,0.2)";
                 ctx.lineWidth = 1;
                 ctx.strokeRect(p.x, 0, PIPE_WIDTH, p.top);
                 ctx.strokeRect(p.x, p.top + PIPE_GAP, PIPE_WIDTH, CH - p.top - PIPE_GAP);
 
                 // Başlık şeritler
-                ctx.fillStyle = "#38bdf8";
+                ctx.fillStyle = "#2dd4bf";
                 ctx.fillRect(p.x - 3, p.top - 6, PIPE_WIDTH + 6, 6);
                 ctx.fillRect(p.x - 3, p.top + PIPE_GAP, PIPE_WIDTH + 6, 6);
             });
@@ -301,8 +301,8 @@
 
             // Glow
             ctx.shadowBlur  = 18;
-            ctx.shadowColor = "#38bdf8";
-            ctx.fillStyle   = "#38bdf8";
+            ctx.shadowColor = "#2dd4bf";
+            ctx.fillStyle   = "#2dd4bf";
             ctx.beginPath();
             ctx.arc(0, 0, BIRD_R, 0, Math.PI * 2);
             ctx.fill();
@@ -348,7 +348,7 @@
                 ctx.fillStyle = "#f1f5f9";
                 ctx.font = "700 22px 'Inter', sans-serif";
                 ctx.fillText("OYUN BİTTİ", CW / 2, CH / 2 - 30);
-                ctx.fillStyle = "#38bdf8";
+                ctx.fillStyle = "#2dd4bf";
                 ctx.font = "700 28px 'Inter', sans-serif";
                 ctx.fillText(score + " puan", CW / 2, CH / 2 + 10);
                 ctx.fillStyle = "rgba(203,213,225,0.65)";

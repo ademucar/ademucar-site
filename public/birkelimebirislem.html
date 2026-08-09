@@ -27,13 +27,13 @@
         .info-btn {
             position: absolute; top: 16px; right: 16px;
             width: 34px; height: 34px; border-radius: 50%;
-            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.4);
-            color: #38bdf8; cursor: pointer; font-size: .85rem;
+            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(45, 212, 191, 0.4);
+            color: #2dd4bf; cursor: pointer; font-size: .85rem;
             display: none; align-items: center; justify-content: center;
             transition: all .2s; z-index: 5;
         }
         .info-btn.acik { display: flex; }
-        .info-btn:hover { background: #38bdf8; color: #0f172a; box-shadow: 0 0 15px rgba(56, 189, 248, 0.45); }
+        .info-btn:hover { background: #2dd4bf; color: #0f172a; box-shadow: 0 0 15px rgba(45, 212, 191, 0.45); }
 
         .modal {
             position: fixed; inset: 0; z-index: 2000;
@@ -43,17 +43,17 @@
         .modal.acik { display: flex; }
         .modal-card {
             position: relative; width: 100%; max-width: 460px; max-height: 85vh; overflow-y: auto;
-            background: rgba(15, 23, 42, 0.97); border: 1px solid rgba(56, 189, 248, 0.3);
+            background: rgba(15, 23, 42, 0.97); border: 1px solid rgba(45, 212, 191, 0.3);
             border-radius: 14px; padding: 28px 26px; text-align: left; color: #cbd5e1;
             box-shadow: 0 20px 60px rgba(0,0,0,.6);
         }
-        .modal-card h3 { color: #38bdf8; font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; letter-spacing: .5px; }
+        .modal-card h3 { color: #2dd4bf; font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; letter-spacing: .5px; }
         .modal-card p { font-size: .92rem; line-height: 1.6; margin-bottom: 12px; }
         .modal-card ul { list-style: none; margin: 6px 0 14px; }
         .modal-card ul li { font-size: .9rem; line-height: 1.5; color: #cbd5e1; padding-left: 16px; margin-bottom: 9px; position: relative; }
-        .modal-card ul li::before { content: '›'; position: absolute; left: 0; color: #38bdf8; font-weight: 800; }
+        .modal-card ul li::before { content: '›'; position: absolute; left: 0; color: #2dd4bf; font-weight: 800; }
         .modal-card b { color: #f8fafc; }
-        .modal-card .ornek { background: rgba(56,189,248,.08); border: 1px solid rgba(56,189,248,.25);
+        .modal-card .ornek { background: rgba(45,212,191,.08); border: 1px solid rgba(45,212,191,.25);
             border-radius: 8px; padding: 10px 12px; font-size: .88rem; color: #cbd5e1; margin-top: 4px; }
         .modal-kapat {
             position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 8px;
@@ -71,7 +71,7 @@
         }
         .score-box {
             background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            border: 1px solid rgba(45, 212, 191, 0.25);
             border-radius: 10px;
             padding: 8px 24px;
             text-align: center;
@@ -82,7 +82,7 @@
             letter-spacing: 0.08em; font-weight: 600;
         }
         .score-box-value {
-            font-size: 1.5rem; font-weight: 800; color: #38bdf8; line-height: 1.2;
+            font-size: 1.5rem; font-weight: 800; color: #2dd4bf; line-height: 1.2;
         }
 
         /* ---- Başlangıç / mod seçimi ---- */
@@ -91,15 +91,15 @@
 
         .difficulty-btn {
             background: rgba(15, 23, 42, 0.8);
-            border: 2px solid #38bdf8; color: #38bdf8;
+            border: 2px solid #2dd4bf; color: #2dd4bf;
             padding: 15px 30px; font-size: 1.2rem; font-weight: 800;
             border-radius: 12px; cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+            box-shadow: 0 0 15px rgba(45, 212, 191, 0.1);
             display: flex; align-items: center; justify-content: center; gap: 12px;
         }
         .difficulty-btn:hover:not(:disabled) {
-            background: #38bdf8; color: #0f172a;
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4); transform: translateY(-2px);
+            background: #2dd4bf; color: #0f172a;
+            box-shadow: 0 0 25px rgba(45, 212, 191, 0.4); transform: translateY(-2px);
         }
         .difficulty-btn:disabled { opacity: .5; cursor: not-allowed; }
         .difficulty-btn .kucuk { display:block; font-size:.72rem; font-weight:600; letter-spacing:1px; color:#94a3b8; margin-top:4px; }
@@ -110,7 +110,7 @@
         .oyun-ekran.acik { display: flex; }
         .oyun-baslik { font-size: .72rem; letter-spacing: 3px; text-transform: uppercase; color: #64748b; font-weight: 700; margin-bottom: 6px; }
         .oyun-ipucu { color: #94a3b8; font-size: .88rem; line-height: 1.5; margin-bottom: 20px; max-width: 460px; }
-        .oyun-ipucu b { color: #38bdf8; }
+        .oyun-ipucu b { color: #2dd4bf; }
 
         /* ---- Karolar ---- */
         .karo-sira { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; min-height: 58px; }
@@ -118,8 +118,8 @@
             width: 50px; height: 56px; border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.7rem; font-weight: 800; color: #f8fafc;
-            background: rgba(15, 23, 42, 0.85); border: 2px solid #38bdf8;
-            box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
+            background: rgba(15, 23, 42, 0.85); border: 2px solid #2dd4bf;
+            box-shadow: 0 0 14px rgba(45, 212, 191, 0.25);
             animation: karoIn .3s ease both;
         }
         .karo.sayi { font-size: 1.4rem; }
@@ -129,7 +129,7 @@
         /* ---- Hedef (İşlem) ---- */
         .hedef-kutu { margin: -4px 0 18px; }
         .hedef-kutu .et { font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; color: #64748b; font-weight: 600; }
-        .hedef-kutu .no { font-size: 2.6rem; font-weight: 800; color: #38bdf8; line-height: 1.1; text-shadow: 0 0 20px rgba(56,189,248,.4); }
+        .hedef-kutu .no { font-size: 2.6rem; font-weight: 800; color: #2dd4bf; line-height: 1.1; text-shadow: 0 0 20px rgba(45,212,191,.4); }
 
         /* ---- Kontrol butonları ---- */
         .kontrol-sira { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 18px; }
@@ -138,16 +138,16 @@
             padding: 10px 16px; border-radius: 8px; font-family: 'Inter', sans-serif;
             font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .2s;
         }
-        .mini-btn:hover:not(:disabled) { border-color: #38bdf8; color: #38bdf8; }
+        .mini-btn:hover:not(:disabled) { border-color: #2dd4bf; color: #2dd4bf; }
         .mini-btn:disabled { opacity: .4; cursor: not-allowed; }
-        .mini-btn.secili { background: rgba(56,189,248,.15); border-color: #38bdf8; color: #38bdf8; }
+        .mini-btn.secili { background: rgba(45,212,191,.15); border-color: #2dd4bf; color: #2dd4bf; }
 
         /* ---- Saat ---- */
         .saat-sar { position: relative; width: 150px; height: 150px; margin: 6px 0 14px; }
         .saat-sar svg { width: 100%; height: 100%; transform: rotate(-90deg); }
         .saat-iz { fill: none; stroke: #1e293b; stroke-width: 8; }
-        .saat-ilerleme { fill: none; stroke: #38bdf8; stroke-width: 8; stroke-linecap: round;
-            filter: drop-shadow(0 0 6px rgba(56,189,248,.6)); transition: stroke-dashoffset .95s linear; }
+        .saat-ilerleme { fill: none; stroke: #2dd4bf; stroke-width: 8; stroke-linecap: round;
+            filter: drop-shadow(0 0 6px rgba(45,212,191,.6)); transition: stroke-dashoffset .95s linear; }
         .saat-rakam { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .saat-rakam .sn { font-size: 2.8rem; font-weight: 800; color: #f8fafc; line-height: 1; }
         .saat-rakam .brm { font-size: .6rem; letter-spacing: 3px; color: #64748b; margin-top: 3px; text-transform: uppercase; }
@@ -164,14 +164,14 @@
             font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
         }
         .oyun-giris::placeholder { color: #64748b; letter-spacing: normal; text-transform: none; font-weight: 400; }
-        .oyun-giris:focus { outline: none; border-color: #38bdf8; box-shadow: 0 0 12px rgba(56,189,248,.2); }
+        .oyun-giris:focus { outline: none; border-color: #2dd4bf; box-shadow: 0 0 12px rgba(45,212,191,.2); }
         .oyun-giris:disabled { opacity: .45; }
         .gonder-btn {
-            background: #38bdf8; border: none; color: #0f172a; font-weight: 800;
+            background: #2dd4bf; border: none; color: #0f172a; font-weight: 800;
             padding: 0 22px; border-radius: 10px; cursor: pointer; font-family: 'Inter', sans-serif;
             font-size: .9rem; letter-spacing: 1px; transition: all .2s;
         }
-        .gonder-btn:hover:not(:disabled) { box-shadow: 0 0 20px rgba(56,189,248,.5); transform: translateY(-1px); }
+        .gonder-btn:hover:not(:disabled) { box-shadow: 0 0 20px rgba(45,212,191,.5); transform: translateY(-1px); }
         .gonder-btn:disabled { opacity: .4; cursor: not-allowed; }
 
         /* ---- Sonuç ---- */
@@ -181,13 +181,13 @@
             border-radius: 10px; padding: 16px 18px; font-size: .9rem; line-height: 1.55; color: #cbd5e1;
         }
         .sonuc.acik { display: block; }
-        .sonuc b { color: #38bdf8; }
+        .sonuc b { color: #2dd4bf; }
         .rozet { display: inline-block; font-weight: 800; font-size: .72rem; letter-spacing: 1px;
             padding: 3px 10px; border-radius: 999px; margin-right: 8px; }
         .rozet.ok { background: rgba(16,185,129,.16); color: #10b981; }
         .rozet.no { background: rgba(239,68,68,.16); color: #f87171; }
-        .cozum-etiket { display:inline-block; background: rgba(56,189,248,.1); border:1px solid rgba(56,189,248,.3);
-            color:#38bdf8; border-radius: 8px; padding: 3px 9px; margin: 3px 4px 0 0; font-weight: 700; letter-spacing: 1px; }
+        .cozum-etiket { display:inline-block; background: rgba(45,212,191,.1); border:1px solid rgba(45,212,191,.3);
+            color:#2dd4bf; border-radius: 8px; padding: 3px 9px; margin: 3px 4px 0 0; font-weight: 700; letter-spacing: 1px; }
 
         /* ---- Alt / geri ---- */
         .back-btn {

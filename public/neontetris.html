@@ -44,7 +44,7 @@
 
         .score-box {
             background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            border: 1px solid rgba(45, 212, 191, 0.25);
             border-radius: 10px;
             padding: 8px 24px;
             text-align: center;
@@ -62,7 +62,7 @@
         .score-box-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #38bdf8;
+            color: #2dd4bf;
             line-height: 1.2;
         }
 
@@ -72,9 +72,9 @@
 
         #tetrisCanvas {
             background: rgba(10, 18, 35, 0.97);
-            border: 2px solid rgba(56, 189, 248, 0.35);
+            border: 2px solid rgba(45, 212, 191, 0.35);
             border-radius: 8px;
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.1);
+            box-shadow: 0 0 30px rgba(45, 212, 191, 0.1);
             display: block;
             margin: 0 auto;
             touch-action: none;
@@ -101,7 +101,7 @@
         }
 
         .start-btn {
-            background: #38bdf8;
+            background: #2dd4bf;
             color: #0f172a;
             border: none;
             padding: 12px 30px;
@@ -109,13 +109,13 @@
             font-weight: 800;
             border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 20px rgba(45, 212, 191, 0.4);
             transition: all 0.3s ease;
         }
 
         .start-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.6);
+            box-shadow: 0 0 30px rgba(45, 212, 191, 0.6);
         }
 
         .mobile-controls {
@@ -130,7 +130,7 @@
         .control-btn {
             background: rgba(30, 41, 59, 0.8);
             border: 1px solid #334155;
-            color: #38bdf8;
+            color: #2dd4bf;
             padding: 15px 0;
             border-radius: 8px;
             font-size: 1.5rem;
@@ -140,7 +140,7 @@
         }
 
         .control-btn:active {
-            background: #38bdf8;
+            background: #2dd4bf;
             color: #0f172a;
             transform: scale(0.95);
         }
@@ -232,7 +232,7 @@
             </div>
 
             <div class="canvas-wrapper">
-                <canvas id="tetrisCanvas" width="250" height="500"></canvas>
+                <canvas id="tetrisCanvas" width="300" height="500"></canvas>
                 <div id="overlay" class="game-overlay">
                     <h2 id="overlay-text">TETRİS</h2>
                     <button class="start-btn" id="start-btn">OYUNA BAŞLA</button>
@@ -262,7 +262,7 @@
         const startBtn = document.getElementById('start-btn');
 
         const ROWS = 20;
-        const COLS = 10;
+        const COLS = 12;
         const BLOCK_SIZE = 25;
 
         const COLORS = [
@@ -352,7 +352,7 @@
             ctx.fillStyle = "rgba(10, 18, 35, 1)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.strokeStyle = "rgba(56, 189, 248, 0.05)";
+            ctx.strokeStyle = "rgba(45, 212, 191, 0.05)";
             ctx.lineWidth = 1;
             for (let i = 0; i < COLS; i++) {
                 ctx.beginPath(); ctx.moveTo(i * BLOCK_SIZE, 0); ctx.lineTo(i * BLOCK_SIZE, canvas.height); ctx.stroke();
