@@ -51,7 +51,7 @@
                 y: Math.random() * height,
                 vx: (Math.random() - 0.5) * SPEED,
                 vy: (Math.random() - 0.5) * SPEED,
-                r: Math.random() * 3.6 + 2.2
+                r: Math.random() * 4.5 + 3.0
             });
         }
     }
@@ -88,8 +88,8 @@
                     ctx.moveTo(p.x, p.y);
                     ctx.lineTo(q.x, q.y);
                     ctx.strokeStyle =
-                        'rgba(' + COLOR + ',' + (0.18 * (1 - dist / LINK_DIST)) + ')';
-                    ctx.lineWidth = 1;
+                        'rgba(' + COLOR + ',' + (0.22 * (1 - dist / LINK_DIST)) + ')';
+                    ctx.lineWidth = 1.8;
                     ctx.stroke();
                 }
             }
