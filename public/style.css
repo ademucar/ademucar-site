@@ -139,10 +139,10 @@ body, html {
 
 .nav-menu a:hover,
 .dropbtn:hover {
-    color: #38bdf8;
-    border-color: rgba(56, 189, 248, 0.6);
-    background: rgba(56, 189, 248, 0.08);
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+    color: #2dd4bf;
+    border-color: rgba(45, 212, 191, 0.6);
+    background: rgba(45, 212, 191, 0.08);
+    box-shadow: 0 0 12px rgba(45, 212, 191, 0.25);
 }
 
 /* --- AÇILIR MENÜ (DROPDOWN) STİLLERİ --- */
@@ -172,7 +172,7 @@ body, html {
     backdrop-filter: blur(10px);
     min-width: 230px;
     box-shadow: 0px 8px 24px 0px rgba(0,0,0,0.6);
-    border: 1px solid rgba(56, 189, 248, 0.2);
+    border: 1px solid rgba(45, 212, 191, 0.25);
     border-radius: 8px;
     z-index: 1000;
     top: 100%;
@@ -210,8 +210,8 @@ body, html {
 
 /* Hover efekti: Hem renk değişir hem hafif sağa kayar */
 .dropdown-content a:hover {
-    background-color: rgba(56, 189, 248, 0.1);
-    color: #38bdf8;
+    background-color: rgba(45, 212, 191, 0.12);
+    color: #2dd4bf;
     padding-left: 25px; 
 }
 
