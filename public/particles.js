@@ -2,10 +2,10 @@
    Süzülen noktalar + yakınlaştıkça beliren bağlantı çizgileri.
    Sıfır dış bağımlılık, mobil dostu, hareket azaltma desteği. */
 (function () {
-    // Hareket azaltmayı tercih edenlerde çalıştırma
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        return;
-    }
+    // Hareket azaltmayı tercih edenlerde animasyonu durdur,
+    // ama sabit (hareketsiz) takımyıldızını yine de göster.
+    var reduceMotion = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     var canvas = document.createElement('canvas');
     canvas.setAttribute('aria-hidden', 'true');
@@ -35,6 +35,9 @@
         canvas.height = height * dpr;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         initParticles();
+        // canvas.width atamak bitmap'i temizler; hareketsiz modda
+        // döngü olmadığı için yeniden çizmemiz gerekir.
+        if (reduceMotion) draw();
     }
 
     function initParticles() {
@@ -56,12 +59,15 @@
 
         for (var i = 0; i < particles.length; i++) {
             var p = particles[i];
-            p.x += p.vx;
-            p.y += p.vy;
 
-            // Kenarlardan yumuşak sekme
-            if (p.x < 0 || p.x > width) p.vx *= -1;
-            if (p.y < 0 || p.y > height) p.vy *= -1;
+            // Hareket azaltma kapalıysa noktaları hareket ettir
+            if (!reduceMotion) {
+                p.x += p.vx;
+                p.y += p.vy;
+                // Kenarlardan yumuşak sekme
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+            }
 
             // Nokta
             ctx.beginPath();
@@ -86,7 +92,8 @@
                 }
             }
         }
-        requestAnimationFrame(draw);
+        // Hareket azaltma açıksa tek kare çiz, döngüye girme
+        if (!reduceMotion) requestAnimationFrame(draw);
     }
 
     function start() {
