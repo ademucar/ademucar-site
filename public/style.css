@@ -95,17 +95,27 @@ body, html {
     align-items: center; 
 }
 
-.nav-menu a {
+.nav-menu a,
+.dropbtn {
     color: #ffffff;
     text-decoration: none;
     font-weight: 600;
     font-size: 0.85rem;
     letter-spacing: 1.5px;
-    transition: color 0.3s;
+    /* Buton çerçevesi */
+    padding: 9px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    transition: color 0.3s, border-color 0.3s, background 0.3s, box-shadow 0.3s;
 }
 
-.nav-menu a:hover {
+.nav-menu a:hover,
+.dropbtn:hover {
     color: #38bdf8;
+    border-color: rgba(56, 189, 248, 0.6);
+    background: rgba(56, 189, 248, 0.08);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
 }
 
 /* --- AÇILIR MENÜ (DROPDOWN) STİLLERİ --- */
@@ -115,20 +125,9 @@ body, html {
 }
 
 .dropbtn {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.85rem;
-    letter-spacing: 1.5px;
-    transition: color 0.3s;
     cursor: pointer;
-    background: none;
-    border: none;
     outline: none;
-}
-
-.dropbtn:hover {
-    color: #38bdf8;
+    font-family: 'Inter', sans-serif;
 }
 
 /* Aşağı ok işareti */
@@ -259,14 +258,13 @@ body, html {
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 900px;
-    background: rgba(15, 23, 42, 0.75); 
-    backdrop-filter: blur(10px); 
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent; /* Mavi panel tabanı kaldırıldı */
+    border: none;
     border-radius: 15px;
     padding: 40px 50px;
     color: #f1f5f9;
     max-height: 80vh;
-    overflow-y: auto; 
+    overflow-y: auto;
 }
 
 /* Sayfa Başlığı */
