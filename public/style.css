@@ -13,14 +13,73 @@ body, html {
 
 .background-wrapper {
     width: 100%; /* 100vw yerine 100% kullanmak yatay kayma hatalarını önler */
-    min-height: 100vh; 
-    /* Yumuşak, sakin koyu zemin (üstte hafif mavi parıltı) */
-    background:
-        radial-gradient(1000px 650px at 50% -5%, rgba(56, 189, 248, 0.08), transparent 60%),
-        linear-gradient(180deg, #0f172a 0%, #0b1120 100%);
+    min-height: 100vh;
+    /* Koyu zemin (aurora efekti için temel) */
+    background: linear-gradient(180deg, #0f172a 0%, #0b1120 100%);
     background-attachment: fixed;
     position: relative;
+    overflow: hidden; /* Aurora huzmelerinin taşmasını engeller */
 }
+
+/* --- AURORA / IŞIK HUZMELERİ EFEKTİ --- */
+.background-wrapper::before,
+.background-wrapper::after {
+    content: "";
+    position: fixed;
+    top: -30%;
+    left: -30%;
+    width: 160%;
+    height: 160%;
+    z-index: 0;
+    pointer-events: none; /* Tıklamaları engellemez */
+    filter: blur(90px);
+    opacity: 0.55;
+}
+
+/* Birinci ışık katmanı: turkuaz-camgöbeği */
+.background-wrapper::before {
+    background:
+        radial-gradient(35% 45% at 25% 25%, rgba(45, 212, 191, 0.45), transparent 60%),
+        radial-gradient(30% 40% at 75% 20%, rgba(52, 211, 153, 0.35), transparent 60%);
+    animation: aurora-move-1 18s ease-in-out infinite alternate;
+}
+
+/* İkinci ışık katmanı: yeşil-lime */
+.background-wrapper::after {
+    background:
+        radial-gradient(40% 45% at 70% 75%, rgba(52, 211, 153, 0.40), transparent 60%),
+        radial-gradient(30% 40% at 30% 80%, rgba(132, 204, 22, 0.28), transparent 60%);
+    animation: aurora-move-2 22s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-move-1 {
+    0%   { transform: translate(0, 0) scale(1)   rotate(0deg); }
+    100% { transform: translate(6%, 8%) scale(1.15) rotate(12deg); }
+}
+
+@keyframes aurora-move-2 {
+    0%   { transform: translate(0, 0) scale(1)    rotate(0deg); }
+    100% { transform: translate(-8%, -6%) scale(1.2) rotate(-15deg); }
+}
+
+/* Hareketi azaltmayı tercih eden kullanıcılar için */
+@media (prefers-reduced-motion: reduce) {
+    .background-wrapper::before,
+    .background-wrapper::after {
+        animation: none;
+    }
+}
+
+/* İçeriğin ışık huzmelerinin üstünde kalmasını garanti eder */
+.top-header {
+    position: relative;
+}
+.top-header,
+.hero-text,
+.content-container {
+    z-index: 1;
+}
+/* --- AURORA SONU --- */
 
 /* Üst Header (Menü + Sosyal) */
 .top-header {
