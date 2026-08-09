@@ -171,9 +171,9 @@ body, html {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: rgba(15, 23, 42, 0.45);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background-color: rgba(15, 23, 42, 0.18);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     min-width: 230px;
     box-shadow: 0px 8px 24px 0px rgba(0,0,0,0.6);
     border: 1px solid rgba(45, 212, 191, 0.25);
