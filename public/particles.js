@@ -19,7 +19,7 @@
 
     // Zümrüt-yeşil ton (aurora ile uyumlu)
     var COLOR = '52, 211, 153';
-    var LINK_DIST = 130;   // Bağlantı çizgisi mesafesi (px)
+    var LINK_DIST = 160;   // Bağlantı çizgisi mesafesi (px)
     var SPEED = 0.25;      // Hareket hızı
 
     function particleCount() {
@@ -49,7 +49,7 @@
                 y: Math.random() * height,
                 vx: (Math.random() - 0.5) * SPEED,
                 vy: (Math.random() - 0.5) * SPEED,
-                r: Math.random() * 1.6 + 0.6
+                r: Math.random() * 2.8 + 1.4
             });
         }
     }
