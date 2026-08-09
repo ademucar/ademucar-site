@@ -23,12 +23,14 @@
     var SPEED = 0.25;      // Hareket hızı
 
     function particleCount() {
-        // Ekran alanına göre yoğunluk (üst sınırla performansı koru)
-        return Math.min(90, Math.floor((width * height) / 16000));
+        // Ekran alanına göre yoğunluk (mobilde daha az → performans)
+        var cap = width < 768 ? 40 : 90;
+        return Math.min(cap, Math.floor((width * height) / 16000));
     }
 
     function resize() {
-        dpr = window.devicePixelRatio || 1;
+        // Yüksek piksel oranlı telefonlarda canvas'ı küçük tutup takılmayı önle
+        dpr = Math.min(window.devicePixelRatio || 1, 1.5);
         width = window.innerWidth;
         height = window.innerHeight;
         canvas.width = width * dpr;
@@ -49,7 +51,7 @@
                 y: Math.random() * height,
                 vx: (Math.random() - 0.5) * SPEED,
                 vy: (Math.random() - 0.5) * SPEED,
-                r: Math.random() * 2.8 + 1.4
+                r: Math.random() * 3.6 + 2.2
             });
         }
     }

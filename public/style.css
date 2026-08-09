@@ -8,7 +8,34 @@
 body, html {
     min-height: 100vh;
     background-color: #0f172a; /* Sayfa kaydığında veya esnediğinde beyaz görünmesini engeller */
-    overflow-x: hidden; 
+    overflow-x: hidden;
+}
+
+/* --- ŞIK KAYDIRMA ÇUBUĞU --- */
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #2dd4bf rgba(15, 23, 42, 0.35);
+}
+/* Chrome / Edge / Safari */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.35);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #38bdf8, #2dd4bf);
+    border-radius: 10px;
+    border: 2px solid rgba(15, 23, 42, 0.6);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #2dd4bf, #38bdf8);
+}
+::-webkit-scrollbar-button {
+    display: none; /* Üst/alt ok tuşlarını gizle */
 }
 
 .background-wrapper {
@@ -91,8 +118,8 @@ body, html {
 
 .nav-menu {
     display: flex;
-    gap: 40px;
-    align-items: center; 
+    gap: 14px;
+    align-items: center;
 }
 
 .nav-menu a,
@@ -432,23 +459,36 @@ body, html {
 
 @media (max-width: 768px) {
     body, html {
-        overflow-y: auto; 
+        overflow-y: auto;
+    }
+
+    /* Mobil performansı: ağır blur katmanlar ve sabit arka plan
+       telefonda takılmaya (geç geçiş) yol açtığı için sadeleştiriyoruz */
+    .background-wrapper {
+        background-attachment: scroll;
+    }
+    .background-wrapper::before,
+    .background-wrapper::after {
+        display: none;
     }
 
     .top-header {
-        flex-direction: column; 
+        flex-direction: column;
         padding: 20px;
         gap: 15px;
     }
 
     .nav-menu {
-        gap: 15px;
+        gap: 10px;
         flex-wrap: wrap;
         justify-content: center;
     }
 
-    .nav-menu a {
+    /* ARAÇLAR/OYUNLAR (dropbtn) diğer sekmelerle aynı boyutta olsun */
+    .nav-menu a,
+    .dropbtn {
         font-size: 0.7rem;
+        padding: 7px 12px;
     }
 
     .dropdown-content {
