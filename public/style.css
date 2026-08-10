@@ -7,7 +7,7 @@
 
 body, html {
     min-height: 100vh;
-    background-color: #0f172a; /* Sayfa kaydığında veya esnediğinde beyaz görünmesini engeller */
+    background-color: #0b1120; /* Tek tip koyu zemin (kaydırınca renk farkı olmasın) */
     overflow-x: hidden;
 }
 
@@ -479,10 +479,12 @@ body, html {
         overflow-y: auto;
     }
 
-    /* Mobil performansı: ağır blur katmanlar ve sabit arka plan
-       telefonda takılmaya (geç geçiş) yol açtığı için sadeleştiriyoruz */
+    /* Mobil performansı + kaydırınca renk farkı olmaması için:
+       ağır blur katmanları kapat, degradeyi kaldır, tek tip koyu zemin bırak
+       (iOS background-attachment:fixed desteklemediğinden degrade yayılıp
+        renk farkı yaratıyordu). */
     .background-wrapper {
-        background-attachment: scroll;
+        background: transparent;
     }
     .background-wrapper::before,
     .background-wrapper::after {
