@@ -5,6 +5,18 @@
     font-family: 'Inter', sans-serif;
 }
 
+html {
+    /* Tarayıcıların metni kendiliğinden büyütmesini engeller.
+       Bu olmadan Chrome/Safari mobilde yazıları farklı oranlarda şişiriyor
+       (ilk açılışta devasa görünme ve tarayıcıdan tarayıcıya oran farkı). */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Tüm tarayıcılarda aynı kök ölçü (varsayılan 16px).
+       Yüzde kullanmak, kullanıcının bilinçli yazı boyutu ayarını da korur. */
+    font-size: 100%;
+}
+
 body, html {
     min-height: 100vh;
     background-color: #0b1120; /* Tek tip koyu zemin (kaydırınca renk farkı olmasın) */
@@ -259,11 +271,10 @@ body, html {
 }
 
 .hero-text h1 {
-    font-size: 3.5rem;
+    font-size: clamp(1.8rem, 6vw, 3.5rem);
     font-weight: 800;
     letter-spacing: 2px;
     margin-bottom: 15px;
-    white-space: nowrap; 
 }
 
 .hero-text p {
@@ -274,7 +285,7 @@ body, html {
 
 /* İletişim Özel Tasarım */
 .contact-title {
-    font-size: 3rem !important;
+    font-size: clamp(1.6rem, 5.5vw, 3rem) !important;
     margin-bottom: 30px !important;
 }
 
@@ -307,7 +318,7 @@ body, html {
 
 /* Sayfa Başlığı */
 .page-title {
-    font-size: 2.2rem;
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
     font-weight: 800;
     margin-bottom: 20px;
     text-align: center;
@@ -516,10 +527,6 @@ body, html {
         min-width: 180px;
     }
 
-    .hero-text h1 {
-        font-size: 2.2rem; 
-    }
-
     .content-container {
         position: relative; 
         top: 0;
@@ -537,10 +544,6 @@ body, html {
 
     .projects-grid {
         grid-template-columns: 1fr; 
-    }
-
-    .contact-title {
-        font-size: 2.2rem !important;
     }
 
     .contact-details p {

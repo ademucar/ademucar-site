@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#0b1220" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
@@ -255,21 +255,56 @@
         function downloadImage() {
             const captureArea = document.getElementById("captureArea");
             const downloadBtn = document.querySelector(".btn-download");
-            
+            const eskiIcerik = '<i class="fas fa-image"></i> İndir';
+
             downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Hazırlanıyor...';
-            
+            downloadBtn.disabled = true;
+
+            // Telefonlarda çok büyük görsel bellek hatası verebiliyor
+            const olcek = window.innerWidth < 768 ? 1.5 : 2;
+
             html2canvas(captureArea, {
-                backgroundColor: "#0f172a", 
-                scale: 2 
+                backgroundColor: "#0f172a",
+                scale: olcek,
+                useCORS: true
             }).then(canvas => {
-                let imageURL = canvas.toDataURL("image/png");
-                let a = document.createElement("a");
-                a.href = imageURL;
-                a.download = "Haftalik-Programim.png";
-                a.click();
-                
-                downloadBtn.innerHTML = '<i class="fas fa-image"></i> Görseli İndir';
+                return new Promise(resolve => canvas.toBlob(resolve, "image/png"));
+            }).then(blob => {
+                if (!blob) throw new Error("Görsel oluşturulamadı");
+
+                const dosyaAdi = "Haftalik-Programim.png";
+
+                // 1) Telefonlarda paylaşım menüsü (iOS Safari 'download' özniteliğini desteklemez)
+                if (navigator.canShare) {
+                    const dosya = new File([blob], dosyaAdi, { type: "image/png" });
+                    if (navigator.canShare({ files: [dosya] })) {
+                        return navigator.share({ files: [dosya], title: "Haftalık Programım" })
+                            .catch(() => klasikIndir(blob, dosyaAdi)); // Paylaşım iptal edilirse
+                    }
+                }
+
+                // 2) Masaüstü ve diğer tarayıcılar
+                klasikIndir(blob, dosyaAdi);
+            }).catch(err => {
+                console.error(err);
+                alert("Görsel indirilemedi. Lütfen tekrar deneyin.");
+            }).finally(() => {
+                downloadBtn.innerHTML = eskiIcerik;
+                downloadBtn.disabled = false;
             });
+        }
+
+        // Blob'u dosya olarak indirir (bağlantı DOM'a eklenmeli, yoksa bazı tarayıcılar yok sayar)
+        function klasikIndir(blob, dosyaAdi) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = dosyaAdi;
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
         }
 
         // Tabloyu Temizleme Fonksiyonu
@@ -281,6 +316,6 @@
             }
         }
     </script>
-    <script src="particles.js" defer></script>
+    <script src="particles.js?v=2" defer></script>
 </body>
 </html>
