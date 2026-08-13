@@ -22,8 +22,10 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            height: calc(100vh - 100px);
-            padding: 0 20px;
+            /* Sabit yükseklik yerine en az yükseklik: içerik sığmazsa taşmak
+               yerine büyür. Mobilde adres çubuğu 100vh'yi şişirdiği için şart. */
+            min-height: calc(100vh - 160px);
+            padding: 20px;
             animation: fadeIn 1s ease-out;
         }
 
