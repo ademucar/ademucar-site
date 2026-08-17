@@ -375,10 +375,14 @@ function bildir(msg){ notif.innerText = msg; notif.style.opacity = '1'; setTimeo
 
 /* ---- Sözlük ---- */
 let SOZLUK_SET = new Set(), SOZLUK_DIZI = [];
-const SOZLUK_URL = "https://raw.githubusercontent.com/mertemin/turkish-word-list/master/words.txt";
+// Sözlük kendi sunucumuzda: dış servisin hız sınırına (429) takılmaz, daha hızlı yüklenir.
+const SOZLUK_URL = "words.txt";
 async function sozlukYukle(){
   try{
     const res = await fetch(SOZLUK_URL);
+    // Hata sayfası da metin döndüğü için durum kodunu kontrol etmek şart:
+    // yoksa hata içeriği "sözlük" sanılıp boş listeyle devam ediliyordu.
+    if(!res.ok) throw new Error("Sözlük indirilemedi (HTTP " + res.status + ")");
     const text = await res.text();
     for(let ham of text.split('\n')){
       let w = trKucuk(ham.trim()).replace(/â/g,'a').replace(/î/g,'i').replace(/û/g,'u');

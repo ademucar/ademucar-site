@@ -333,7 +333,10 @@
         
         window.onload = async () => {
             try {
-                let res = await fetch("https://raw.githubusercontent.com/mertemin/turkish-word-list/master/words.txt");
+                // Sözlük kendi sunucumuzda: dış servisin hız sınırına (429) takılmaz.
+                let res = await fetch("words.txt");
+                // Hata sayfası da metin döndüğü için durum kodu kontrol edilmeli.
+                if (!res.ok) throw new Error("Sözlük indirilemedi (HTTP " + res.status + ")");
                 let text = await res.text();
                 text.split('\n').forEach(w => {
                     let cleanWord = w.trim().toLocaleUpperCase('tr-TR')

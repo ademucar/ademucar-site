@@ -30,8 +30,8 @@ app.use(helmet({
       scriptSrcAttr: ["'unsafe-inline'"],
       // flagcdn: Neon Flagle'ın bayrak görselleri
       imgSrc: ["'self'", "data:", "blob:", "https://flagcdn.com"],
-      // raw.githubusercontent: Bir Kelime Bir İşlem ve Neon Wordle'ın Türkçe sözlüğü
-      connectSrc: ["'self'", "https://raw.githubusercontent.com"],
+      // Sözlük artık kendi sunucumuzda (public/words.txt) → dış bağlantıya gerek yok
+      connectSrc: ["'self'"],
       frameAncestors: ["'none'"],   // Siteyi kimse iframe'e gömemez
       objectSrc: ["'none'"],
       baseUri: ["'self'"]
