@@ -28,8 +28,10 @@ app.use(helmet({
       // HTML'deki onclick="..." gibi satır içi olay işleyicileri için şart.
       // (helmet varsayılanı 'none' olduğundan oyun butonları çalışmazdı)
       scriptSrcAttr: ["'unsafe-inline'"],
-      imgSrc: ["'self'", "data:", "blob:"],
-      connectSrc: ["'self'"],
+      // flagcdn: Neon Flagle'ın bayrak görselleri
+      imgSrc: ["'self'", "data:", "blob:", "https://flagcdn.com"],
+      // raw.githubusercontent: Bir Kelime Bir İşlem ve Neon Wordle'ın Türkçe sözlüğü
+      connectSrc: ["'self'", "https://raw.githubusercontent.com"],
       frameAncestors: ["'none'"],   // Siteyi kimse iframe'e gömemez
       objectSrc: ["'none'"],
       baseUri: ["'self'"]
