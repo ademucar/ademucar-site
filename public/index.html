@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1f2a24" />
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
     
@@ -44,7 +44,7 @@
         .typing-container {
             font-family: var(--yazi-el);
             font-size: clamp(1.2rem, 4.4vw, 1.9rem);
-            color: var(--altin);
+            color: var(--vurgu);
             font-weight: 600;
             margin-bottom: 26px;
             min-height: 42px;
@@ -53,7 +53,7 @@
         .cursor {
             display: inline-block;
             width: 2px;
-            background-color: var(--altin);
+            background-color: var(--vurgu);
             margin-left: 3px;
             animation: blink 0.8s step-end infinite;
         }
@@ -91,14 +91,14 @@
 
         .btn-primary {
             background: transparent;
-            border: 1.5px solid var(--altin);
-            color: var(--altin);
+            border: 1.5px solid var(--vurgu);
+            color: var(--vurgu);
         }
 
         /* Hover'da köşeler yeniden çizilmiş gibi değişir */
         .btn-primary:hover {
-            background: rgba(217, 177, 102, 0.12);
-            color: var(--altin-parlak);
+            background: rgba(224, 134, 106, 0.12);
+            color: var(--vurgu-parlak);
             border-radius: var(--el-kose-3);
             transform: translateY(-2px) rotate(-0.5deg);
         }
@@ -132,8 +132,8 @@
         .skill-badge i { font-size: 0.8rem; opacity: .75; }
 
         .skill-badge:hover {
-            border-color: var(--altin);
-            color: var(--altin);
+            border-color: var(--vurgu);
+            color: var(--vurgu);
             transform: translateY(-2px) rotate(-1.2deg);
             border-radius: var(--el-kose-3);
         }
@@ -170,8 +170,8 @@
                         <a href="birkelimebirislem"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
                         <a href="neonwordle"><i class="fas fa-font"></i> Wordle</a>
                         <a href="neonflagle"><i class="fas fa-flag"></i> Flagle</a>
-                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Yılan</a>
-                        <a href="neonbird"><i class="fas fa-dove"></i> Kuş</a>
+                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Snake</a>
+                        <a href="neonbird"><i class="fas fa-dove"></i> Flappy</a>
                         <a href="neontetris"><i class="fas fa-cubes"></i> Tetris</a>
                     </div>
                 </div>
@@ -216,7 +216,7 @@
         </div>
     </div>
 
-    <script src="particles.js?v=4" defer></script>
+    <script src="particles.js?v=5" defer></script>
     <script>
         const textToType = "Matematik ve Bilgisayar Bilimleri Öğrencisiyim.";
         let charIndex = 0;

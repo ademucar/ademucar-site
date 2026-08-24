@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1f2a24" />
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
     <style>
@@ -27,13 +27,13 @@
         .info-btn {
             position: absolute; top: 16px; right: 16px;
             width: 34px; height: 34px; border-radius: 50%;
-            background: rgba(31, 42, 36, 0.8); border: 1px solid rgba(217, 177, 102, 0.4);
-            color: #d9b166; cursor: pointer; font-size: .85rem;
+            background: rgba(31, 42, 36, 0.8); border: 1px solid rgba(224, 134, 106, 0.4);
+            color: #e0866a; cursor: pointer; font-size: .85rem;
             display: none; align-items: center; justify-content: center;
             transition: all .2s; z-index: 5;
         }
         .info-btn.acik { display: flex; }
-        .info-btn:hover { background: #d9b166; color: #1f2a24; box-shadow: 0 0 15px rgba(217, 177, 102, 0.45); }
+        .info-btn:hover { background: #e0866a; color: #1f2a24; box-shadow: 0 0 15px rgba(224, 134, 106, 0.45); }
 
         .modal {
             position: fixed; inset: 0; z-index: 2000;
@@ -43,17 +43,17 @@
         .modal.acik { display: flex; }
         .modal-card {
             position: relative; width: 100%; max-width: 460px; max-height: 85vh; overflow-y: auto;
-            background: rgba(31, 42, 36, 0.97); border: 1px solid rgba(217, 177, 102, 0.3);
+            background: rgba(31, 42, 36, 0.97); border: 1px solid rgba(224, 134, 106, 0.3);
             border-radius: 14px; padding: 28px 26px; text-align: left; color: #b9c6bb;
             box-shadow: 0 20px 60px rgba(0,0,0,.6);
         }
-        .modal-card h3 { color: #d9b166; font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; letter-spacing: .5px; }
+        .modal-card h3 { color: #e0866a; font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; letter-spacing: .5px; }
         .modal-card p { font-size: .92rem; line-height: 1.6; margin-bottom: 12px; }
         .modal-card ul { list-style: none; margin: 6px 0 14px; }
         .modal-card ul li { font-size: .9rem; line-height: 1.5; color: #b9c6bb; padding-left: 16px; margin-bottom: 9px; position: relative; }
-        .modal-card ul li::before { content: '›'; position: absolute; left: 0; color: #d9b166; font-weight: 800; }
+        .modal-card ul li::before { content: '›'; position: absolute; left: 0; color: #e0866a; font-weight: 800; }
         .modal-card b { color: #eae6da; }
-        .modal-card .ornek { background: rgba(217,177,102,.08); border: 1px solid rgba(217,177,102,.25);
+        .modal-card .ornek { background: rgba(224, 134, 106,.08); border: 1px solid rgba(224, 134, 106,.25);
             border-radius: 8px; padding: 10px 12px; font-size: .88rem; color: #b9c6bb; margin-top: 4px; }
         .modal-kapat {
             position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 8px;
@@ -71,7 +71,7 @@
         }
         .score-box {
             background: rgba(31, 42, 36, 0.7);
-            border: 1px solid rgba(217, 177, 102, 0.25);
+            border: 1px solid rgba(224, 134, 106, 0.25);
             border-radius: 10px;
             padding: 8px 24px;
             text-align: center;
@@ -82,7 +82,7 @@
             letter-spacing: 0.08em; font-weight: 600;
         }
         .score-box-value {
-            font-size: 1.5rem; font-weight: 800; color: #d9b166; line-height: 1.2;
+            font-size: 1.5rem; font-weight: 800; color: #e0866a; line-height: 1.2;
         }
 
         /* ---- Başlangıç / mod seçimi ---- */
@@ -91,15 +91,15 @@
 
         .difficulty-btn {
             background: rgba(31, 42, 36, 0.8);
-            border: 2px solid #d9b166; color: #d9b166;
+            border: 2px solid #e0866a; color: #e0866a;
             padding: 15px 30px; font-size: 1.2rem; font-weight: 800;
             border-radius: 12px; cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(217, 177, 102, 0.1);
+            box-shadow: 0 0 15px rgba(224, 134, 106, 0.1);
             display: flex; align-items: center; justify-content: center; gap: 12px;
         }
         .difficulty-btn:hover:not(:disabled) {
-            background: #d9b166; color: #1f2a24;
-            box-shadow: 0 0 25px rgba(217, 177, 102, 0.4); transform: translateY(-2px);
+            background: #e0866a; color: #1f2a24;
+            box-shadow: 0 0 25px rgba(224, 134, 106, 0.4); transform: translateY(-2px);
         }
         .difficulty-btn:disabled { opacity: .5; cursor: not-allowed; }
         .difficulty-btn .kucuk { display:block; font-size:.72rem; font-weight:600; letter-spacing:1px; color:#b9c6bb; margin-top:4px; }
@@ -110,7 +110,7 @@
         .oyun-ekran.acik { display: flex; }
         .oyun-baslik { font-size: .72rem; letter-spacing: 3px; text-transform: uppercase; color: #869a8b; font-weight: 700; margin-bottom: 6px; }
         .oyun-ipucu { color: #b9c6bb; font-size: .88rem; line-height: 1.5; margin-bottom: 20px; max-width: 460px; }
-        .oyun-ipucu b { color: #d9b166; }
+        .oyun-ipucu b { color: #e0866a; }
 
         /* ---- Karolar ---- */
         .karo-sira { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; min-height: 58px; }
@@ -118,8 +118,8 @@
             width: 50px; height: 56px; border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.7rem; font-weight: 800; color: #eae6da;
-            background: rgba(31, 42, 36, 0.85); border: 2px solid #d9b166;
-            box-shadow: 0 0 14px rgba(217, 177, 102, 0.25);
+            background: rgba(31, 42, 36, 0.85); border: 2px solid #e0866a;
+            box-shadow: 0 0 14px rgba(224, 134, 106, 0.25);
             animation: karoIn .3s ease both;
         }
         .karo.sayi { font-size: 1.4rem; }
@@ -129,7 +129,7 @@
         /* ---- Hedef (İşlem) ---- */
         .hedef-kutu { margin: -4px 0 18px; }
         .hedef-kutu .et { font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; color: #869a8b; font-weight: 600; }
-        .hedef-kutu .no { font-size: 2.6rem; font-weight: 800; color: #d9b166; line-height: 1.1; text-shadow: 0 0 20px rgba(217,177,102,.4); }
+        .hedef-kutu .no { font-size: 2.6rem; font-weight: 800; color: #e0866a; line-height: 1.1; text-shadow: 0 0 20px rgba(224, 134, 106,.4); }
 
         /* ---- Kontrol butonları ---- */
         .kontrol-sira { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 18px; }
@@ -138,16 +138,16 @@
             padding: 10px 16px; border-radius: 8px; font-family: var(--yazi-govde);
             font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .2s;
         }
-        .mini-btn:hover:not(:disabled) { border-color: #d9b166; color: #d9b166; }
+        .mini-btn:hover:not(:disabled) { border-color: #e0866a; color: #e0866a; }
         .mini-btn:disabled { opacity: .4; cursor: not-allowed; }
-        .mini-btn.secili { background: rgba(217,177,102,.15); border-color: #d9b166; color: #d9b166; }
+        .mini-btn.secili { background: rgba(224, 134, 106,.15); border-color: #e0866a; color: #e0866a; }
 
         /* ---- Saat ---- */
         .saat-sar { position: relative; width: 150px; height: 150px; margin: 6px 0 14px; }
         .saat-sar svg { width: 100%; height: 100%; transform: rotate(-90deg); }
         .saat-iz { fill: none; stroke: #263329; stroke-width: 8; }
-        .saat-ilerleme { fill: none; stroke: #d9b166; stroke-width: 8; stroke-linecap: round;
-            filter: drop-shadow(0 0 6px rgba(217,177,102,.6)); transition: stroke-dashoffset .95s linear; }
+        .saat-ilerleme { fill: none; stroke: #e0866a; stroke-width: 8; stroke-linecap: round;
+            filter: drop-shadow(0 0 6px rgba(224, 134, 106,.6)); transition: stroke-dashoffset .95s linear; }
         .saat-rakam { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .saat-rakam .sn { font-size: 2.8rem; font-weight: 800; color: #eae6da; line-height: 1; }
         .saat-rakam .brm { font-size: .6rem; letter-spacing: 3px; color: #869a8b; margin-top: 3px; text-transform: uppercase; }
@@ -164,14 +164,14 @@
             font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
         }
         .oyun-giris::placeholder { color: #869a8b; letter-spacing: normal; text-transform: none; font-weight: 400; }
-        .oyun-giris:focus { outline: none; border-color: #d9b166; box-shadow: 0 0 12px rgba(217,177,102,.2); }
+        .oyun-giris:focus { outline: none; border-color: #e0866a; box-shadow: 0 0 12px rgba(224, 134, 106,.2); }
         .oyun-giris:disabled { opacity: .45; }
         .gonder-btn {
-            background: #d9b166; border: none; color: #1f2a24; font-weight: 800;
+            background: #e0866a; border: none; color: #1f2a24; font-weight: 800;
             padding: 0 22px; border-radius: 10px; cursor: pointer; font-family: var(--yazi-govde);
             font-size: .9rem; letter-spacing: 1px; transition: all .2s;
         }
-        .gonder-btn:hover:not(:disabled) { box-shadow: 0 0 20px rgba(217,177,102,.5); transform: translateY(-1px); }
+        .gonder-btn:hover:not(:disabled) { box-shadow: 0 0 20px rgba(224, 134, 106,.5); transform: translateY(-1px); }
         .gonder-btn:disabled { opacity: .4; cursor: not-allowed; }
 
         /* ---- Sonuç ---- */
@@ -181,13 +181,13 @@
             border-radius: 10px; padding: 16px 18px; font-size: .9rem; line-height: 1.55; color: #b9c6bb;
         }
         .sonuc.acik { display: block; }
-        .sonuc b { color: #d9b166; }
+        .sonuc b { color: #e0866a; }
         .rozet { display: inline-block; font-weight: 800; font-size: .72rem; letter-spacing: 1px;
             padding: 3px 10px; border-radius: 999px; margin-right: 8px; }
         .rozet.ok { background: rgba(16,185,129,.16); color: #10b981; }
         .rozet.no { background: rgba(239,68,68,.16); color: #f87171; }
-        .cozum-etiket { display:inline-block; background: rgba(217,177,102,.1); border:1px solid rgba(217,177,102,.3);
-            color:#d9b166; border-radius: 8px; padding: 3px 9px; margin: 3px 4px 0 0; font-weight: 700; letter-spacing: 1px; }
+        .cozum-etiket { display:inline-block; background: rgba(224, 134, 106,.1); border:1px solid rgba(224, 134, 106,.3);
+            color:#e0866a; border-radius: 8px; padding: 3px 9px; margin: 3px 4px 0 0; font-weight: 700; letter-spacing: 1px; }
 
         /* ---- Alt / geri ---- */
         .back-btn {
@@ -237,8 +237,8 @@
                         <a href="birkelimebirislem"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
                         <a href="neonwordle"><i class="fas fa-font"></i> Wordle</a>
                         <a href="neonflagle"><i class="fas fa-flag"></i> Flagle</a>
-                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Yılan</a>
-                        <a href="neonbird"><i class="fas fa-dove"></i> Kuş</a>
+                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Snake</a>
+                        <a href="neonbird"><i class="fas fa-dove"></i> Flappy</a>
                         <a href="neontetris"><i class="fas fa-cubes"></i> Tetris</a>
                     </div>
                 </div>
@@ -622,6 +622,6 @@ kKarolarCiz(); kDurum(); iKarolarCiz();
 ekranGoster('start');
 sozlukYukle();
 </script>
-    <script src="particles.js?v=4" defer></script>
+    <script src="particles.js?v=5" defer></script>
 </body>
 </html>

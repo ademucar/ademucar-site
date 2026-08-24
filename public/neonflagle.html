@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1f2a24" />
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
     
@@ -30,7 +30,7 @@
             font-size: 2rem;
             font-weight: 800;
             color: #eae6da;
-            text-shadow: 0 0 15px rgba(217, 177, 102, 0.6);
+            text-shadow: 0 0 15px rgba(224, 134, 106, 0.6);
             margin-bottom: 10px;
             letter-spacing: 2px;
         }
@@ -45,7 +45,7 @@
 
         .score-box {
             background: rgba(31, 42, 36, 0.4);
-            border: 1px solid rgba(217, 177, 102, 0.3);
+            border: 1px solid rgba(224, 134, 106, 0.3);
             border-radius: 8px;
             padding: 6px 20px;
             text-align: center;
@@ -61,7 +61,7 @@
         }
 
         .score-value {
-            color: #d9b166;
+            color: #e0866a;
             font-size: 1.5rem;
             font-weight: 800;
         }
@@ -78,8 +78,8 @@
             width: 285px;
             height: 190px;
             position: relative;
-            border: 2px solid rgba(217, 177, 102, 0.5);
-            box-shadow: 0 0 20px rgba(217, 177, 102, 0.2);
+            border: 2px solid rgba(224, 134, 106, 0.5);
+            box-shadow: 0 0 20px rgba(224, 134, 106, 0.2);
             border-radius: 8px;
             overflow: hidden;
             margin-bottom: 15px;
@@ -144,13 +144,13 @@
         }
 
         .neon-input:focus {
-            border-color: #d9b166;
-            box-shadow: 0 0 10px rgba(217, 177, 102, 0.2);
+            border-color: #e0866a;
+            box-shadow: 0 0 10px rgba(224, 134, 106, 0.2);
             background: rgba(31, 42, 36, 1);
         }
 
         .btn-guess {
-            background: #d9b166;
+            background: #e0866a;
             color: #1f2a24;
             border: none;
             padding: 0 15px;
@@ -163,7 +163,7 @@
         }
 
         .btn-guess:hover {
-            box-shadow: 0 0 10px rgba(217, 177, 102, 0.5);
+            box-shadow: 0 0 10px rgba(224, 134, 106, 0.5);
             transform: translateY(-2px);
         }
 
@@ -177,7 +177,7 @@
             position: absolute;
             top: 100%; left: 0; right: 0;
             background: #263329;
-            border: 1px solid #d9b166;
+            border: 1px solid #e0866a;
             border-top: none;
             border-radius: 0 0 6px 6px;
             z-index: 100;
@@ -199,8 +199,8 @@
         }
 
         .autocomplete-item:hover {
-            background: rgba(217, 177, 102, 0.2);
-            color: #d9b166;
+            background: rgba(224, 134, 106, 0.2);
+            color: #e0866a;
         }
 
         /* SONUÇLAR - DAHA KOMPAKT YAPI */
@@ -228,8 +228,8 @@
         .result-dist { color: #b9c6bb; font-size: 0.85rem; white-space: nowrap; }
 
         .result-dir {
-            background: rgba(217, 177, 102, 0.2);
-            color: #d9b166;
+            background: rgba(224, 134, 106, 0.2);
+            color: #e0866a;
             width: 28px;
             height: 28px;
             display: flex;
@@ -261,8 +261,8 @@
             left: 50%;
             transform: translateX(-50%) translateY(-12px);
             background: rgba(31, 42, 36, 0.95);
-            border: 1px solid #d9b166;
-            box-shadow: 0 0 18px rgba(217, 177, 102, 0.45);
+            border: 1px solid #e0866a;
+            box-shadow: 0 0 18px rgba(224, 134, 106, 0.45);
             color: #eae6da;
             padding: 12px 24px;
             border-radius: 10px;
@@ -324,8 +324,8 @@
                         <a href="birkelimebirislem"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
                         <a href="neonwordle"><i class="fas fa-font"></i> Wordle</a>
                         <a href="neonflagle"><i class="fas fa-flag"></i> Flagle</a>
-                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Yılan</a>
-                        <a href="neonbird"><i class="fas fa-dove"></i> Kuş</a>
+                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Snake</a>
+                        <a href="neonbird"><i class="fas fa-dove"></i> Flappy</a>
                         <a href="neontetris"><i class="fas fa-cubes"></i> Tetris</a>
                     </div>
                 </div>
@@ -777,6 +777,6 @@
 
         initGame();
     </script>
-    <script src="particles.js?v=4" defer></script>
+    <script src="particles.js?v=5" defer></script>
 </body>
 </html>

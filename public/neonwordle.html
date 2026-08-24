@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1f2a24" />
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
     <style>
@@ -34,7 +34,7 @@
 
         .score-box {
             background: rgba(31, 42, 36, 0.7);
-            border: 1px solid rgba(217, 177, 102, 0.25);
+            border: 1px solid rgba(224, 134, 106, 0.25);
             border-radius: 10px;
             padding: 8px 24px;
             text-align: center;
@@ -52,7 +52,7 @@
         .score-box-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #d9b166;
+            color: #e0866a;
             line-height: 1.2;
         }
 
@@ -67,21 +67,21 @@
         
         .difficulty-btn {
             background: rgba(31, 42, 36, 0.8);
-            border: 2px solid #d9b166;
-            color: #d9b166;
+            border: 2px solid #e0866a;
+            color: #e0866a;
             padding: 15px 30px;
             font-size: 1.2rem;
             font-weight: 800;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(217, 177, 102, 0.1);
+            box-shadow: 0 0 15px rgba(224, 134, 106, 0.1);
         }
 
         .difficulty-btn:hover {
-            background: #d9b166;
+            background: #e0866a;
             color: #1f2a24;
-            box-shadow: 0 0 25px rgba(217, 177, 102, 0.4);
+            box-shadow: 0 0 25px rgba(224, 134, 106, 0.4);
             transform: translateY(-2px);
         }
 
@@ -151,7 +151,7 @@
         .correct { background: #10b981 !important; border-color: #10b981 !important; color: white !important; }
         .present { background: #f59e0b !important; border-color: #f59e0b !important; color: white !important; }
         .absent { background: #3a4a40 !important; border-color: #3a4a40 !important; color: #b9c6bb !important; }
-        .active { border-color: #d9b166 !important; }
+        .active { border-color: #e0866a !important; }
         
         .pop { animation: pop 0.1s ease-in-out; }
         @keyframes pop { 50% { transform: scale(1.1); } }
@@ -198,8 +198,8 @@
             font-size: 1.9rem;
             font-weight: 800;
             letter-spacing: 4px;
-            color: #d9b166;
-            text-shadow: 0 0 12px rgba(217, 177, 102, 0.6);
+            color: #e0866a;
+            text-shadow: 0 0 12px rgba(224, 134, 106, 0.6);
         }
         #answer-reveal.win .answer-word { color: #22c55e; text-shadow: 0 0 12px rgba(34,197,94,0.6); }
         @keyframes revealIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -260,8 +260,8 @@
                         <a href="birkelimebirislem"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
                         <a href="neonwordle"><i class="fas fa-font"></i> Wordle</a>
                         <a href="neonflagle"><i class="fas fa-flag"></i> Flagle</a>
-                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Yılan</a>
-                        <a href="neonbird"><i class="fas fa-dove"></i> Kuş</a>
+                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Snake</a>
+                        <a href="neonbird"><i class="fas fa-dove"></i> Flappy</a>
                         <a href="neontetris"><i class="fas fa-cubes"></i> Tetris</a>
                     </div>
                 </div>
@@ -664,6 +664,6 @@
             }
         });
     </script>
-    <script src="particles.js?v=4" defer></script>
+    <script src="particles.js?v=5" defer></script>
 </body>
 </html>
