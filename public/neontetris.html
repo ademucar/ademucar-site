@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Tetris | Adem Uçar</title>
+    <title>Tetris | Adem Uçar</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#0b1220" />
-    <link rel="stylesheet" href="style.css?v=2">
+    <meta name="theme-color" content="#1f2a24" />
+    <link rel="stylesheet" href="style.css?v=3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
     <style>
         /* MOBİLDE KOPYALA MENÜSÜNÜ VE METİN SEÇİMİNİ TAMAMEN ENGELLEYEN KODLAR */
         .content-container, canvas, .mobile-controls, .control-btn {
@@ -43,8 +43,8 @@
         }
 
         .score-box {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(45, 212, 191, 0.25);
+            background: rgba(31, 42, 36, 0.7);
+            border: 1px solid rgba(217, 177, 102, 0.25);
             border-radius: 10px;
             padding: 8px 24px;
             text-align: center;
@@ -53,7 +53,7 @@
 
         .score-box-label {
             font-size: 0.68rem;
-            color: #64748b;
+            color: #869a8b;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             font-weight: 600;
@@ -62,7 +62,7 @@
         .score-box-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #2dd4bf;
+            color: #d9b166;
             line-height: 1.2;
         }
 
@@ -72,9 +72,9 @@
 
         #tetrisCanvas {
             background: rgba(10, 18, 35, 0.97);
-            border: 2px solid rgba(45, 212, 191, 0.35);
+            border: 2px solid rgba(217, 177, 102, 0.35);
             border-radius: 8px;
-            box-shadow: 0 0 30px rgba(45, 212, 191, 0.1);
+            box-shadow: 0 0 30px rgba(217, 177, 102, 0.1);
             display: block;
             margin: 0 auto;
             touch-action: none;
@@ -93,7 +93,7 @@
         }
 
         .game-overlay h2 {
-            color: #f8fafc;
+            color: #eae6da;
             font-size: 2.2rem;
             margin-bottom: 15px;
             letter-spacing: 2px;
@@ -101,21 +101,21 @@
         }
 
         .start-btn {
-            background: #2dd4bf;
-            color: #0f172a;
+            background: #d9b166;
+            color: #1f2a24;
             border: none;
             padding: 12px 30px;
             font-size: 1.1rem;
             font-weight: 800;
             border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(45, 212, 191, 0.4);
+            box-shadow: 0 0 20px rgba(217, 177, 102, 0.4);
             transition: all 0.3s ease;
         }
 
         .start-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(45, 212, 191, 0.6);
+            box-shadow: 0 0 30px rgba(217, 177, 102, 0.6);
         }
 
         .mobile-controls {
@@ -129,8 +129,8 @@
 
         .control-btn {
             background: rgba(30, 41, 59, 0.8);
-            border: 1px solid #334155;
-            color: #2dd4bf;
+            border: 1px solid #3a4a40;
+            color: #d9b166;
             padding: 15px 0;
             border-radius: 8px;
             font-size: 1.5rem;
@@ -140,8 +140,8 @@
         }
 
         .control-btn:active {
-            background: #2dd4bf;
-            color: #0f172a;
+            background: #d9b166;
+            color: #1f2a24;
             transform: scale(0.95);
         }
 
@@ -159,11 +159,11 @@
         .back-btn {
             margin-top: 25px;
             background: transparent;
-            border: 1px solid #475569;
-            color: #94a3b8;
+            border: 1px solid #55665a;
+            color: #b9c6bb;
             padding: 10px 20px;
             border-radius: 8px;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--yazi-govde);
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
@@ -173,9 +173,9 @@
         }
 
         .back-btn:hover {
-            background: #334155;
-            color: #f8fafc;
-            border-color: #64748b;
+            background: #3a4a40;
+            color: #eae6da;
+            border-color: #869a8b;
         }
     </style>
 </head>
@@ -200,11 +200,11 @@
                     <button class="dropbtn">OYUNLAR</button>
                     <div class="dropdown-content">
                         <a href="birkelimebirislem"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
-                        <a href="neonwordle"><i class="fas fa-font"></i> Neon Wordle</a>
-                        <a href="neonflagle"><i class="fas fa-flag"></i> Neon Flagle</a>
-                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Neon Snake</a>
-                        <a href="neonbird"><i class="fas fa-dove"></i> Neon Bird</a>
-                        <a href="neontetris"><i class="fas fa-cubes"></i> Neon Tetris</a>
+                        <a href="neonwordle"><i class="fas fa-font"></i> Wordle</a>
+                        <a href="neonflagle"><i class="fas fa-flag"></i> Flagle</a>
+                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Yılan</a>
+                        <a href="neonbird"><i class="fas fa-dove"></i> Kuş</a>
+                        <a href="neontetris"><i class="fas fa-cubes"></i> Tetris</a>
                     </div>
                 </div>
             </nav>
@@ -218,7 +218,7 @@
         </header>
 
         <div class="content-container">
-            <h1 class="page-title" style="letter-spacing: 5px; margin-bottom: 10px;">Neon Tetris</h1>
+            <h1 class="page-title" style="letter-spacing: 5px; margin-bottom: 10px;">Tetris</h1>
             
             <div class="score-panel">
                 <div class="score-box">
@@ -352,7 +352,7 @@
             ctx.fillStyle = "rgba(10, 18, 35, 1)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.strokeStyle = "rgba(45, 212, 191, 0.05)";
+            ctx.strokeStyle = "rgba(217, 177, 102, 0.05)";
             ctx.lineWidth = 1;
             for (let i = 0; i < COLS; i++) {
                 ctx.beginPath(); ctx.moveTo(i * BLOCK_SIZE, 0); ctx.lineTo(i * BLOCK_SIZE, canvas.height); ctx.stroke();
@@ -371,7 +371,8 @@
             ctx.setLineDash([]); 
 
             drawMatrix(board, {x: 0, y: 0});
-            drawMatrix(player.matrix, player.pos);
+            // Sayfa ilk açıldığında henüz parça yok; oyun başlayınca doluyor.
+            if (player.matrix) drawMatrix(player.matrix, player.pos);
         }
 
         function playerDrop() {
@@ -588,6 +589,6 @@
         startBtn.addEventListener('click', startGame);
         draw(); 
     </script>
-    <script src="particles.js?v=2" defer></script>
+    <script src="particles.js?v=3" defer></script>
 </body>
 </html>

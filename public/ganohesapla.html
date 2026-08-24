@@ -9,12 +9,12 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#0b1220" />
-    <link rel="stylesheet" href="style.css?v=2">
+    <meta name="theme-color" content="#1f2a24" />
+    <link rel="stylesheet" href="style.css?v=3">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
     <style>
         /* Hesaplayıcıya Özel Stil Eklemeleri */
         .calculator-grid {
@@ -32,7 +32,7 @@
 
         .input-group label {
             font-size: 0.85rem;
-            color: #38bdf8;
+            color: #d9b166;
             font-weight: 600;
         }
 
@@ -47,14 +47,14 @@
         }
 
         input:focus, select:focus {
-            border-color: #38bdf8;
+            border-color: #d9b166;
             background: rgba(255, 255, 255, 0.1);
         }
 
         /* Açılır menü (dropdown) listesi için karanlık tema */
         select option {
-            background-color: #0f172a; 
-            color: #f1f5f9; 
+            background-color: #1f2a24; 
+            color: #eae6da; 
             padding: 10px;
         }
 
@@ -80,8 +80,8 @@
 
         .btn-add {
             background: transparent;
-            border: 1px dashed #38bdf8;
-            color: #38bdf8;
+            border: 1px dashed #d9b166;
+            color: #d9b166;
             width: 100%;
             padding: 12px;
             margin-bottom: 20px;
@@ -91,12 +91,12 @@
         }
 
         .btn-add:hover {
-            background: rgba(56, 189, 248, 0.1);
+            background: rgba(217, 177, 102, 0.1);
         }
 
         .btn-calc {
-            background: #38bdf8;
-            color: #0f172a;
+            background: #d9b166;
+            color: #1f2a24;
             width: 100%;
             padding: 15px;
             border-radius: 8px;
@@ -119,8 +119,8 @@
         .result-box {
             margin-top: 30px;
             padding: 25px;
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.2);
+            background: rgba(217, 177, 102, 0.1);
+            border: 1px solid rgba(217, 177, 102, 0.2);
             border-radius: 12px;
             text-align: center;
         }
@@ -128,7 +128,7 @@
         .result-score {
             font-size: 3.5rem;
             font-weight: 800;
-            color: #38bdf8;
+            color: #d9b166;
         }
 
         .hidden { display: none !important; }
@@ -163,11 +163,11 @@
                     <button class="dropbtn">OYUNLAR</button>
                     <div class="dropdown-content">
                         <a href="birkelimebirislem"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
-                        <a href="neonwordle"><i class="fas fa-font"></i> Neon Wordle</a>
-                        <a href="neonflagle"><i class="fas fa-flag"></i> Neon Flagle</a>
-                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Neon Snake</a>
-                        <a href="neonbird"><i class="fas fa-dove"></i> Neon Bird</a>
-                        <a href="neontetris"><i class="fas fa-cubes"></i> Neon Tetris</a>
+                        <a href="neonwordle"><i class="fas fa-font"></i> Wordle</a>
+                        <a href="neonflagle"><i class="fas fa-flag"></i> Flagle</a>
+                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Yılan</a>
+                        <a href="neonbird"><i class="fas fa-dove"></i> Kuş</a>
+                        <a href="neontetris"><i class="fas fa-cubes"></i> Tetris</a>
                     </div>
                 </div>
 
@@ -209,9 +209,9 @@
             <button class="btn-calc" onclick="calculateGPA()">Hesapla</button>
 
             <div class="result-box" id="resultBox" style="display: none;">
-                <div style="font-size: 0.9rem; color: #cbd5e1;">Yeni Genel Not Ortalamanız</div>
+                <div style="font-size: 0.9rem; color: #b9c6bb;">Yeni Genel Not Ortalamanız</div>
                 <div class="result-score" id="finalGPA">0.00</div>
-                <div id="totalCreditsText" style="color: #38bdf8; font-weight: 600;"></div>
+                <div id="totalCreditsText" style="color: #d9b166; font-weight: 600;"></div>
             </div>
         </div>
     </div>
@@ -297,6 +297,6 @@
             document.getElementById('totalCreditsText').innerText = `Toplam AKTS: ${totalCredits}`;
         }
     </script>
-    <script src="particles.js?v=2" defer></script>
+    <script src="particles.js?v=3" defer></script>
 </body>
 </html>

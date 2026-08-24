@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Bird | Adem Uçar</title>
+    <title>Kuş | Adem Uçar</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#0b1220" />
-    <link rel="stylesheet" href="style.css?v=2">
+    <meta name="theme-color" content="#1f2a24" />
+    <link rel="stylesheet" href="style.css?v=3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
     <style>
         .content-container {
             max-width: 500px;
@@ -27,8 +27,8 @@
         }
 
         .score-box {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(45, 212, 191, 0.25);
+            background: rgba(31, 42, 36, 0.7);
+            border: 1px solid rgba(217, 177, 102, 0.25);
             border-radius: 10px;
             padding: 8px 24px;
             text-align: center;
@@ -36,7 +36,7 @@
 
         .score-box-label {
             font-size: 0.68rem;
-            color: #64748b;
+            color: #869a8b;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             font-weight: 600;
@@ -45,30 +45,30 @@
         .score-box-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #2dd4bf;
+            color: #d9b166;
             line-height: 1.2;
         }
 
         #flappyCanvas {
             background: rgba(10, 18, 35, 0.97);
-            border: 1.5px solid rgba(45, 212, 191, 0.35);
+            border: 1.5px solid rgba(217, 177, 102, 0.35);
             border-radius: 14px;
             display: block;
             margin: 0 auto;
-            box-shadow: 0 0 30px rgba(45, 212, 191, 0.08);
+            box-shadow: 0 0 30px rgba(217, 177, 102, 0.08);
             touch-action: none;
             cursor: pointer;
         }
 
         .game-hint {
             margin-top: 12px;
-            color: #475569;
+            color: #55665a;
             font-size: 0.8rem;
             font-weight: 300;
         }
 
         .game-hint strong {
-            color: #2dd4bf;
+            color: #d9b166;
             font-weight: 600;
         }
     </style>
@@ -94,11 +94,11 @@
                     <button class="dropbtn">OYUNLAR</button>
                     <div class="dropdown-content">
                         <a href="birkelimebirislem"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
-                        <a href="neonwordle"><i class="fas fa-font"></i> Neon Wordle</a>
-                        <a href="neonflagle"><i class="fas fa-flag"></i> Neon Flagle</a>
-                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Neon Snake</a>
-                        <a href="neonbird"><i class="fas fa-dove"></i> Neon Bird</a>
-                        <a href="neontetris"><i class="fas fa-cubes"></i> Neon Tetris</a>
+                        <a href="neonwordle"><i class="fas fa-font"></i> Wordle</a>
+                        <a href="neonflagle"><i class="fas fa-flag"></i> Flagle</a>
+                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Yılan</a>
+                        <a href="neonbird"><i class="fas fa-dove"></i> Kuş</a>
+                        <a href="neontetris"><i class="fas fa-cubes"></i> Tetris</a>
                     </div>
                 </div>
             </nav>
@@ -113,7 +113,7 @@
         </header>
 
         <div class="content-container">
-            <h1 class="page-title" style="letter-spacing: 4px; margin-bottom: 14px;">Neon Bird</h1>
+            <h1 class="page-title" style="letter-spacing: 4px; margin-bottom: 14px;">Kuş</h1>
 
             <div class="score-panel">
                 <div class="score-box">
@@ -269,7 +269,7 @@
             ctx.fillRect(0, 0, CW, CH);
 
             // Izgara
-            ctx.strokeStyle = "rgba(45, 212, 191, 0.05)";
+            ctx.strokeStyle = "rgba(217, 177, 102, 0.05)";
             ctx.lineWidth = 0.5;
             for (let x = 0; x < CW; x += 20) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CH); ctx.stroke(); }
             for (let y = 0; y < CH; y += 20) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CW,y); ctx.stroke(); }
@@ -282,13 +282,13 @@
                 ctx.fillRect(p.x, p.top + PIPE_GAP, PIPE_WIDTH, CH - p.top - PIPE_GAP);
 
                 // Kenar çizgisi
-                ctx.strokeStyle = "rgba(45,212,191,0.2)";
+                ctx.strokeStyle = "rgba(217,177,102,0.2)";
                 ctx.lineWidth = 1;
                 ctx.strokeRect(p.x, 0, PIPE_WIDTH, p.top);
                 ctx.strokeRect(p.x, p.top + PIPE_GAP, PIPE_WIDTH, CH - p.top - PIPE_GAP);
 
                 // Başlık şeritler
-                ctx.fillStyle = "#2dd4bf";
+                ctx.fillStyle = "#d9b166";
                 ctx.fillRect(p.x - 3, p.top - 6, PIPE_WIDTH + 6, 6);
                 ctx.fillRect(p.x - 3, p.top + PIPE_GAP, PIPE_WIDTH + 6, 6);
             });
@@ -301,15 +301,15 @@
 
             // Glow
             ctx.shadowBlur  = 18;
-            ctx.shadowColor = "#2dd4bf";
-            ctx.fillStyle   = "#2dd4bf";
+            ctx.shadowColor = "#d9b166";
+            ctx.fillStyle   = "#d9b166";
             ctx.beginPath();
             ctx.arc(0, 0, BIRD_R, 0, Math.PI * 2);
             ctx.fill();
             ctx.shadowBlur = 0;
 
             // Göz
-            ctx.fillStyle = "#0f172a";
+            ctx.fillStyle = "#1f2a24";
             ctx.beginPath();
             ctx.arc(5, -3, 3, 0, Math.PI * 2);
             ctx.fill();
@@ -331,11 +331,11 @@
                 ctx.fillStyle = "rgba(0,0,0,0.5)";
                 ctx.fillRect(0, 0, CW, CH);
                 ctx.textAlign = "center";
-                ctx.fillStyle = "#f1f5f9";
-                ctx.font = "700 18px 'Inter', sans-serif";
+                ctx.fillStyle = "#eae6da";
+                ctx.font = "700 18px var(--yazi-govde)";
                 ctx.fillText("Başlamak için dokun", CW / 2, CH / 2 - 12);
                 ctx.fillStyle = "rgba(203,213,225,0.65)";
-                ctx.font = "400 13px 'Inter', sans-serif";
+                ctx.font = "400 13px var(--yazi-govde)";
                 ctx.fillText("veya SPACE tuşuna bas", CW / 2, CH / 2 + 14);
                 ctx.textAlign = "left";
             }
@@ -345,14 +345,14 @@
                 ctx.fillStyle = "rgba(0,0,0,0.62)";
                 ctx.fillRect(0, 0, CW, CH);
                 ctx.textAlign = "center";
-                ctx.fillStyle = "#f1f5f9";
-                ctx.font = "700 22px 'Inter', sans-serif";
+                ctx.fillStyle = "#eae6da";
+                ctx.font = "700 22px var(--yazi-govde)";
                 ctx.fillText("OYUN BİTTİ", CW / 2, CH / 2 - 30);
-                ctx.fillStyle = "#2dd4bf";
-                ctx.font = "700 28px 'Inter', sans-serif";
+                ctx.fillStyle = "#d9b166";
+                ctx.font = "700 28px var(--yazi-govde)";
                 ctx.fillText(score + " puan", CW / 2, CH / 2 + 10);
                 ctx.fillStyle = "rgba(203,213,225,0.65)";
-                ctx.font = "400 13px 'Inter', sans-serif";
+                ctx.font = "400 13px var(--yazi-govde)";
                 ctx.fillText("Tekrar oynamak için dokun veya SPACE", CW / 2, CH / 2 + 44);
                 ctx.textAlign = "left";
             }
@@ -377,6 +377,6 @@
         // ── Başlat ───────────────────────────────────────────────────
         init();
     </script>
-    <script src="particles.js?v=2" defer></script>
+    <script src="particles.js?v=3" defer></script>
 </body>
 </html>

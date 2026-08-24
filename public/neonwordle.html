@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Wordle | Adem Uçar</title>
+    <title>Wordle | Adem Uçar</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#0b1220" />
-    <link rel="stylesheet" href="style.css?v=2">
+    <meta name="theme-color" content="#1f2a24" />
+    <link rel="stylesheet" href="style.css?v=3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
     <style>
         .content-container {
             max-width: 600px;
@@ -33,8 +33,8 @@
         }
 
         .score-box {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid rgba(45, 212, 191, 0.25);
+            background: rgba(31, 42, 36, 0.7);
+            border: 1px solid rgba(217, 177, 102, 0.25);
             border-radius: 10px;
             padding: 8px 24px;
             text-align: center;
@@ -43,7 +43,7 @@
 
         .score-box-label {
             font-size: 0.68rem;
-            color: #64748b;
+            color: #869a8b;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             font-weight: 600;
@@ -52,7 +52,7 @@
         .score-box-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #2dd4bf;
+            color: #d9b166;
             line-height: 1.2;
         }
 
@@ -66,22 +66,22 @@
         }
         
         .difficulty-btn {
-            background: rgba(15, 23, 42, 0.8);
-            border: 2px solid #2dd4bf;
-            color: #2dd4bf;
+            background: rgba(31, 42, 36, 0.8);
+            border: 2px solid #d9b166;
+            color: #d9b166;
             padding: 15px 30px;
             font-size: 1.2rem;
             font-weight: 800;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(45, 212, 191, 0.1);
+            box-shadow: 0 0 15px rgba(217, 177, 102, 0.1);
         }
 
         .difficulty-btn:hover {
-            background: #2dd4bf;
-            color: #0f172a;
-            box-shadow: 0 0 25px rgba(45, 212, 191, 0.4);
+            background: #d9b166;
+            color: #1f2a24;
+            box-shadow: 0 0 25px rgba(217, 177, 102, 0.4);
             transform: translateY(-2px);
         }
 
@@ -102,13 +102,13 @@
         .tile {
             width: 50px;
             height: 50px;
-            border: 2px solid #334155;
+            border: 2px solid #3a4a40;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 2rem;
             font-weight: 800;
-            color: #f8fafc;
+            color: #eae6da;
             text-transform: uppercase;
             border-radius: 8px;
             transition: transform 0.4s ease;
@@ -130,9 +130,9 @@
         }
 
         .key {
-            background: #1e293b;
-            border: 1px solid #334155;
-            color: #f8fafc;
+            background: #263329;
+            border: 1px solid #3a4a40;
+            color: #eae6da;
             padding: 12px 0;
             flex: 1;
             border-radius: 6px;
@@ -150,8 +150,8 @@
 
         .correct { background: #10b981 !important; border-color: #10b981 !important; color: white !important; }
         .present { background: #f59e0b !important; border-color: #f59e0b !important; color: white !important; }
-        .absent { background: #334155 !important; border-color: #334155 !important; color: #94a3b8 !important; }
-        .active { border-color: #2dd4bf !important; }
+        .absent { background: #3a4a40 !important; border-color: #3a4a40 !important; color: #b9c6bb !important; }
+        .active { border-color: #d9b166 !important; }
         
         .pop { animation: pop 0.1s ease-in-out; }
         @keyframes pop { 50% { transform: scale(1.1); } }
@@ -164,8 +164,8 @@
         .notification {
             position: fixed;
             top: 20px;
-            background: #e2e8f0;
-            color: #0f172a;
+            background: #eae6da;
+            color: #1f2a24;
             padding: 12px 24px;
             border-radius: 8px;
             font-weight: 800;
@@ -181,8 +181,8 @@
             margin-top: 18px;
             padding: 14px 26px;
             border-radius: 12px;
-            border: 1px solid #475569;
-            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid #55665a;
+            background: rgba(31, 42, 36, 0.85);
             text-align: center;
             animation: revealIn 0.35s ease;
         }
@@ -190,7 +190,7 @@
             font-size: 0.8rem;
             font-weight: 600;
             letter-spacing: 1px;
-            color: #94a3b8;
+            color: #b9c6bb;
             text-transform: uppercase;
         }
         #answer-reveal .answer-word {
@@ -198,8 +198,8 @@
             font-size: 1.9rem;
             font-weight: 800;
             letter-spacing: 4px;
-            color: #22d3ee;
-            text-shadow: 0 0 12px rgba(34, 211, 238, 0.6);
+            color: #d9b166;
+            text-shadow: 0 0 12px rgba(217, 177, 102, 0.6);
         }
         #answer-reveal.win .answer-word { color: #22c55e; text-shadow: 0 0 12px rgba(34,197,94,0.6); }
         @keyframes revealIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -214,11 +214,11 @@
         .back-btn {
             margin-top: 25px;
             background: transparent;
-            border: 1px solid #475569;
-            color: #94a3b8;
+            border: 1px solid #55665a;
+            color: #b9c6bb;
             padding: 10px 20px;
             border-radius: 8px;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--yazi-govde);
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
@@ -226,9 +226,9 @@
         }
 
         .back-btn:hover {
-            background: #334155;
-            color: #f8fafc;
-            border-color: #64748b;
+            background: #3a4a40;
+            color: #eae6da;
+            border-color: #869a8b;
         }
 
         /* Süre kutusu uyarı durumları */
@@ -258,11 +258,11 @@
                     <button class="dropbtn">OYUNLAR</button>
                     <div class="dropdown-content">
                         <a href="birkelimebirislem"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
-                        <a href="neonwordle"><i class="fas fa-font"></i> Neon Wordle</a>
-                        <a href="neonflagle"><i class="fas fa-flag"></i> Neon Flagle</a>
-                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Neon Snake</a>
-                        <a href="neonbird"><i class="fas fa-dove"></i> Neon Bird</a>
-                        <a href="neontetris"><i class="fas fa-cubes"></i> Neon Tetris</a>
+                        <a href="neonwordle"><i class="fas fa-font"></i> Wordle</a>
+                        <a href="neonflagle"><i class="fas fa-flag"></i> Flagle</a>
+                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Yılan</a>
+                        <a href="neonbird"><i class="fas fa-dove"></i> Kuş</a>
+                        <a href="neontetris"><i class="fas fa-cubes"></i> Tetris</a>
                     </div>
                 </div>
             </nav>
@@ -276,7 +276,7 @@
         </header>
 
         <div class="content-container">
-            <h1 class="page-title" style="letter-spacing: 5px; margin-bottom: 10px;">Neon Wordle</h1>
+            <h1 class="page-title" style="letter-spacing: 5px; margin-bottom: 10px;">Wordle</h1>
             
             <div class="score-panel" id="score-panel">
                 <div class="score-box">
@@ -664,6 +664,6 @@
             }
         });
     </script>
-    <script src="particles.js?v=2" defer></script>
+    <script src="particles.js?v=3" defer></script>
 </body>
 </html>

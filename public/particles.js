@@ -17,8 +17,8 @@
     var particles = [];
     var width, height, dpr;
 
-    // Zümrüt-yeşil ton (aurora ile uyumlu)
-    var COLOR = '52, 211, 153';
+    // Tebeşir tozu: tahta zeminde hafifçe süzülen noktalar
+    var COLOR = '234, 230, 218';   // Tebeşir beyazı
     var LINK_DIST = 160;   // Bağlantı çizgisi mesafesi (px)
     var SPEED = 0.25;      // Hareket hızı
 
@@ -51,7 +51,7 @@
                 y: Math.random() * height,
                 vx: (Math.random() - 0.5) * SPEED,
                 vy: (Math.random() - 0.5) * SPEED,
-                r: Math.random() * 4.5 + 3.0
+                r: Math.random() * 3.4 + 2.0
             });
         }
     }
@@ -74,7 +74,7 @@
             // Nokta
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(' + COLOR + ',0.7)';
+            ctx.fillStyle = 'rgba(' + COLOR + ',0.42)';
             ctx.fill();
 
             // Yakın noktalar arası bağlantı çizgileri
@@ -88,8 +88,8 @@
                     ctx.moveTo(p.x, p.y);
                     ctx.lineTo(q.x, q.y);
                     ctx.strokeStyle =
-                        'rgba(' + COLOR + ',' + (0.22 * (1 - dist / LINK_DIST)) + ')';
-                    ctx.lineWidth = 1.8;
+                        'rgba(' + COLOR + ',' + (0.16 * (1 - dist / LINK_DIST)) + ')';
+                    ctx.lineWidth = 1.1;
                     ctx.stroke();
                 }
             }

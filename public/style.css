@@ -1,166 +1,165 @@
+/* ============================================================
+   KARA TAHTA TEMASI
+   Zemin: arduvaz yeşili tahta · Yazı: tebeşir · Vurgu: altın sarısı
+   Başlıklar serif, gövde okunaklı sans, el yazısı yalnızca vurguda.
+   ============================================================ */
+
+:root {
+    /* Renkler */
+    --tahta:          #1f2a24;
+    --tahta-derin:    #18211c;
+    --tahta-acik:     #263329;
+    --tebesir:        #eae6da;
+    --tebesir-orta:   #b9c6bb;
+    --tebesir-silik:  #869a8b;
+    --altin:          #d9b166;
+    --altin-parlak:   #ecc987;
+    --cizgi:          rgba(234, 230, 218, 0.13);
+    --cizgi-belirgin: rgba(234, 230, 218, 0.26);
+
+    /* Yazı tipleri */
+    --yazi-baslik: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    --yazi-govde:  'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --yazi-el:     'Caveat', 'Segoe Script', cursive;
+
+    /* Elle çizilmiş hissi veren düzensiz köşeler */
+    --el-kose-1: 14px 9px 16px 8px;
+    --el-kose-2: 9px 16px 8px 14px;
+    --el-kose-3: 18px 12px 20px 10px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--yazi-govde);
 }
 
 html {
-    /* Tarayıcıların metni kendiliğinden büyütmesini engeller.
-       Bu olmadan Chrome/Safari mobilde yazıları farklı oranlarda şişiriyor
-       (ilk açılışta devasa görünme ve tarayıcıdan tarayıcıya oran farkı). */
+    /* Tarayıcıların metni kendiliğinden büyütmesini engeller */
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    /* Tüm tarayıcılarda aynı kök ölçü (varsayılan 16px).
-       Yüzde kullanmak, kullanıcının bilinçli yazı boyutu ayarını da korur. */
     font-size: 100%;
 }
 
 body, html {
     min-height: 100vh;
-    background-color: #0b1120; /* Tek tip koyu zemin (kaydırınca renk farkı olmasın) */
+    background-color: var(--tahta-derin);
+    color: var(--tebesir);
     overflow-x: hidden;
 }
 
-/* --- ŞIK KAYDIRMA ÇUBUĞU --- */
-/* Firefox */
+/* --- Kaydırma çubuğu --- */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #2dd4bf rgba(15, 23, 42, 0.35);
+    scrollbar-color: var(--altin) rgba(0, 0, 0, 0.25);
 }
-/* Chrome / Edge / Safari */
-::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-::-webkit-scrollbar-track {
-    background: rgba(15, 23, 42, 0.35);
-    border-radius: 10px;
-}
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.25); }
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #38bdf8, #2dd4bf);
-    border-radius: 10px;
-    border: 2px solid rgba(15, 23, 42, 0.6);
+    background: var(--altin);
+    border-radius: 6px;
+    border: 2px solid var(--tahta-derin);
 }
-::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #2dd4bf, #38bdf8);
-}
-::-webkit-scrollbar-button {
-    display: none; /* Üst/alt ok tuşlarını gizle */
-}
+::-webkit-scrollbar-thumb:hover { background: var(--altin-parlak); }
+::-webkit-scrollbar-button { display: none; }
 
+::selection { background: rgba(217, 177, 102, 0.3); color: var(--tebesir); }
+
+/* ============================================================
+   TAHTA ZEMİNİ
+   ============================================================ */
 .background-wrapper {
-    width: 100%; /* 100vw yerine 100% kullanmak yatay kayma hatalarını önler */
+    width: 100%;
     min-height: 100vh;
-    /* Koyu zemin (aurora efekti için temel) */
-    background: linear-gradient(180deg, #0f172a 0%, #0b1120 100%);
-    background-attachment: fixed;
+    background-color: var(--tahta);
     position: relative;
-    overflow: hidden; /* Aurora huzmelerinin taşmasını engeller */
+    overflow: hidden;
 }
 
-/* --- AURORA / IŞIK HUZMELERİ EFEKTİ --- */
-.background-wrapper::before,
+/* Tahtanın ortası açık, kenarları koyu — gerçek tahta böyle görünür */
+.background-wrapper::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(120% 90% at 50% 32%, rgba(78, 102, 84, 0.30), transparent 62%),
+        radial-gradient(100% 70% at 50% 100%, rgba(0, 0, 0, 0.32), transparent 55%);
+}
+
+/* Silinmiş tebeşir izleri — çok hafif, dikkat dağıtmaz */
 .background-wrapper::after {
     content: "";
     position: fixed;
-    top: -30%;
-    left: -30%;
-    width: 160%;
-    height: 160%;
+    inset: 0;
     z-index: 0;
-    pointer-events: none; /* Tıklamaları engellemez */
-    filter: blur(90px);
-    opacity: 0.55;
+    pointer-events: none;
+    opacity: 0.055;
+    background-image:
+        repeating-linear-gradient(102deg, rgba(234,230,218,.9) 0 2px, transparent 2px 26px),
+        repeating-linear-gradient(-78deg, rgba(234,230,218,.7) 0 1px, transparent 1px 34px);
 }
 
-/* Birinci ışık katmanı: yeşil-zümrüt */
-.background-wrapper::before {
-    background:
-        radial-gradient(35% 45% at 25% 25%, rgba(34, 197, 94, 0.48), transparent 60%),
-        radial-gradient(30% 40% at 75% 20%, rgba(52, 211, 153, 0.38), transparent 60%);
-    animation: aurora-move-1 18s ease-in-out infinite alternate;
-}
-
-/* İkinci ışık katmanı: yeşil-lime */
-.background-wrapper::after {
-    background:
-        radial-gradient(40% 45% at 70% 75%, rgba(22, 163, 74, 0.45), transparent 60%),
-        radial-gradient(30% 40% at 30% 80%, rgba(132, 204, 22, 0.35), transparent 60%);
-    animation: aurora-move-2 22s ease-in-out infinite alternate;
-}
-
-@keyframes aurora-move-1 {
-    0%   { transform: translate(0, 0) scale(1)   rotate(0deg); }
-    100% { transform: translate(6%, 8%) scale(1.15) rotate(12deg); }
-}
-
-@keyframes aurora-move-2 {
-    0%   { transform: translate(0, 0) scale(1)    rotate(0deg); }
-    100% { transform: translate(-8%, -6%) scale(1.2) rotate(-15deg); }
-}
-
-/* Hareketi azaltmayı tercih eden kullanıcılar için */
-@media (prefers-reduced-motion: reduce) {
-    .background-wrapper::before,
-    .background-wrapper::after {
-        animation: none;
-    }
-}
-
-/* İçeriğin ışık huzmelerinin üstünde kalmasını garanti eder */
+/* İçerik her zaman dokunun üstünde kalsın */
 .top-header {
     position: relative;
-    z-index: 100; /* Açılır menülerin içerik kutusunun üstünde kalmasını sağlar */
+    z-index: 100;
 }
 .hero-text,
 .content-container {
     z-index: 1;
 }
-/* --- AURORA SONU --- */
 
-/* Üst Header (Menü + Sosyal) */
+/* ============================================================
+   ÜST MENÜ
+   ============================================================ */
 .top-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 50px;
+    padding: 26px 46px;
 }
 
 .nav-menu {
     display: flex;
-    gap: 14px;
+    gap: 12px;
     align-items: center;
 }
 
+/* Tebeşirle çizilmiş kutucuklar: düzensiz köşe, ince kenar, gölge yok */
 .nav-menu a,
 .dropbtn {
-    color: #ffffff;
+    color: var(--tebesir);
     text-decoration: none;
-    font-weight: 600;
-    font-size: 0.85rem;
-    letter-spacing: 1.5px;
-    /* Buton çerçevesi */
-    padding: 9px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 22px;
-    /* Camsı (buzlu cam) görünüm */
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: color 0.3s, border-color 0.3s, background 0.3s, box-shadow 0.3s;
+    font-family: var(--yazi-govde);
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 1.6px;
+    padding: 9px 18px;
+    background: transparent;
+    border: 1.5px solid var(--cizgi-belirgin);
+    border-radius: var(--el-kose-1);
+    transition: color .25s, border-color .25s, background .25s, border-radius .25s;
+}
+
+/* Komşu düğmeler aynı köşeyi tekrarlamasın: elle çizilmiş izlenimi güçlensin */
+.nav-menu > a:nth-child(even),
+.nav-menu > .dropdown:nth-child(even) .dropbtn {
+    border-radius: var(--el-kose-2);
 }
 
 .nav-menu a:hover,
 .dropbtn:hover {
-    color: #2dd4bf;
-    border-color: rgba(45, 212, 191, 0.6);
-    background: rgba(45, 212, 191, 0.08);
-    box-shadow: 0 0 12px rgba(45, 212, 191, 0.25);
+    color: var(--altin-parlak);
+    border-color: var(--altin);
+    background: rgba(217, 177, 102, 0.09);
+    border-radius: var(--el-kose-3);
 }
 
-/* --- AÇILIR MENÜ (DROPDOWN) STİLLERİ --- */
+/* --- Açılır menü --- */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -169,137 +168,151 @@ body, html {
 .dropbtn {
     cursor: pointer;
     outline: none;
-    font-family: 'Inter', sans-serif;
 }
 
-/* Aşağı ok işareti */
 .dropbtn::after {
-    content: '\25BC'; 
-    font-size: 0.6rem;
-    margin-left: 6px;
+    content: '\25BE';
+    font-size: 0.7rem;
+    margin-left: 7px;
     vertical-align: middle;
+    color: var(--altin);
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: rgba(15, 23, 42, 0.10);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    min-width: 230px;
-    box-shadow: 0px 8px 24px 0px rgba(0,0,0,0.6);
-    border: 1px solid rgba(45, 212, 191, 0.25);
-    border-radius: 8px;
+    background-color: rgba(24, 33, 28, 0.93);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    min-width: 244px;
+    border: 1.5px solid var(--cizgi-belirgin);
+    border-radius: var(--el-kose-3);
     z-index: 1000;
     top: 100%;
     left: 50%;
-    transform: translateX(-50%); 
-    margin-top: 15px; 
+    transform: translateX(-50%);
+    margin-top: 14px;
+    padding: 7px;
     overflow: hidden;
 }
 
-/* Menüye giderken farenin boşa düşmemesi için görünmez köprü */
+/* Fare menüye giderken boşluğa düşmesin */
 .dropdown::after {
     content: "";
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
-    height: 15px;
+    height: 14px;
 }
 
 .dropdown-content a {
-    color: #cbd5e1;
-    padding: 14px 20px;
+    color: var(--tebesir-orta);
+    padding: 11px 15px;
     text-decoration: none;
     display: block;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    /* Satırların iç dolgusunu kaldır: arkadaki parçacıklar doğrudan görünsün.
-       (Nav butonlarından miras alınan beyaz dolgu/blur burada iptal ediliyor) */
+    font-size: 0.84rem;
+    font-weight: 400;
+    letter-spacing: .4px;
+    border: none;
+    border-radius: 8px;
     background: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 0;
+    transition: color .22s, background .22s, padding-left .22s;
 }
 
-.dropdown-content a:last-child {
-    border-bottom: none;
+.dropdown-content a i {
+    color: var(--tebesir-silik);
+    width: 18px;
+    margin-right: 7px;
+    transition: color .22s;
 }
 
-/* Hover efekti: Hem renk değişir hem hafif sağa kayar */
+.dropdown-content a:last-child { border-bottom: none; }
+
 .dropdown-content a:hover {
-    background-color: rgba(45, 212, 191, 0.12);
-    color: #2dd4bf;
-    padding-left: 25px; 
+    background-color: rgba(217, 177, 102, 0.12);
+    color: var(--altin-parlak);
+    padding-left: 21px;
 }
+.dropdown-content a:hover i { color: var(--altin); }
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-/* --- AÇILIR MENÜ SONU --- */
+.dropdown:hover .dropdown-content { display: block; }
 
+/* --- Sosyal ikonlar --- */
 .social-icons {
     display: flex;
-    gap: 25px;
+    gap: 22px;
+    align-items: center;
 }
 
 .social-icons a {
-    color: #ffffff;
-    font-size: 1.3rem;
-    transition: color 0.3s, transform 0.3s;
+    color: var(--tebesir-orta);
+    font-size: 1.2rem;
+    transition: color .25s, transform .25s;
 }
 
 .social-icons a:hover {
-    color: #38bdf8;
-    transform: translateY(-3px);
+    color: var(--altin-parlak);
+    transform: translateY(-3px) rotate(-4deg);
 }
 
-/* Orta Hero Alanı */
+/* ============================================================
+   HERO
+   ============================================================ */
 .hero-text {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: #ffffff;
+    color: var(--tebesir);
     width: 90%;
 }
 
 .hero-text h1 {
-    font-size: clamp(1.8rem, 6vw, 3.5rem);
-    font-weight: 800;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-}
-
-.hero-text p {
-    font-size: 1rem;
-    color: #cbd5e1;
+    font-family: var(--yazi-baslik);
+    font-size: clamp(2.2rem, 7vw, 4.2rem);
+    font-weight: 400;
     letter-spacing: 1px;
+    line-height: 1.05;
+    margin-bottom: 12px;
 }
 
-/* İletişim Özel Tasarım */
+/* El yazısı tam da bu satır için */
+.hero-text p {
+    font-family: var(--yazi-el);
+    font-size: clamp(1.15rem, 4vw, 1.7rem);
+    color: var(--altin);
+    letter-spacing: .5px;
+}
+
+/* ============================================================
+   İLETİŞİM
+   ============================================================ */
 .contact-title {
-    font-size: clamp(1.6rem, 5.5vw, 3rem) !important;
-    margin-bottom: 30px !important;
+    font-size: clamp(2rem, 6vw, 3.4rem) !important;
+    margin-bottom: 26px !important;
 }
 
 .contact-details p {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
+    font-size: 1.15rem;
+    margin-bottom: 14px;
     font-weight: 300;
+    color: var(--tebesir-orta);
 }
 
 .contact-data {
-    color: #38bdf8;
+    font-family: var(--yazi-el);
+    font-size: 1.5rem;
     font-weight: 600;
+    color: var(--altin);
 }
 
+/* ============================================================
+   İÇERİK KABI
+   ============================================================ */
 .content-container {
     position: absolute;
     top: 55%;
@@ -307,156 +320,186 @@ body, html {
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 900px;
-    background: transparent; /* Mavi panel tabanı kaldırıldı */
+    background: transparent;
     border: none;
-    border-radius: 15px;
-    padding: 40px 50px;
-    color: #f1f5f9;
+    padding: 38px 46px;
+    color: var(--tebesir);
     max-height: 80vh;
     overflow-y: auto;
 }
 
-/* Sayfa Başlığı */
+/* Tahtaya tebeşirle yazılmış başlık, altında çift el çizimi çizgi */
 .page-title {
-    font-size: clamp(1.4rem, 5vw, 2.2rem);
-    font-weight: 800;
-    margin-bottom: 20px;
+    position: relative;
+    font-family: var(--yazi-baslik);
+    font-size: clamp(1.7rem, 5.5vw, 2.7rem);
+    font-weight: 400;
+    margin-bottom: 26px;
     text-align: center;
-    letter-spacing: 2px;
-    color: #ffffff;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 15px;
+    letter-spacing: 1px;
+    color: var(--tebesir);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--cizgi-belirgin);
 }
 
-/* Biyografi Metni */
+.page-title::after {
+    content: "";
+    position: absolute;
+    left: 14%;
+    right: 20%;
+    bottom: -4px;
+    height: 1px;
+    background: rgba(217, 177, 102, 0.55);
+}
+
+/* ============================================================
+   HAKKIMDA
+   ============================================================ */
 .about-text p {
     font-size: 1rem;
-    line-height: 1.6;
-    color: #cbd5e1;
+    line-height: 1.75;
+    color: var(--tebesir-orta);
     margin-bottom: 15px;
     text-align: justify;
 }
 
 .about-details {
     display: flex;
-    gap: 30px;
-    margin-top: 30px;
+    gap: 28px;
+    margin-top: 32px;
 }
 
+/* Tahtaya tebeşirle çizilmiş kutu */
 .detail-box {
     flex: 1;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 25px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.16);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding: 24px;
+    border-radius: var(--el-kose-3);
+    border: 1.5px solid var(--cizgi);
 }
+.about-details > .detail-box:nth-child(even) { border-radius: var(--el-kose-2); }
 
 .detail-box h3 {
-    color: #38bdf8;
-    font-size: 1.2rem;
-    margin-bottom: 15px;
+    font-family: var(--yazi-el);
+    color: var(--altin);
+    font-size: 1.55rem;
+    font-weight: 600;
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
     gap: 10px;
+    letter-spacing: .5px;
 }
+.detail-box h3 i { font-size: 1.05rem; }
 
-.detail-box ul {
-    list-style: none;
-}
+.detail-box ul { list-style: none; }
 
 .detail-box ul li {
-    margin-bottom: 15px;
+    margin-bottom: 14px;
     font-size: 0.9rem;
-    color: #cbd5e1;
-    border-left: 2px solid #38bdf8;
-    padding-left: 15px;
+    color: var(--tebesir-orta);
+    border-left: 2px solid rgba(217, 177, 102, 0.45);
+    padding-left: 14px;
+    border-radius: 0;
+    line-height: 1.55;
 }
 
 .detail-box ul li strong {
-    color: #ffffff;
-    font-size: 1.05rem;
+    color: var(--tebesir);
+    font-size: 1rem;
+    font-weight: 600;
 }
 
+/* Yetenek etiketleri: defter kenarına düşülmüş notlar */
 .skills-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 9px;
 }
 
 .skills-tags span {
-    background: rgba(56, 189, 248, 0.15);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    color: #38bdf8;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    font-family: var(--yazi-el);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    color: var(--altin);
+    padding: 3px 14px;
+    border-radius: var(--el-kose-1);
+    font-size: 1.1rem;
     font-weight: 600;
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    border: 1.5px solid rgba(217, 177, 102, 0.4);
 }
+.skills-tags span:nth-child(even) { border-radius: var(--el-kose-2); }
 
+/* ============================================================
+   PROJELER
+   ============================================================ */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    margin-top: 30px;
+    gap: 22px;
+    margin-top: 28px;
 }
 
 .project-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 25px;
+    background: rgba(0, 0, 0, 0.16);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 1.5px solid var(--cizgi);
+    border-radius: var(--el-kose-3);
+    padding: 23px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.3s ease, background 0.3s ease;
+    transition: transform .3s ease, border-color .3s ease, background .3s ease;
 }
+.projects-grid > .project-card:nth-child(even) { border-radius: var(--el-kose-2); }
 
 .project-card:hover {
-    transform: translateY(-8px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(56, 189, 248, 0.4);
+    transform: translateY(-5px) rotate(-0.35deg);
+    background: rgba(0, 0, 0, 0.24);
+    border-color: rgba(217, 177, 102, 0.5);
 }
 
 .project-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .folder-icon {
-    font-size: 2rem;
-    color: #38bdf8;
+    font-size: 1.7rem;
+    color: var(--altin);
 }
 
 .github-link {
-    font-size: 1.4rem;
-    color: #cbd5e1;
-    transition: color 0.3s;
+    font-size: 1.3rem;
+    color: var(--tebesir-silik);
+    transition: color .25s, transform .25s;
 }
 
 .github-link:hover {
-    color: #ffffff;
+    color: var(--altin-parlak);
+    transform: translateY(-2px);
 }
 
 .project-title {
-    font-size: 1.25rem;
-    color: #f8fafc;
-    margin-bottom: 15px;
-    font-weight: 600;
+    font-family: var(--yazi-baslik);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--tebesir);
+    margin-bottom: 11px;
+    letter-spacing: .3px;
 }
 
 .project-desc {
-    font-size: 0.95rem;
-    color: #94a3b8;
-    line-height: 1.5;
-    margin-bottom: 25px;
+    font-size: 0.92rem;
+    color: var(--tebesir-orta);
+    line-height: 1.6;
+    margin-bottom: 22px;
     flex-grow: 1;
 }
 
@@ -465,88 +508,78 @@ body, html {
     align-items: center;
 }
 
+/* Teknoloji satırı: el yazısı dipnot */
 .language-tag {
-    font-size: 0.85rem;
-    color: #cbd5e1;
+    font-family: var(--yazi-el);
+    font-size: 1.08rem;
+    color: var(--tebesir-silik);
     display: flex;
     align-items: center;
     gap: 8px;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .lang-dot {
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
 }
 
-.html-color {
-    background-color: #e34c26;
-}
+.html-color { background-color: #e34c26; }
 
+/* ============================================================
+   MOBİL
+   ============================================================ */
 @media (max-width: 768px) {
-    body, html {
-        overflow-y: auto;
-    }
+    body, html { overflow-y: auto; }
 
-    /* Mobil performansı + kaydırınca renk farkı olmaması için:
-       ağır blur katmanları kapat, degradeyi kaldır, tek tip koyu zemin bırak
-       (iOS background-attachment:fixed desteklemediğinden degrade yayılıp
-        renk farkı yaratıyordu). */
-    .background-wrapper {
-        background: transparent;
-    }
+    /* Mobilde dokuları kapat: performans ve tek tip zemin */
     .background-wrapper::before,
-    .background-wrapper::after {
-        display: none;
-    }
+    .background-wrapper::after { display: none; }
+    .background-wrapper { background-color: var(--tahta); }
 
     .top-header {
         flex-direction: column;
-        padding: 20px;
-        gap: 15px;
+        padding: 18px;
+        gap: 14px;
     }
 
     .nav-menu {
-        gap: 10px;
+        gap: 8px;
         flex-wrap: wrap;
         justify-content: center;
     }
 
-    /* ARAÇLAR/OYUNLAR (dropbtn) diğer sekmelerle aynı boyutta olsun */
     .nav-menu a,
     .dropbtn {
-        font-size: 0.7rem;
-        padding: 7px 12px;
+        font-size: 0.68rem;
+        padding: 7px 13px;
+        letter-spacing: 1.2px;
     }
 
     .dropdown-content {
         left: 50%;
         transform: translateX(-50%);
-        min-width: 180px;
+        min-width: 200px;
     }
 
     .content-container {
-        position: relative; 
+        position: relative;
         top: 0;
         left: 0;
         transform: none;
-        margin: 20px auto;
-        padding: 20px;
-        max-height: none; 
+        margin: 16px auto;
+        padding: 18px;
+        max-height: none;
     }
 
     .about-details {
-        flex-direction: column; 
-        gap: 20px;
+        flex-direction: column;
+        gap: 18px;
     }
 
-    .projects-grid {
-        grid-template-columns: 1fr; 
-    }
+    .projects-grid { grid-template-columns: 1fr; }
 
-    .contact-details p {
-        font-size: 1rem;
-    }
+    .contact-details p { font-size: 1rem; }
 }

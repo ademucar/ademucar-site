@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neon Flagle | Adem Uçar</title>
+    <title>Flagle | Adem Uçar</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#0b1220" />
-    <link rel="stylesheet" href="style.css?v=2">
+    <meta name="theme-color" content="#1f2a24" />
+    <link rel="stylesheet" href="style.css?v=3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
     
     <style>
         /* EKRAMA SIĞMASI İÇİN BOŞLUKLAR DARALTILDI */
@@ -23,14 +23,14 @@
             margin-top: 15px;
             padding-bottom: 20px;
             animation: fadeIn 0.8s ease-out;
-            color: #f8fafc;
+            color: #eae6da;
         }
 
         .game-title {
             font-size: 2rem;
             font-weight: 800;
-            color: #f8fafc;
-            text-shadow: 0 0 15px rgba(45, 212, 191, 0.6);
+            color: #eae6da;
+            text-shadow: 0 0 15px rgba(217, 177, 102, 0.6);
             margin-bottom: 10px;
             letter-spacing: 2px;
         }
@@ -44,8 +44,8 @@
         }
 
         .score-box {
-            background: rgba(15, 23, 42, 0.4);
-            border: 1px solid rgba(45, 212, 191, 0.3);
+            background: rgba(31, 42, 36, 0.4);
+            border: 1px solid rgba(217, 177, 102, 0.3);
             border-radius: 8px;
             padding: 6px 20px;
             text-align: center;
@@ -53,7 +53,7 @@
         }
 
         .score-title {
-            color: #94a3b8;
+            color: #b9c6bb;
             font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 1px;
@@ -61,13 +61,13 @@
         }
 
         .score-value {
-            color: #2dd4bf;
+            color: #d9b166;
             font-size: 1.5rem;
             font-weight: 800;
         }
 
         .subtitle {
-            color: #94a3b8;
+            color: #b9c6bb;
             margin-bottom: 15px;
             text-align: center;
             font-size: 0.85rem;
@@ -78,12 +78,12 @@
             width: 285px;
             height: 190px;
             position: relative;
-            border: 2px solid rgba(45, 212, 191, 0.5);
-            box-shadow: 0 0 20px rgba(45, 212, 191, 0.2);
+            border: 2px solid rgba(217, 177, 102, 0.5);
+            box-shadow: 0 0 20px rgba(217, 177, 102, 0.2);
             border-radius: 8px;
             overflow: hidden;
             margin-bottom: 15px;
-            background-color: #0f172a;
+            background-color: #1f2a24;
         }
 
         .flag-bg {
@@ -106,8 +106,8 @@
         }
 
         .flag-piece {
-            background-color: #1e293b;
-            box-shadow: inset 0 0 0 1px #0f172a;
+            background-color: #263329;
+            box-shadow: inset 0 0 0 1px #1f2a24;
             transition: background-color 0.4s ease, box-shadow 0.4s ease;
         }
 
@@ -133,37 +133,37 @@
         .neon-input {
             flex-grow: 1;
             background: rgba(30, 41, 59, 0.5);
-            border: 1px solid #334155;
-            color: #f8fafc;
+            border: 1px solid #3a4a40;
+            color: #eae6da;
             padding: 8px 12px;
             border-radius: 6px;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--yazi-govde);
             font-size: 0.9rem;
             outline: none;
             transition: all 0.3s;
         }
 
         .neon-input:focus {
-            border-color: #2dd4bf;
-            box-shadow: 0 0 10px rgba(45, 212, 191, 0.2);
-            background: rgba(15, 23, 42, 1);
+            border-color: #d9b166;
+            box-shadow: 0 0 10px rgba(217, 177, 102, 0.2);
+            background: rgba(31, 42, 36, 1);
         }
 
         .btn-guess {
-            background: #2dd4bf;
-            color: #0f172a;
+            background: #d9b166;
+            color: #1f2a24;
             border: none;
             padding: 0 15px;
             border-radius: 6px;
             font-weight: 800;
             cursor: pointer;
             transition: 0.3s;
-            font-family: 'Inter', sans-serif;
+            font-family: var(--yazi-govde);
             font-size: 0.85rem;
         }
 
         .btn-guess:hover {
-            box-shadow: 0 0 10px rgba(45, 212, 191, 0.5);
+            box-shadow: 0 0 10px rgba(217, 177, 102, 0.5);
             transform: translateY(-2px);
         }
 
@@ -176,8 +176,8 @@
         .autocomplete-list {
             position: absolute;
             top: 100%; left: 0; right: 0;
-            background: #1e293b;
-            border: 1px solid #2dd4bf;
+            background: #263329;
+            border: 1px solid #d9b166;
             border-top: none;
             border-radius: 0 0 6px 6px;
             z-index: 100;
@@ -189,8 +189,8 @@
         .autocomplete-item {
             padding: 8px 12px;
             cursor: pointer;
-            border-bottom: 1px solid #334155;
-            color: #f8fafc;
+            border-bottom: 1px solid #3a4a40;
+            color: #eae6da;
             font-size: 0.9rem;
         }
 
@@ -199,8 +199,8 @@
         }
 
         .autocomplete-item:hover {
-            background: rgba(45, 212, 191, 0.2);
-            color: #2dd4bf;
+            background: rgba(217, 177, 102, 0.2);
+            color: #d9b166;
         }
 
         /* SONUÇLAR - DAHA KOMPAKT YAPI */
@@ -217,7 +217,7 @@
             grid-template-columns: 1fr auto auto;
             gap: 8px;
             background: rgba(30, 41, 59, 0.8);
-            border: 1px solid #475569;
+            border: 1px solid #55665a;
             padding: 8px 12px;
             border-radius: 6px;
             align-items: center;
@@ -225,11 +225,11 @@
         }
 
         .result-name { font-weight: 600; font-size: 0.9rem; }
-        .result-dist { color: #cbd5e1; font-size: 0.85rem; white-space: nowrap; }
+        .result-dist { color: #b9c6bb; font-size: 0.85rem; white-space: nowrap; }
 
         .result-dir {
-            background: rgba(45, 212, 191, 0.2);
-            color: #2dd4bf;
+            background: rgba(217, 177, 102, 0.2);
+            color: #d9b166;
             width: 28px;
             height: 28px;
             display: flex;
@@ -254,16 +254,16 @@
             color: #fff;
         }
 
-        /* Neon temaya uygun uyarı bildirimi (alert yerine) */
+        /* Tahta temasına uygun uyarı bildirimi (alert yerine) */
         .toast {
             position: fixed;
             top: 24px;
             left: 50%;
             transform: translateX(-50%) translateY(-12px);
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid #22d3ee;
-            box-shadow: 0 0 18px rgba(34, 211, 238, 0.45);
-            color: #e2e8f0;
+            background: rgba(31, 42, 36, 0.95);
+            border: 1px solid #d9b166;
+            box-shadow: 0 0 18px rgba(217, 177, 102, 0.45);
+            color: #eae6da;
             padding: 12px 24px;
             border-radius: 10px;
             font-weight: 700;
@@ -290,7 +290,7 @@
         .btn-restart {
             margin-top: 10px;
             background: #f59e0b;
-            color: #0f172a;
+            color: #1f2a24;
             display: none;
             padding: 10px 20px;
         }
@@ -322,11 +322,11 @@
                     <button class="dropbtn">OYUNLAR</button>
                     <div class="dropdown-content">
                         <a href="birkelimebirislem"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
-                        <a href="neonwordle"><i class="fas fa-font"></i> Neon Wordle</a>
-                        <a href="neonflagle"><i class="fas fa-flag"></i> Neon Flagle</a>
-                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Neon Snake</a>
-                        <a href="neonbird"><i class="fas fa-dove"></i> Neon Bird</a>
-                        <a href="neontetris"><i class="fas fa-cubes"></i> Neon Tetris</a>
+                        <a href="neonwordle"><i class="fas fa-font"></i> Wordle</a>
+                        <a href="neonflagle"><i class="fas fa-flag"></i> Flagle</a>
+                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Yılan</a>
+                        <a href="neonbird"><i class="fas fa-dove"></i> Kuş</a>
+                        <a href="neontetris"><i class="fas fa-cubes"></i> Tetris</a>
                     </div>
                 </div>
             </nav>
@@ -341,7 +341,7 @@
         </header>
 
         <div class="game-wrapper">
-            <h1 class="game-title">Neon Flagle</h1>
+            <h1 class="game-title">Flagle</h1>
             
             <div class="score-board">
                 <div class="score-box">
@@ -777,6 +777,6 @@
 
         initGame();
     </script>
-    <script src="particles.js?v=2" defer></script>
+    <script src="particles.js?v=3" defer></script>
 </body>
 </html>
