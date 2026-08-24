@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuş | Adem Uçar</title>
+    <title>Flappy | Adem Uçar</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1f2a24" />
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="style.css?v=4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
     <style>
@@ -50,7 +50,7 @@
         }
 
         #flappyCanvas {
-            background: rgba(10, 18, 35, 0.97);
+            background: rgba(24, 33, 28, 0.97);
             border: 1.5px solid rgba(217, 177, 102, 0.35);
             border-radius: 14px;
             display: block;
@@ -107,13 +107,13 @@
                 <a href="https://www.instagram.com/ademucarr_/" target="_blank"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.linkedin.com/in/adem-u%C3%A7ar-39501731a/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                 <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://medium.com/@ademucarr" target="_blank" aria-label="Medium" style="font-family: Georgia, 'Times New Roman', serif; font-weight: bold; font-size: 1.15em; line-height: 1; text-decoration: none; display: inline-block; transform: translateY(2px);">M</a>
+                <a href="https://medium.com/@ademucarr" target="_blank" aria-label="Medium" class="medium-link">M</a>
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ucaradem317@gmail.com" target="_blank" rel="noopener" aria-label="E-posta gönder"><i class="far fa-envelope"></i></a>
             </div>
         </header>
 
         <div class="content-container">
-            <h1 class="page-title" style="letter-spacing: 4px; margin-bottom: 14px;">Kuş</h1>
+            <h1 class="page-title" style="letter-spacing: 4px; margin-bottom: 14px;">Flappy</h1>
 
             <div class="score-panel">
                 <div class="score-box">
@@ -265,7 +265,7 @@
         // ── Çizim ────────────────────────────────────────────────────
         function draw() {
             // Arkaplan
-            ctx.fillStyle = "rgba(8, 15, 30, 0.97)";
+            ctx.fillStyle = "rgba(24, 33, 28, 0.97)";
             ctx.fillRect(0, 0, CW, CH);
 
             // Izgara
@@ -277,7 +277,7 @@
             // Borular
             pipes.forEach(p => {
                 // Gövde
-                ctx.fillStyle = "#1e3a52";
+                ctx.fillStyle = "#33453a";
                 ctx.fillRect(p.x, 0, PIPE_WIDTH, p.top);
                 ctx.fillRect(p.x, p.top + PIPE_GAP, PIPE_WIDTH, CH - p.top - PIPE_GAP);
 
@@ -319,7 +319,7 @@
             ctx.fill();
 
             // Kanat
-            ctx.fillStyle = "rgba(2, 132, 199, 0.7)";
+            ctx.fillStyle = "rgba(217, 177, 102, 0.7)";
             ctx.beginPath();
             ctx.ellipse(-4, 4, 7, 4, 0.3, 0, Math.PI * 2);
             ctx.fill();
@@ -334,7 +334,7 @@
                 ctx.fillStyle = "#eae6da";
                 ctx.font = "700 18px var(--yazi-govde)";
                 ctx.fillText("Başlamak için dokun", CW / 2, CH / 2 - 12);
-                ctx.fillStyle = "rgba(203,213,225,0.65)";
+                ctx.fillStyle = "rgba(185, 198, 187,0.65)";
                 ctx.font = "400 13px var(--yazi-govde)";
                 ctx.fillText("veya SPACE tuşuna bas", CW / 2, CH / 2 + 14);
                 ctx.textAlign = "left";
@@ -351,7 +351,7 @@
                 ctx.fillStyle = "#d9b166";
                 ctx.font = "700 28px var(--yazi-govde)";
                 ctx.fillText(score + " puan", CW / 2, CH / 2 + 10);
-                ctx.fillStyle = "rgba(203,213,225,0.65)";
+                ctx.fillStyle = "rgba(185, 198, 187,0.65)";
                 ctx.font = "400 13px var(--yazi-govde)";
                 ctx.fillText("Tekrar oynamak için dokun veya SPACE", CW / 2, CH / 2 + 44);
                 ctx.textAlign = "left";
@@ -377,6 +377,6 @@
         // ── Başlat ───────────────────────────────────────────────────
         init();
     </script>
-    <script src="particles.js?v=3" defer></script>
+    <script src="particles.js?v=4" defer></script>
 </body>
 </html>

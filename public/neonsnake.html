@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yılan | Adem Uçar</title>
+    <title>Snake | Adem Uçar</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1f2a24" />
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="style.css?v=4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
     <style>
@@ -63,7 +63,7 @@
 
     /* Canvas */
     #gameCanvas {
-        background-color: rgba(10, 18, 35, 0.97);
+        background-color: rgba(24, 33, 28, 0.97);
         border: 1px solid rgba(217, 177, 102, 0.25);
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(217, 177, 102, 0.04);
@@ -125,7 +125,7 @@
     }
 
     .btn-restart:hover {
-        background: #7dd3fc;
+        background: #ecc987;
     }
 
     .btn-restart:active {
@@ -179,13 +179,13 @@
                 <a href="https://www.instagram.com/ademucarr_/" target="_blank"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.linkedin.com/in/adem-u%C3%A7ar-39501731a/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                 <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://medium.com/@ademucarr" target="_blank" aria-label="Medium" style="font-family: Georgia, 'Times New Roman', serif; font-weight: bold; font-size: 1.15em; line-height: 1; text-decoration: none; display: inline-block; transform: translateY(2px);">M</a>
+                <a href="https://medium.com/@ademucarr" target="_blank" aria-label="Medium" class="medium-link">M</a>
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ucaradem317@gmail.com" target="_blank" rel="noopener" aria-label="E-posta gönder"><i class="far fa-envelope"></i></a>
             </div>
         </header>
 
         <div class="content-container">
-            <h1 class="page-title" style="margin-bottom: 8px;">Yılan</h1>
+            <h1 class="page-title" style="margin-bottom: 8px;">Snake</h1>
 
             <div class="game-wrapper">
 
@@ -365,7 +365,7 @@
             const W = canvas.width, H = canvas.height;
 
             // Arkaplan
-            ctx.fillStyle = "rgba(8, 15, 30, 0.97)";
+            ctx.fillStyle = "rgba(24, 33, 28, 0.97)";
             ctx.fillRect(0, 0, W, H);
 
             // Izgara
@@ -384,9 +384,9 @@
                 if (i === 0) {
                     ctx.fillStyle = "#d9b166";
                 } else if (ratio < 0.35) {
-                    ctx.fillStyle = "#0284c7";
+                    ctx.fillStyle = "#b8934f";
                 } else {
-                    ctx.fillStyle = "#0369a1";
+                    ctx.fillStyle = "#96773f";
                 }
 
                 const pad = i === 0 ? 1 : 2;
@@ -427,7 +427,7 @@
             ctx.textAlign = "center";
             ctx.fillText(line1, canvas.width / 2, canvas.height / 2 - 10);
 
-            ctx.fillStyle = "rgba(203, 213, 225, 0.7)";
+            ctx.fillStyle = "rgba(185, 198, 187, 0.7)";
             ctx.font = "400 13px var(--yazi-govde)";
             ctx.fillText(line2, canvas.width / 2, canvas.height / 2 + 16);
 
@@ -435,6 +435,6 @@
         }
     </script>
 
-    <script src="particles.js?v=3" defer></script>
+    <script src="particles.js?v=4" defer></script>
 </body>
 </html>

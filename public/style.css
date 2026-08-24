@@ -258,6 +258,19 @@ body, html {
     transform: translateY(-3px) rotate(-4deg);
 }
 
+/* Medium'un "M" harfi: hizalama için 'top' kullanılıyor, 'transform' değil.
+   Aksi halde hover'daki yükselme animasyonunu ezerdi. */
+.social-icons a.medium-link {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    font-size: 1.32rem;
+    line-height: 1;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    top: 2px;
+}
+
 /* ============================================================
    HERO
    ============================================================ */
