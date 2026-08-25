@@ -9,10 +9,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1f2a24" />
-    <link rel="stylesheet" href="style.css?v=5">
+    <meta name="theme-color" content="#15140f" />
+    <link rel="stylesheet" href="style.css?v=7">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         .content-container {
             max-width: 500px;
@@ -27,16 +27,16 @@
         }
 
         .score-box {
-            background: rgba(31, 42, 36, 0.7);
-            border: 1px solid rgba(224, 134, 106, 0.25);
-            border-radius: 10px;
+            background: rgba(28, 26, 20, 0.7);
+            border: 1px solid rgba(207, 82, 56, 0.25);
+            border-radius: 3px;
             padding: 8px 24px;
             text-align: center;
         }
 
         .score-box-label {
             font-size: 0.68rem;
-            color: #869a8b;
+            color: #6b6455;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             font-weight: 600;
@@ -45,30 +45,30 @@
         .score-box-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #e0866a;
+            color: #cf5238;
             line-height: 1.2;
         }
 
         #flappyCanvas {
-            background: rgba(24, 33, 28, 0.97);
-            border: 1.5px solid rgba(224, 134, 106, 0.35);
-            border-radius: 14px;
+            background: rgba(16, 15, 11, 0.97);
+            border: 1.5px solid rgba(207, 82, 56, 0.35);
+            border-radius: 3px;
             display: block;
             margin: 0 auto;
-            box-shadow: 0 0 30px rgba(224, 134, 106, 0.08);
+            
             touch-action: none;
             cursor: pointer;
         }
 
         .game-hint {
             margin-top: 12px;
-            color: #55665a;
+            color: #3a362b;
             font-size: 0.8rem;
             font-weight: 300;
         }
 
         .game-hint strong {
-            color: #e0866a;
+            color: #cf5238;
             font-weight: 600;
         }
     </style>
@@ -265,11 +265,11 @@
         // ── Çizim ────────────────────────────────────────────────────
         function draw() {
             // Arkaplan
-            ctx.fillStyle = "rgba(24, 33, 28, 0.97)";
+            ctx.fillStyle = "rgba(16, 15, 11, 0.97)";
             ctx.fillRect(0, 0, CW, CH);
 
             // Izgara
-            ctx.strokeStyle = "rgba(224, 134, 106, 0.05)";
+            ctx.strokeStyle = "rgba(207, 82, 56, 0.05)";
             ctx.lineWidth = 0.5;
             for (let x = 0; x < CW; x += 20) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CH); ctx.stroke(); }
             for (let y = 0; y < CH; y += 20) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CW,y); ctx.stroke(); }
@@ -282,13 +282,13 @@
                 ctx.fillRect(p.x, p.top + PIPE_GAP, PIPE_WIDTH, CH - p.top - PIPE_GAP);
 
                 // Kenar çizgisi
-                ctx.strokeStyle = "rgba(224, 134, 106,0.2)";
+                ctx.strokeStyle = "rgba(207, 82, 56,0.2)";
                 ctx.lineWidth = 1;
                 ctx.strokeRect(p.x, 0, PIPE_WIDTH, p.top);
                 ctx.strokeRect(p.x, p.top + PIPE_GAP, PIPE_WIDTH, CH - p.top - PIPE_GAP);
 
                 // Başlık şeritler
-                ctx.fillStyle = "#e0866a";
+                ctx.fillStyle = "#cf5238";
                 ctx.fillRect(p.x - 3, p.top - 6, PIPE_WIDTH + 6, 6);
                 ctx.fillRect(p.x - 3, p.top + PIPE_GAP, PIPE_WIDTH + 6, 6);
             });
@@ -301,15 +301,15 @@
 
             // Glow
             ctx.shadowBlur  = 18;
-            ctx.shadowColor = "#e0866a";
-            ctx.fillStyle   = "#e0866a";
+            ctx.shadowColor = "#cf5238";
+            ctx.fillStyle   = "#cf5238";
             ctx.beginPath();
             ctx.arc(0, 0, BIRD_R, 0, Math.PI * 2);
             ctx.fill();
             ctx.shadowBlur = 0;
 
             // Göz
-            ctx.fillStyle = "#1f2a24";
+            ctx.fillStyle = "#15140f";
             ctx.beginPath();
             ctx.arc(5, -3, 3, 0, Math.PI * 2);
             ctx.fill();
@@ -319,7 +319,7 @@
             ctx.fill();
 
             // Kanat
-            ctx.fillStyle = "rgba(224, 134, 106, 0.7)";
+            ctx.fillStyle = "rgba(207, 82, 56, 0.7)";
             ctx.beginPath();
             ctx.ellipse(-4, 4, 7, 4, 0.3, 0, Math.PI * 2);
             ctx.fill();
@@ -331,11 +331,11 @@
                 ctx.fillStyle = "rgba(0,0,0,0.5)";
                 ctx.fillRect(0, 0, CW, CH);
                 ctx.textAlign = "center";
-                ctx.fillStyle = "#eae6da";
-                ctx.font = "700 18px var(--yazi-govde)";
+                ctx.fillStyle = "#e8e0cd";
+                ctx.font = "700 18px var(--yazi)";
                 ctx.fillText("Başlamak için dokun", CW / 2, CH / 2 - 12);
-                ctx.fillStyle = "rgba(185, 198, 187,0.65)";
-                ctx.font = "400 13px var(--yazi-govde)";
+                ctx.fillStyle = "rgba(164, 155, 133,0.65)";
+                ctx.font = "400 13px var(--yazi)";
                 ctx.fillText("veya SPACE tuşuna bas", CW / 2, CH / 2 + 14);
                 ctx.textAlign = "left";
             }
@@ -345,14 +345,14 @@
                 ctx.fillStyle = "rgba(0,0,0,0.62)";
                 ctx.fillRect(0, 0, CW, CH);
                 ctx.textAlign = "center";
-                ctx.fillStyle = "#eae6da";
-                ctx.font = "700 22px var(--yazi-govde)";
+                ctx.fillStyle = "#e8e0cd";
+                ctx.font = "700 22px var(--yazi)";
                 ctx.fillText("OYUN BİTTİ", CW / 2, CH / 2 - 30);
-                ctx.fillStyle = "#e0866a";
-                ctx.font = "700 28px var(--yazi-govde)";
+                ctx.fillStyle = "#cf5238";
+                ctx.font = "700 28px var(--yazi)";
                 ctx.fillText(score + " puan", CW / 2, CH / 2 + 10);
-                ctx.fillStyle = "rgba(185, 198, 187,0.65)";
-                ctx.font = "400 13px var(--yazi-govde)";
+                ctx.fillStyle = "rgba(164, 155, 133,0.65)";
+                ctx.font = "400 13px var(--yazi)";
                 ctx.fillText("Tekrar oynamak için dokun veya SPACE", CW / 2, CH / 2 + 44);
                 ctx.textAlign = "left";
             }
@@ -377,6 +377,5 @@
         // ── Başlat ───────────────────────────────────────────────────
         init();
     </script>
-    <script src="particles.js?v=5" defer></script>
 </body>
 </html>

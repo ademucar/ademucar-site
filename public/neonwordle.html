@@ -9,10 +9,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1f2a24" />
-    <link rel="stylesheet" href="style.css?v=5">
+    <meta name="theme-color" content="#15140f" />
+    <link rel="stylesheet" href="style.css?v=7">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         .content-container {
             max-width: 600px;
@@ -33,9 +33,9 @@
         }
 
         .score-box {
-            background: rgba(31, 42, 36, 0.7);
-            border: 1px solid rgba(224, 134, 106, 0.25);
-            border-radius: 10px;
+            background: rgba(28, 26, 20, 0.7);
+            border: 1px solid rgba(207, 82, 56, 0.25);
+            border-radius: 3px;
             padding: 8px 24px;
             text-align: center;
             min-width: 100px;
@@ -43,7 +43,7 @@
 
         .score-box-label {
             font-size: 0.68rem;
-            color: #869a8b;
+            color: #6b6455;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             font-weight: 600;
@@ -52,7 +52,7 @@
         .score-box-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #e0866a;
+            color: #cf5238;
             line-height: 1.2;
         }
 
@@ -66,22 +66,22 @@
         }
         
         .difficulty-btn {
-            background: rgba(31, 42, 36, 0.8);
-            border: 2px solid #e0866a;
-            color: #e0866a;
+            background: rgba(28, 26, 20, 0.8);
+            border: 2px solid #cf5238;
+            color: #cf5238;
             padding: 15px 30px;
             font-size: 1.2rem;
             font-weight: 800;
-            border-radius: 12px;
+            border-radius: 3px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(224, 134, 106, 0.1);
+            
         }
 
         .difficulty-btn:hover {
-            background: #e0866a;
-            color: #1f2a24;
-            box-shadow: 0 0 25px rgba(224, 134, 106, 0.4);
+            background: #cf5238;
+            color: #15140f;
+            
             transform: translateY(-2px);
         }
 
@@ -102,15 +102,15 @@
         .tile {
             width: 50px;
             height: 50px;
-            border: 2px solid #3a4a40;
+            border: 2px solid #2e2b22;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 2rem;
             font-weight: 800;
-            color: #eae6da;
+            color: #e8e0cd;
             text-transform: uppercase;
-            border-radius: 8px;
+            border-radius: 2px;
             transition: transform 0.4s ease;
         }
 
@@ -130,12 +130,12 @@
         }
 
         .key {
-            background: #263329;
-            border: 1px solid #3a4a40;
-            color: #eae6da;
+            background: #201e17;
+            border: 1px solid #2e2b22;
+            color: #e8e0cd;
             padding: 12px 0;
             flex: 1;
-            border-radius: 6px;
+            border-radius: 2px;
             font-weight: 600;
             cursor: pointer;
             text-align: center;
@@ -150,8 +150,8 @@
 
         .correct { background: #10b981 !important; border-color: #10b981 !important; color: white !important; }
         .present { background: #f59e0b !important; border-color: #f59e0b !important; color: white !important; }
-        .absent { background: #3a4a40 !important; border-color: #3a4a40 !important; color: #b9c6bb !important; }
-        .active { border-color: #e0866a !important; }
+        .absent { background: #2e2b22 !important; border-color: #2e2b22 !important; color: #a49b85 !important; }
+        .active { border-color: #cf5238 !important; }
         
         .pop { animation: pop 0.1s ease-in-out; }
         @keyframes pop { 50% { transform: scale(1.1); } }
@@ -164,10 +164,10 @@
         .notification {
             position: fixed;
             top: 20px;
-            background: #eae6da;
-            color: #1f2a24;
+            background: #e8e0cd;
+            color: #15140f;
             padding: 12px 24px;
-            border-radius: 8px;
+            border-radius: 2px;
             font-weight: 800;
             opacity: 0;
             transition: opacity 0.3s;
@@ -180,9 +180,9 @@
             display: none;
             margin-top: 18px;
             padding: 14px 26px;
-            border-radius: 12px;
-            border: 1px solid #55665a;
-            background: rgba(31, 42, 36, 0.85);
+            border-radius: 3px;
+            border: 1px solid #3a362b;
+            background: rgba(28, 26, 20, 0.85);
             text-align: center;
             animation: revealIn 0.35s ease;
         }
@@ -190,7 +190,7 @@
             font-size: 0.8rem;
             font-weight: 600;
             letter-spacing: 1px;
-            color: #b9c6bb;
+            color: #a49b85;
             text-transform: uppercase;
         }
         #answer-reveal .answer-word {
@@ -198,10 +198,10 @@
             font-size: 1.9rem;
             font-weight: 800;
             letter-spacing: 4px;
-            color: #e0866a;
-            text-shadow: 0 0 12px rgba(224, 134, 106, 0.6);
+            color: #cf5238;
+            
         }
-        #answer-reveal.win .answer-word { color: #22c55e; text-shadow: 0 0 12px rgba(34,197,94,0.6); }
+        #answer-reveal.win .answer-word { color: #22c55e;  }
         @keyframes revealIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
         #action-buttons {
@@ -214,11 +214,11 @@
         .back-btn {
             margin-top: 25px;
             background: transparent;
-            border: 1px solid #55665a;
-            color: #b9c6bb;
+            border: 1px solid #3a362b;
+            color: #a49b85;
             padding: 10px 20px;
-            border-radius: 8px;
-            font-family: var(--yazi-govde);
+            border-radius: 2px;
+            font-family: var(--yazi);
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
@@ -226,9 +226,9 @@
         }
 
         .back-btn:hover {
-            background: #3a4a40;
-            color: #eae6da;
-            border-color: #869a8b;
+            background: #2e2b22;
+            color: #e8e0cd;
+            border-color: #6b6455;
         }
 
         /* Süre kutusu uyarı durumları */
@@ -664,6 +664,5 @@
             }
         });
     </script>
-    <script src="particles.js?v=5" defer></script>
 </body>
 </html>

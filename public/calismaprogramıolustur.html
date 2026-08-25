@@ -9,10 +9,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1f2a24" />
-    <link rel="stylesheet" href="style.css?v=5">
+    <meta name="theme-color" content="#15140f" />
+    <link rel="stylesheet" href="style.css?v=7">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
     <!-- Ekran Görüntüsü Alma Kütüphanesi -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -25,16 +25,16 @@
         }
 
         #captureArea {
-            background: rgba(31, 42, 36, 0.95);
+            background: rgba(28, 26, 20, 0.95);
             padding: 20px;
-            border-radius: 12px;
-            border: 2px solid rgba(224, 134, 106, 0.3);
+            border-radius: 3px;
+            border: 2px solid rgba(207, 82, 56, 0.3);
             min-width: 800px; 
         }
 
         .planner-title {
             text-align: center;
-            color: #e0866a;
+            color: #cf5238;
             margin-bottom: 20px;
             font-size: 1.5rem;
             font-weight: 800;
@@ -52,8 +52,8 @@
         }
 
         th {
-            background: rgba(224, 134, 106, 0.1);
-            color: #e0866a;
+            background: rgba(207, 82, 56, 0.1);
+            color: #cf5238;
             padding: 12px 5px;
             font-weight: 600;
             width: 13.5%;
@@ -72,7 +72,7 @@
         .time-cell {
             min-height: 60px;
             padding: 10px 5px;
-            color: #b9c6bb;
+            color: #a49b85;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -84,15 +84,15 @@
         }
 
         .time-cell:focus {
-            background: rgba(224, 134, 106, 0.05);
-            color: #e0866a;
+            background: rgba(207, 82, 56, 0.05);
+            color: #cf5238;
         }
 
         /* Kullanıcının ders yazı yazacağı alan */
         .editable-cell {
             min-height: 60px;
             padding: 10px;
-            color: #eae6da;
+            color: #e8e0cd;
             font-size: 0.85rem;
             outline: none; 
             transition: 0.3s;
@@ -104,12 +104,12 @@
         }
 
         .editable-cell:focus {
-            background: rgba(224, 134, 106, 0.05);
+            background: rgba(207, 82, 56, 0.05);
         }
 
         .editable-cell[placeholder]:empty:before {
             content: attr(placeholder);
-            color: #869a8b;
+            color: #6b6455;
         }
 
         .action-buttons {
@@ -124,7 +124,7 @@
             color: white;
             padding: 12px 25px;
             border: none;
-            border-radius: 8px;
+            border-radius: 2px;
             font-weight: 800;
             cursor: pointer;
             transition: 0.3s;
@@ -140,7 +140,7 @@
             color: #ef4444;
             border: 1px solid rgba(239, 68, 68, 0.3);
             padding: 12px 25px;
-            border-radius: 8px;
+            border-radius: 2px;
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
@@ -194,7 +194,7 @@
 
         <div class="content-container" style="max-width: 1000px;">
             <h1 class="page-title" style="margin-bottom: 10px;">ÇALIŞMA PROGRAMI OLUŞTUR</h1>
-            <p style="text-align:center; color:#b9c6bb; font-size:0.9rem; margin-bottom:20px;">
+            <p style="text-align:center; color:#a49b85; font-size:0.9rem; margin-bottom:20px;">
                 Aşağıdaki tabloya tıklayarak kendi ders programınızı veya günlük planınızı yazın. Saatleri de kendinize göre değiştirebilirsiniz. Ardından görsel olarak indirin.
             </p>
             
@@ -264,7 +264,7 @@
             const olcek = window.innerWidth < 768 ? 1.5 : 2;
 
             html2canvas(captureArea, {
-                backgroundColor: "#1f2a24",
+                backgroundColor: "#15140f",
                 scale: olcek,
                 useCORS: true
             }).then(canvas => {
@@ -316,6 +316,5 @@
             }
         }
     </script>
-    <script src="particles.js?v=5" defer></script>
 </body>
 </html>

@@ -9,10 +9,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1f2a24" />
-    <link rel="stylesheet" href="style.css?v=5">
+    <meta name="theme-color" content="#15140f" />
+    <link rel="stylesheet" href="style.css?v=7">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
     .content-container {
         max-width: 520px;
@@ -39,16 +39,16 @@
 
     .score-box {
         flex: 1;
-        background: rgba(31, 42, 36, 0.7);
-        border: 1px solid rgba(224, 134, 106, 0.2);
-        border-radius: 10px;
+        background: rgba(28, 26, 20, 0.7);
+        border: 1px solid rgba(207, 82, 56, 0.2);
+        border-radius: 3px;
         padding: 8px 12px;
         text-align: center;
     }
 
     .score-box-label {
         font-size: 0.68rem;
-        color: #869a8b;
+        color: #6b6455;
         text-transform: uppercase;
         letter-spacing: 0.08em;
         font-weight: 600;
@@ -57,16 +57,16 @@
     .score-box-value {
         font-size: 1.45rem;
         font-weight: 800;
-        color: #e0866a;
+        color: #cf5238;
         line-height: 1.1;
     }
 
     /* Canvas */
     #gameCanvas {
-        background-color: rgba(24, 33, 28, 0.97);
-        border: 1px solid rgba(224, 134, 106, 0.25);
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(224, 134, 106, 0.04);
+        background-color: rgba(16, 15, 11, 0.97);
+        border: 1px solid rgba(207, 82, 56, 0.25);
+        border-radius: 3px;
+        
         display: block;
         width: 340px;
         height: 340px;
@@ -87,10 +87,10 @@
     .dpad-btn {
         width: 40px;
         height: 40px;
-        background: rgba(31, 42, 36, 0.8);
-        border: 1px solid rgba(224, 134, 106, 0.25);
-        border-radius: 8px;
-        color: #e0866a;
+        background: rgba(28, 26, 20, 0.8);
+        border: 1px solid rgba(207, 82, 56, 0.25);
+        border-radius: 2px;
+        color: #cf5238;
         font-size: 14px;
         display: flex;
         align-items: center;
@@ -102,7 +102,7 @@
     }
 
     .dpad-btn:active {
-        background: rgba(224, 134, 106, 0.15);
+        background: rgba(207, 82, 56, 0.15);
         transform: scale(0.93);
     }
 
@@ -113,10 +113,10 @@
 
     .btn-restart {
         padding: 9px 22px;
-        background: #e0866a;
-        color: #1f2a24;
+        background: #cf5238;
+        color: #15140f;
         border: none;
-        border-radius: 8px;
+        border-radius: 2px;
         font-weight: 800;
         font-size: 0.82rem;
         cursor: pointer;
@@ -125,7 +125,7 @@
     }
 
     .btn-restart:hover {
-        background: #eda087;
+        background: #e06b4f;
     }
 
     .btn-restart:active {
@@ -134,7 +134,7 @@
 
     .game-hint {
         font-size: 0.72rem;
-        color: #55665a;
+        color: #3a362b;
         text-align: center;
     }
 
@@ -365,11 +365,11 @@
             const W = canvas.width, H = canvas.height;
 
             // Arkaplan
-            ctx.fillStyle = "rgba(24, 33, 28, 0.97)";
+            ctx.fillStyle = "rgba(16, 15, 11, 0.97)";
             ctx.fillRect(0, 0, W, H);
 
             // Izgara
-            ctx.strokeStyle = "rgba(224, 134, 106, 0.06)";
+            ctx.strokeStyle = "rgba(207, 82, 56, 0.06)";
             ctx.lineWidth = 0.5;
             for (let x = 0; x <= COLS; x++) {
                 ctx.beginPath(); ctx.moveTo(x * BOX, 0); ctx.lineTo(x * BOX, H); ctx.stroke();
@@ -382,11 +382,11 @@
             snake.forEach((seg, i) => {
                 const ratio = i / snake.length;
                 if (i === 0) {
-                    ctx.fillStyle = "#e0866a";
+                    ctx.fillStyle = "#cf5238";
                 } else if (ratio < 0.35) {
-                    ctx.fillStyle = "#c26f56";
+                    ctx.fillStyle = "#cf5238";
                 } else {
-                    ctx.fillStyle = "#a35a45";
+                    ctx.fillStyle = "#a8402b";
                 }
 
                 const pad = i === 0 ? 1 : 2;
@@ -397,7 +397,7 @@
 
                 // Göz
                 if (i === 0) {
-                    ctx.fillStyle = "#1f2a24";
+                    ctx.fillStyle = "#15140f";
                     const horiz = dir.x !== 0;
                     const e1x = seg.x * BOX + (horiz ? (dir.x > 0 ? 13 : 4) : 5);
                     const e1y = seg.y * BOX + (horiz ? 5 : (dir.y > 0 ? 13 : 4));
@@ -422,19 +422,18 @@
             ctx.fillStyle = "rgba(0, 0, 0, 0.62)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "#eae6da";
-            ctx.font = "700 17px var(--yazi-govde)";
+            ctx.fillStyle = "#e8e0cd";
+            ctx.font = "700 17px var(--yazi)";
             ctx.textAlign = "center";
             ctx.fillText(line1, canvas.width / 2, canvas.height / 2 - 10);
 
-            ctx.fillStyle = "rgba(185, 198, 187, 0.7)";
-            ctx.font = "400 13px var(--yazi-govde)";
+            ctx.fillStyle = "rgba(164, 155, 133, 0.7)";
+            ctx.font = "400 13px var(--yazi)";
             ctx.fillText(line2, canvas.width / 2, canvas.height / 2 + 16);
 
             ctx.textAlign = "left";
         }
     </script>
 
-    <script src="particles.js?v=5" defer></script>
 </body>
 </html>

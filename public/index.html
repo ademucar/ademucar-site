@@ -9,10 +9,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1f2a24" />
-    <link rel="stylesheet" href="style.css?v=5">
+    <meta name="theme-color" content="#15140f" />
+    <link rel="stylesheet" href="style.css?v=7">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
         /* Ana Sayfa Özel Tasarımları */
@@ -30,112 +30,131 @@
         }
 
         .hero-content h1 {
-            font-family: var(--yazi-baslik);
+            font-family: var(--yazi);
             /* Ekranla orantılı ölçek: her cihaz ve tarayıcıda aynı oran */
-            font-size: clamp(2.4rem, 8vw, 4.4rem);
-            font-weight: 400;
-            color: var(--tebesir);
-            letter-spacing: 1px;
-            line-height: 1.02;
-            margin-bottom: 4px;
+            font-size: clamp(1.6rem, 6.5vw, 3.4rem);
+            font-weight: 700;
+            color: var(--murekkep);
+            letter-spacing: clamp(3px, 1.4vw, 12px);
+            text-transform: uppercase;
+            line-height: 1.15;
+            margin-bottom: 14px;
         }
 
-        /* El yazısı: harf harf yazılan satır için doğru yer */
+        /* Terminal satırı: başına komut istemi işareti gelir */
         .typing-container {
-            font-family: var(--yazi-el);
-            font-size: clamp(1.2rem, 4.4vw, 1.9rem);
-            color: var(--vurgu);
-            font-weight: 600;
-            margin-bottom: 26px;
-            min-height: 42px;
+            font-family: var(--yazi);
+            font-size: clamp(0.72rem, 2.7vw, 0.92rem);
+            color: var(--kirmizi);
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            margin-bottom: 30px;
+            min-height: 30px;
         }
 
+        .typing-container::before {
+            content: "> ";
+            color: var(--murekkep-silik);
+        }
+
+        /* Blok imleç: eski terminallerdeki gibi */
         .cursor {
             display: inline-block;
-            width: 2px;
-            background-color: var(--vurgu);
-            margin-left: 3px;
-            animation: blink 0.8s step-end infinite;
+            width: 8px;
+            background-color: var(--kirmizi);
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
         }
 
         @keyframes blink { 50% { opacity: 0; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .hero-desc {
-            max-width: 620px;
-            color: var(--tebesir-orta);
-            font-size: clamp(0.92rem, 3.2vw, 1.05rem);
-            line-height: 1.8;
+            max-width: 600px;
+            color: var(--murekkep-orta);
+            font-size: clamp(0.74rem, 2.6vw, 0.84rem);
+            line-height: 1.95;
             margin-bottom: 34px;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 15px;
-            margin-bottom: 42px;
+            gap: 14px;
+            margin-bottom: 40px;
         }
 
-        /* Tebeşirle çizilmiş buton: dolgu yok, parlama yok, köşeler düzensiz */
+        /* Dolu kırmızı buton, sert kaydırılmış gölge — basılı düğme hissi */
         .btn {
-            padding: 11px 26px;
-            border-radius: var(--el-kose-1);
-            font-weight: 500;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            position: relative;
+            padding: 13px 26px;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             text-decoration: none;
-            transition: color .25s, border-color .25s, background .25s, border-radius .25s, transform .25s;
+            transition: transform .12s, box-shadow .12s, background .18s;
             display: flex;
             align-items: center;
-            gap: 9px;
+            gap: 10px;
         }
 
         .btn-primary {
-            background: transparent;
-            border: 1.5px solid var(--vurgu);
-            color: var(--vurgu);
+            background: var(--kirmizi);
+            border: 1px solid var(--kirmizi);
+            color: #14130f;
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
         }
 
-        /* Hover'da köşeler yeniden çizilmiş gibi değişir */
+        /* Panellerdeki kesik iç çerçevenin aynısı */
+        .btn-primary::before {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            border: 1px dashed rgba(20, 19, 15, 0.45);
+            pointer-events: none;
+        }
+
+        /* Basılınca gerçekten aşağı iner, gölge küçülür */
         .btn-primary:hover {
-            background: rgba(224, 134, 106, 0.12);
-            color: var(--vurgu-parlak);
-            border-radius: var(--el-kose-3);
-            transform: translateY(-2px) rotate(-0.5deg);
+            background: var(--kirmizi-parlak);
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
         }
 
         .hero-skills {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 9px;
+            gap: 7px;
             max-width: 620px;
         }
 
-        /* Defter kenarına düşülmüş notlar */
+        /* Basılı form kutucukları */
         .skill-badge {
-            font-family: var(--yazi-el);
+            font-family: var(--yazi);
             background: transparent;
-            border: 1.5px solid rgba(234, 230, 218, 0.22);
-            color: var(--tebesir-orta);
-            padding: 2px 14px;
-            border-radius: var(--el-kose-1);
-            font-size: 1.08rem;
-            font-weight: 600;
+            border: 1px solid var(--cizgi-guclu);
+            color: var(--murekkep-orta);
+            padding: 6px 12px;
+            border-radius: 2px;
+            font-size: 0.64rem;
+            font-weight: 500;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
             display: flex;
             align-items: center;
             gap: 7px;
-            transition: color .25s, border-color .25s, transform .25s, border-radius .25s;
+            transition: color .18s, border-color .18s, background .18s;
             cursor: default;
         }
 
-        .skill-badge:nth-child(even) { border-radius: var(--el-kose-2); }
-        .skill-badge i { font-size: 0.8rem; opacity: .75; }
+        .skill-badge i { font-size: 0.72rem; color: var(--murekkep-silik); }
 
         .skill-badge:hover {
-            border-color: var(--vurgu);
-            color: var(--vurgu);
-            transform: translateY(-2px) rotate(-1.2deg);
-            border-radius: var(--el-kose-3);
+            border-color: var(--kirmizi);
+            color: var(--kirmizi);
+            background: rgba(207, 82, 56, 0.08);
         }
 
         /* Kırılma noktası site geneliyle (style.css) aynı: 768px.
@@ -216,7 +235,6 @@
         </div>
     </div>
 
-    <script src="particles.js?v=5" defer></script>
     <script>
         const textToType = "Matematik ve Bilgisayar Bilimleri Öğrencisiyim.";
         let charIndex = 0;
