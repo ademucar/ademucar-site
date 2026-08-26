@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#15140f" />
-    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="stylesheet" href="style.css?v=9">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -27,13 +27,13 @@
         .info-btn {
             position: absolute; top: 16px; right: 16px;
             width: 34px; height: 34px; border-radius: 2px;
-            background: rgba(28, 26, 20, 0.8); border: 1px solid rgba(109, 143, 168, 0.4);
-            color: #6d8fa8; cursor: pointer; font-size: .85rem;
+            background: rgba(28, 26, 20, 0.8); border: 1px solid rgba(102, 136, 189, 0.4);
+            color: #6688bd; cursor: pointer; font-size: .85rem;
             display: none; align-items: center; justify-content: center;
             transition: all .2s; z-index: 5;
         }
         .info-btn.acik { display: flex; }
-        .info-btn:hover { background: #6d8fa8; color: #15140f;  }
+        .info-btn:hover { background: #2f4a78; color: #e8e0cd;  }
 
         .modal {
             position: fixed; inset: 0; z-index: 2000;
@@ -43,17 +43,17 @@
         .modal.acik { display: flex; }
         .modal-card {
             position: relative; width: 100%; max-width: 460px; max-height: 85vh; overflow-y: auto;
-            background: rgba(28, 26, 20, 0.97); border: 1px solid rgba(109, 143, 168, 0.3);
+            background: rgba(28, 26, 20, 0.97); border: 1px solid rgba(102, 136, 189, 0.3);
             border-radius: 3px; padding: 28px 26px; text-align: left; color: #a49b85;
             box-shadow: 6px 6px 0 rgba(0,0,0,.6);
         }
-        .modal-card h3 { color: #6d8fa8; font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; letter-spacing: .5px; }
+        .modal-card h3 { color: #6688bd; font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; letter-spacing: .5px; }
         .modal-card p { font-size: .92rem; line-height: 1.6; margin-bottom: 12px; }
         .modal-card ul { list-style: none; margin: 6px 0 14px; }
         .modal-card ul li { font-size: .9rem; line-height: 1.5; color: #a49b85; padding-left: 16px; margin-bottom: 9px; position: relative; }
-        .modal-card ul li::before { content: '›'; position: absolute; left: 0; color: #6d8fa8; font-weight: 800; }
+        .modal-card ul li::before { content: '›'; position: absolute; left: 0; color: #6688bd; font-weight: 800; }
         .modal-card b { color: #e8e0cd; }
-        .modal-card .ornek { background: rgba(109, 143, 168,.08); border: 1px solid rgba(109, 143, 168,.25);
+        .modal-card .ornek { background: rgba(102, 136, 189,.08); border: 1px solid rgba(102, 136, 189,.25);
             border-radius: 2px; padding: 10px 12px; font-size: .88rem; color: #a49b85; margin-top: 4px; }
         .modal-kapat {
             position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 2px;
@@ -71,7 +71,7 @@
         }
         .score-box {
             background: rgba(28, 26, 20, 0.7);
-            border: 1px solid rgba(109, 143, 168, 0.25);
+            border: 1px solid rgba(102, 136, 189, 0.25);
             border-radius: 3px;
             padding: 8px 24px;
             text-align: center;
@@ -82,7 +82,7 @@
             letter-spacing: 0.08em; font-weight: 600;
         }
         .score-box-value {
-            font-size: 1.5rem; font-weight: 800; color: #6d8fa8; line-height: 1.2;
+            font-size: 1.5rem; font-weight: 800; color: #6688bd; line-height: 1.2;
         }
 
         /* ---- Başlangıç / mod seçimi ---- */
@@ -91,14 +91,14 @@
 
         .difficulty-btn {
             background: rgba(28, 26, 20, 0.8);
-            border: 2px solid #6d8fa8; color: #6d8fa8;
+            border: 2px solid #6688bd; color: #6688bd;
             padding: 15px 30px; font-size: 1.2rem; font-weight: 800;
             border-radius: 3px; cursor: pointer; transition: all 0.3s ease;
             
             display: flex; align-items: center; justify-content: center; gap: 12px;
         }
         .difficulty-btn:hover:not(:disabled) {
-            background: #6d8fa8; color: #15140f;
+            background: #2f4a78; color: #e8e0cd;
              transform: translateY(-2px);
         }
         .difficulty-btn:disabled { opacity: .5; cursor: not-allowed; }
@@ -110,7 +110,7 @@
         .oyun-ekran.acik { display: flex; }
         .oyun-baslik { font-size: .72rem; letter-spacing: 3px; text-transform: uppercase; color: #6b6455; font-weight: 700; margin-bottom: 6px; }
         .oyun-ipucu { color: #a49b85; font-size: .88rem; line-height: 1.5; margin-bottom: 20px; max-width: 460px; }
-        .oyun-ipucu b { color: #6d8fa8; }
+        .oyun-ipucu b { color: #6688bd; }
 
         /* ---- Karolar ---- */
         .karo-sira { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; min-height: 58px; }
@@ -118,7 +118,7 @@
             width: 50px; height: 56px; border-radius: 2px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.7rem; font-weight: 800; color: #e8e0cd;
-            background: rgba(28, 26, 20, 0.85); border: 2px solid #6d8fa8;
+            background: rgba(28, 26, 20, 0.85); border: 2px solid #6688bd;
             
             animation: karoIn .3s ease both;
         }
@@ -129,7 +129,7 @@
         /* ---- Hedef (İşlem) ---- */
         .hedef-kutu { margin: -4px 0 18px; }
         .hedef-kutu .et { font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; color: #6b6455; font-weight: 600; }
-        .hedef-kutu .no { font-size: 2.6rem; font-weight: 800; color: #6d8fa8; line-height: 1.1;  }
+        .hedef-kutu .no { font-size: 2.6rem; font-weight: 800; color: #6688bd; line-height: 1.1;  }
 
         /* ---- Kontrol butonları ---- */
         .kontrol-sira { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 18px; }
@@ -138,16 +138,16 @@
             padding: 10px 16px; border-radius: 2px; font-family: var(--yazi);
             font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .2s;
         }
-        .mini-btn:hover:not(:disabled) { border-color: #6d8fa8; color: #6d8fa8; }
+        .mini-btn:hover:not(:disabled) { border-color: #6688bd; color: #6688bd; }
         .mini-btn:disabled { opacity: .4; cursor: not-allowed; }
-        .mini-btn.secili { background: rgba(109, 143, 168,.15); border-color: #6d8fa8; color: #6d8fa8; }
+        .mini-btn.secili { background: rgba(102, 136, 189,.15); border-color: #6688bd; color: #6688bd; }
 
         /* ---- Saat ---- */
         .saat-sar { position: relative; width: 150px; height: 150px; margin: 6px 0 14px; }
         .saat-sar svg { width: 100%; height: 100%; transform: rotate(-90deg); }
         .saat-iz { fill: none; stroke: #201e17; stroke-width: 8; }
-        .saat-ilerleme { fill: none; stroke: #6d8fa8; stroke-width: 8; stroke-linecap: round;
-            filter: drop-shadow(0 0 6px rgba(109, 143, 168,.6)); transition: stroke-dashoffset .95s linear; }
+        .saat-ilerleme { fill: none; stroke: #6688bd; stroke-width: 8; stroke-linecap: round;
+            filter: drop-shadow(0 0 6px rgba(102, 136, 189,.6)); transition: stroke-dashoffset .95s linear; }
         .saat-rakam { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .saat-rakam .sn { font-size: 2.8rem; font-weight: 800; color: #e8e0cd; line-height: 1; }
         .saat-rakam .brm { font-size: .6rem; letter-spacing: 3px; color: #6b6455; margin-top: 3px; text-transform: uppercase; }
@@ -164,10 +164,10 @@
             font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
         }
         .oyun-giris::placeholder { color: #6b6455; letter-spacing: normal; text-transform: none; font-weight: 400; }
-        .oyun-giris:focus { outline: none; border-color: #6d8fa8;  }
+        .oyun-giris:focus { outline: none; border-color: #6688bd;  }
         .oyun-giris:disabled { opacity: .45; }
         .gonder-btn {
-            background: #6d8fa8; border: none; color: #15140f; font-weight: 800;
+            background: #2f4a78; border: none; color: #e8e0cd; font-weight: 800;
             padding: 0 22px; border-radius: 3px; cursor: pointer; font-family: var(--yazi);
             font-size: .9rem; letter-spacing: 1px; transition: all .2s;
         }
@@ -181,13 +181,13 @@
             border-radius: 3px; padding: 16px 18px; font-size: .9rem; line-height: 1.55; color: #a49b85;
         }
         .sonuc.acik { display: block; }
-        .sonuc b { color: #6d8fa8; }
+        .sonuc b { color: #6688bd; }
         .rozet { display: inline-block; font-weight: 800; font-size: .72rem; letter-spacing: 1px;
             padding: 3px 10px; border-radius: 2px; margin-right: 8px; }
         .rozet.ok { background: rgba(16,185,129,.16); color: #10b981; }
         .rozet.no { background: rgba(239,68,68,.16); color: #f87171; }
-        .cozum-etiket { display:inline-block; background: rgba(109, 143, 168,.1); border:1px solid rgba(109, 143, 168,.3);
-            color:#6d8fa8; border-radius: 2px; padding: 3px 9px; margin: 3px 4px 0 0; font-weight: 700; letter-spacing: 1px; }
+        .cozum-etiket { display:inline-block; background: rgba(102, 136, 189,.1); border:1px solid rgba(102, 136, 189,.3);
+            color:#6688bd; border-radius: 2px; padding: 3px 9px; margin: 3px 4px 0 0; font-weight: 700; letter-spacing: 1px; }
 
         /* ---- Alt / geri ---- */
         .back-btn {

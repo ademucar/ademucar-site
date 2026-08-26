@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#15140f" />
-    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="stylesheet" href="style.css?v=9">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -44,7 +44,7 @@
 
         .score-box {
             background: rgba(28, 26, 20, 0.7);
-            border: 1px solid rgba(109, 143, 168, 0.25);
+            border: 1px solid rgba(102, 136, 189, 0.25);
             border-radius: 3px;
             padding: 8px 24px;
             text-align: center;
@@ -62,7 +62,7 @@
         .score-box-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #6d8fa8;
+            color: #6688bd;
             line-height: 1.2;
         }
 
@@ -72,7 +72,7 @@
 
         #tetrisCanvas {
             background: rgba(16, 15, 11, 0.97);
-            border: 2px solid rgba(109, 143, 168, 0.35);
+            border: 2px solid rgba(102, 136, 189, 0.35);
             border-radius: 2px;
             
             display: block;
@@ -101,8 +101,8 @@
         }
 
         .start-btn {
-            background: #6d8fa8;
-            color: #15140f;
+            background: #2f4a78;
+            color: #e8e0cd;
             border: none;
             padding: 12px 30px;
             font-size: 1.1rem;
@@ -130,7 +130,7 @@
         .control-btn {
             background: rgba(32, 30, 23, 0.8);
             border: 1px solid #2e2b22;
-            color: #6d8fa8;
+            color: #6688bd;
             padding: 15px 0;
             border-radius: 2px;
             font-size: 1.5rem;
@@ -140,8 +140,8 @@
         }
 
         .control-btn:active {
-            background: #6d8fa8;
-            color: #15140f;
+            background: #2f4a78;
+            color: #e8e0cd;
             transform: scale(0.95);
         }
 
@@ -352,7 +352,7 @@
             ctx.fillStyle = "rgba(16, 15, 11, 1)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.strokeStyle = "rgba(109, 143, 168, 0.05)";
+            ctx.strokeStyle = "rgba(102, 136, 189, 0.05)";
             ctx.lineWidth = 1;
             for (let i = 0; i < COLS; i++) {
                 ctx.beginPath(); ctx.moveTo(i * BLOCK_SIZE, 0); ctx.lineTo(i * BLOCK_SIZE, canvas.height); ctx.stroke();

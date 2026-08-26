@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#15140f" />
-    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="stylesheet" href="style.css?v=9">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -40,7 +40,7 @@
     .score-box {
         flex: 1;
         background: rgba(28, 26, 20, 0.7);
-        border: 1px solid rgba(109, 143, 168, 0.2);
+        border: 1px solid rgba(102, 136, 189, 0.2);
         border-radius: 3px;
         padding: 8px 12px;
         text-align: center;
@@ -57,14 +57,14 @@
     .score-box-value {
         font-size: 1.45rem;
         font-weight: 800;
-        color: #6d8fa8;
+        color: #6688bd;
         line-height: 1.1;
     }
 
     /* Canvas */
     #gameCanvas {
         background-color: rgba(16, 15, 11, 0.97);
-        border: 1px solid rgba(109, 143, 168, 0.25);
+        border: 1px solid rgba(102, 136, 189, 0.25);
         border-radius: 3px;
         
         display: block;
@@ -88,9 +88,9 @@
         width: 40px;
         height: 40px;
         background: rgba(28, 26, 20, 0.8);
-        border: 1px solid rgba(109, 143, 168, 0.25);
+        border: 1px solid rgba(102, 136, 189, 0.25);
         border-radius: 2px;
-        color: #6d8fa8;
+        color: #6688bd;
         font-size: 14px;
         display: flex;
         align-items: center;
@@ -102,7 +102,7 @@
     }
 
     .dpad-btn:active {
-        background: rgba(109, 143, 168, 0.15);
+        background: rgba(102, 136, 189, 0.15);
         transform: scale(0.93);
     }
 
@@ -113,8 +113,8 @@
 
     .btn-restart {
         padding: 9px 22px;
-        background: #6d8fa8;
-        color: #15140f;
+        background: #2f4a78;
+        color: #e8e0cd;
         border: none;
         border-radius: 2px;
         font-weight: 800;
@@ -125,7 +125,7 @@
     }
 
     .btn-restart:hover {
-        background: #89aac2;
+        background: #8aa8d6;
     }
 
     .btn-restart:active {
@@ -369,7 +369,7 @@
             ctx.fillRect(0, 0, W, H);
 
             // Izgara
-            ctx.strokeStyle = "rgba(109, 143, 168, 0.06)";
+            ctx.strokeStyle = "rgba(102, 136, 189, 0.06)";
             ctx.lineWidth = 0.5;
             for (let x = 0; x <= COLS; x++) {
                 ctx.beginPath(); ctx.moveTo(x * BOX, 0); ctx.lineTo(x * BOX, H); ctx.stroke();
@@ -382,11 +382,11 @@
             snake.forEach((seg, i) => {
                 const ratio = i / snake.length;
                 if (i === 0) {
-                    ctx.fillStyle = "#6d8fa8";
+                    ctx.fillStyle = "#6688bd";
                 } else if (ratio < 0.35) {
-                    ctx.fillStyle = "#6d8fa8";
+                    ctx.fillStyle = "#6688bd";
                 } else {
-                    ctx.fillStyle = "#4e6b80";
+                    ctx.fillStyle = "#22406b";
                 }
 
                 const pad = i === 0 ? 1 : 2;

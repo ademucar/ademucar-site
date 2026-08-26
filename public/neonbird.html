@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#15140f" />
-    <link rel="stylesheet" href="style.css?v=8">
+    <link rel="stylesheet" href="style.css?v=9">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -28,7 +28,7 @@
 
         .score-box {
             background: rgba(28, 26, 20, 0.7);
-            border: 1px solid rgba(109, 143, 168, 0.25);
+            border: 1px solid rgba(102, 136, 189, 0.25);
             border-radius: 3px;
             padding: 8px 24px;
             text-align: center;
@@ -45,13 +45,13 @@
         .score-box-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #6d8fa8;
+            color: #6688bd;
             line-height: 1.2;
         }
 
         #flappyCanvas {
             background: rgba(16, 15, 11, 0.97);
-            border: 1.5px solid rgba(109, 143, 168, 0.35);
+            border: 1.5px solid rgba(102, 136, 189, 0.35);
             border-radius: 3px;
             display: block;
             margin: 0 auto;
@@ -68,7 +68,7 @@
         }
 
         .game-hint strong {
-            color: #6d8fa8;
+            color: #6688bd;
             font-weight: 600;
         }
     </style>
@@ -269,7 +269,7 @@
             ctx.fillRect(0, 0, CW, CH);
 
             // Izgara
-            ctx.strokeStyle = "rgba(109, 143, 168, 0.05)";
+            ctx.strokeStyle = "rgba(102, 136, 189, 0.05)";
             ctx.lineWidth = 0.5;
             for (let x = 0; x < CW; x += 20) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,CH); ctx.stroke(); }
             for (let y = 0; y < CH; y += 20) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(CW,y); ctx.stroke(); }
@@ -282,13 +282,13 @@
                 ctx.fillRect(p.x, p.top + PIPE_GAP, PIPE_WIDTH, CH - p.top - PIPE_GAP);
 
                 // Kenar çizgisi
-                ctx.strokeStyle = "rgba(109, 143, 168,0.2)";
+                ctx.strokeStyle = "rgba(102, 136, 189,0.2)";
                 ctx.lineWidth = 1;
                 ctx.strokeRect(p.x, 0, PIPE_WIDTH, p.top);
                 ctx.strokeRect(p.x, p.top + PIPE_GAP, PIPE_WIDTH, CH - p.top - PIPE_GAP);
 
                 // Başlık şeritler
-                ctx.fillStyle = "#6d8fa8";
+                ctx.fillStyle = "#6688bd";
                 ctx.fillRect(p.x - 3, p.top - 6, PIPE_WIDTH + 6, 6);
                 ctx.fillRect(p.x - 3, p.top + PIPE_GAP, PIPE_WIDTH + 6, 6);
             });
@@ -301,8 +301,8 @@
 
             // Glow
             ctx.shadowBlur  = 18;
-            ctx.shadowColor = "#6d8fa8";
-            ctx.fillStyle   = "#6d8fa8";
+            ctx.shadowColor = "#6688bd";
+            ctx.fillStyle   = "#6688bd";
             ctx.beginPath();
             ctx.arc(0, 0, BIRD_R, 0, Math.PI * 2);
             ctx.fill();
@@ -319,7 +319,7 @@
             ctx.fill();
 
             // Kanat
-            ctx.fillStyle = "rgba(109, 143, 168, 0.7)";
+            ctx.fillStyle = "rgba(102, 136, 189, 0.7)";
             ctx.beginPath();
             ctx.ellipse(-4, 4, 7, 4, 0.3, 0, Math.PI * 2);
             ctx.fill();
@@ -348,7 +348,7 @@
                 ctx.fillStyle = "#e8e0cd";
                 ctx.font = "700 22px var(--yazi)";
                 ctx.fillText("OYUN BİTTİ", CW / 2, CH / 2 - 30);
-                ctx.fillStyle = "#6d8fa8";
+                ctx.fillStyle = "#6688bd";
                 ctx.font = "700 28px var(--yazi)";
                 ctx.fillText(score + " puan", CW / 2, CH / 2 + 10);
                 ctx.fillStyle = "rgba(164, 155, 133,0.65)";

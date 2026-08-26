@@ -18,8 +18,9 @@
     --murekkep-silik: #6b6455;
 
     /* Vurgu ve durum renkleri */
-    --vurgu:        #6d8fa8;
-    --vurgu-parlak: #89aac2;
+    --vurgu:        #6688bd;
+    --vurgu-parlak: #8aa8d6;
+    --vurgu-koyu:   #2f4a78;
     --yesil:          #8aa07a;
     --sari:           #c9a54a;
 
@@ -69,7 +70,7 @@ body, html {
 ::-webkit-scrollbar-thumb:hover { background: var(--vurgu-parlak); }
 ::-webkit-scrollbar-button { display: none; }
 
-::selection { background: var(--vurgu); color: #14130f; }
+::selection { background: var(--vurgu-koyu); color: var(--murekkep); }
 
 /* ============================================================
    ZEMİN — kağıt dokusu + kenar kararması
@@ -169,7 +170,7 @@ body, html {
 .dropbtn:hover {
     color: var(--vurgu-parlak);
     border-color: var(--vurgu);
-    background: rgba(109, 143, 168, 0.10);
+    background: rgba(102, 136, 189, 0.10);
 }
 
 /* --- Açılır menü --- */
@@ -246,8 +247,8 @@ body, html {
 .dropdown-content a:last-child { border-bottom: none; }
 
 .dropdown-content a:hover {
-    background-color: var(--vurgu);
-    color: #14130f;
+    background-color: var(--vurgu-koyu);
+    color: var(--murekkep);
     padding-left: 18px;
 }
 .dropdown-content a:hover i { color: #14130f; }
