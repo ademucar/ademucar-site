@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#15140f" />
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="style.css?v=8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
@@ -45,7 +45,7 @@
         .typing-container {
             font-family: var(--yazi);
             font-size: clamp(0.72rem, 2.7vw, 0.92rem);
-            color: var(--kirmizi);
+            color: var(--vurgu);
             font-weight: 500;
             letter-spacing: 1.2px;
             margin-bottom: 30px;
@@ -61,7 +61,7 @@
         .cursor {
             display: inline-block;
             width: 8px;
-            background-color: var(--kirmizi);
+            background-color: var(--vurgu);
             margin-left: 2px;
             animation: blink 1s step-end infinite;
         }
@@ -100,8 +100,8 @@
         }
 
         .btn-primary {
-            background: var(--kirmizi);
-            border: 1px solid var(--kirmizi);
+            background: var(--vurgu);
+            border: 1px solid var(--vurgu);
             color: #14130f;
             box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
         }
@@ -117,7 +117,7 @@
 
         /* Basılınca gerçekten aşağı iner, gölge küçülür */
         .btn-primary:hover {
-            background: var(--kirmizi-parlak);
+            background: var(--vurgu-parlak);
             transform: translate(2px, 2px);
             box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
         }
@@ -152,9 +152,9 @@
         .skill-badge i { font-size: 0.72rem; color: var(--murekkep-silik); }
 
         .skill-badge:hover {
-            border-color: var(--kirmizi);
-            color: var(--kirmizi);
-            background: rgba(207, 82, 56, 0.08);
+            border-color: var(--vurgu);
+            color: var(--vurgu);
+            background: rgba(109, 143, 168, 0.08);
         }
 
         /* Kırılma noktası site geneliyle (style.css) aynı: 768px.

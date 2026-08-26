@@ -1,7 +1,7 @@
 /* ============================================================
    RETRO TERMİNAL / DEFTER TEMASI — koyu sürüm
    Baştan sona monospace · büyük harf etiketler · keskin köşeler
-   Panellerde kesik çizgili iç çerçeve · pas kırmızısı vurgu
+   Panellerde kesik çizgili iç çerçeve · kapalı çelik mavisi vurgu
    Degrade yok, parlama yok, blur yok.
    ============================================================ */
 
@@ -18,11 +18,10 @@
     --murekkep-silik: #6b6455;
 
     /* Vurgu ve durum renkleri */
-    --kirmizi:        #cf5238;
-    --kirmizi-parlak: #e06b4f;
+    --vurgu:        #6d8fa8;
+    --vurgu-parlak: #89aac2;
     --yesil:          #8aa07a;
     --sari:           #c9a54a;
-    --mavi:           #7590a6;
 
     /* Çizgiler */
     --cizgi:       rgba(232, 224, 205, 0.14);
@@ -58,19 +57,19 @@ body, html {
 /* --- Kaydırma çubuğu: köşesiz, mekanik --- */
 * {
     scrollbar-width: thin;
-    scrollbar-color: var(--kirmizi) var(--zemin-koyu);
+    scrollbar-color: var(--vurgu) var(--zemin-koyu);
 }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--zemin-koyu); }
 ::-webkit-scrollbar-thumb {
-    background: var(--kirmizi);
+    background: var(--vurgu);
     border: 2px solid var(--zemin-koyu);
     border-radius: 0;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--kirmizi-parlak); }
+::-webkit-scrollbar-thumb:hover { background: var(--vurgu-parlak); }
 ::-webkit-scrollbar-button { display: none; }
 
-::selection { background: var(--kirmizi); color: #14130f; }
+::selection { background: var(--vurgu); color: #14130f; }
 
 /* ============================================================
    ZEMİN — kağıt dokusu + kenar kararması
@@ -82,7 +81,7 @@ body, html {
     position: relative;
     overflow: hidden;
     /* Sayfanın üst kenarındaki ince kırmızı şerit */
-    border-top: 3px solid var(--kirmizi);
+    border-top: 3px solid var(--vurgu);
 }
 
 /* İnce lif dokusu ve nokta ızgarası — çok hafif */
@@ -168,9 +167,9 @@ body, html {
 
 .nav-menu a:hover,
 .dropbtn:hover {
-    color: var(--kirmizi-parlak);
-    border-color: var(--kirmizi);
-    background: rgba(207, 82, 56, 0.10);
+    color: var(--vurgu-parlak);
+    border-color: var(--vurgu);
+    background: rgba(109, 143, 168, 0.10);
 }
 
 /* --- Açılır menü --- */
@@ -189,7 +188,7 @@ body, html {
     font-size: 0.62rem;
     margin-left: 8px;
     vertical-align: middle;
-    color: var(--kirmizi);
+    color: var(--vurgu);
 }
 
 .dropdown-content {
@@ -247,7 +246,7 @@ body, html {
 .dropdown-content a:last-child { border-bottom: none; }
 
 .dropdown-content a:hover {
-    background-color: var(--kirmizi);
+    background-color: var(--vurgu);
     color: #14130f;
     padding-left: 18px;
 }
@@ -269,7 +268,7 @@ body, html {
 }
 
 .social-icons a:hover {
-    color: var(--kirmizi-parlak);
+    color: var(--vurgu-parlak);
     transform: translateY(-2px);
 }
 
@@ -309,7 +308,7 @@ body, html {
 
 .hero-text p {
     font-size: clamp(0.78rem, 2.6vw, 0.95rem);
-    color: var(--kirmizi);
+    color: var(--vurgu);
     letter-spacing: 1.4px;
 }
 
@@ -331,7 +330,7 @@ body, html {
 }
 
 .contact-data {
-    color: var(--kirmizi);
+    color: var(--vurgu);
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: none;
@@ -417,7 +416,7 @@ body, html {
 }
 
 .detail-box h3 {
-    color: var(--kirmizi);
+    color: var(--vurgu);
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 2.2px;
@@ -437,7 +436,7 @@ body, html {
     margin-bottom: 13px;
     font-size: 0.76rem;
     color: var(--murekkep-orta);
-    border-left: 2px solid var(--kirmizi);
+    border-left: 2px solid var(--vurgu);
     padding-left: 12px;
     border-radius: 0;
     line-height: 1.7;
@@ -503,7 +502,7 @@ body, html {
 /* Basılmış gibi: kart yer değiştirir, gölge küçülür */
 .project-card:hover {
     transform: translate(2px, 2px);
-    border-color: var(--kirmizi);
+    border-color: var(--vurgu);
     box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
 }
 
@@ -518,7 +517,7 @@ body, html {
 
 .folder-icon {
     font-size: 1.3rem;
-    color: var(--kirmizi);
+    color: var(--vurgu);
 }
 
 .github-link {
@@ -527,7 +526,7 @@ body, html {
     transition: color .18s;
 }
 
-.github-link:hover { color: var(--kirmizi-parlak); }
+.github-link:hover { color: var(--vurgu-parlak); }
 
 .project-title {
     font-size: 0.92rem;
