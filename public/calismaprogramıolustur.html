@@ -274,8 +274,16 @@
 
                 const dosyaAdi = "Haftalik-Programim.png";
 
-                // 1) Telefonlarda paylaşım menüsü (iOS Safari 'download' özniteliğini desteklemez)
-                if (navigator.canShare) {
+                // Paylaşım menüsü SADECE dokunmatik telefon/tablette kullanılır;
+                // iOS Safari 'download' özniteliğini desteklemediği için orada şart.
+                // Masaüstünde Windows/Chrome da navigator.share destekliyor ve
+                // kullanıcıya indirme yerine "Paylaş" penceresi açıyordu — istenmeyen davranış.
+                const dokunmatikCihaz =
+                    window.matchMedia &&
+                    window.matchMedia("(pointer: coarse)").matches &&
+                    window.innerWidth < 900;
+
+                if (dokunmatikCihaz && navigator.canShare) {
                     const dosya = new File([blob], dosyaAdi, { type: "image/png" });
                     if (navigator.canShare({ files: [dosya] })) {
                         return navigator.share({ files: [dosya], title: "Haftalık Programım" })
@@ -283,7 +291,7 @@
                     }
                 }
 
-                // 2) Masaüstü ve diğer tarayıcılar
+                // Masaüstü ve diğer tüm durumlar: doğrudan indir
                 klasikIndir(blob, dosyaAdi);
             }).catch(err => {
                 console.error(err);
