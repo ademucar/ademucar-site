@@ -13,6 +13,61 @@
     <link rel="stylesheet" href="style.css?v=9">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Başlık altı özet kutucukları — sayılar sayfadan otomatik okunur */
+        .ozet-kutulari {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 0 0 4px;
+        }
+
+        .ozet-kutu {
+            position: relative;
+            background: var(--zemin-panel);
+            border: 1px solid var(--cizgi-guclu);
+            border-radius: var(--kose);
+            padding: 15px 10px;
+            text-align: center;
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.45);
+        }
+
+        /* Sitenin imzası: içeride ikinci, kesik çerçeve */
+        .ozet-kutu::before {
+            content: "";
+            position: absolute;
+            inset: 5px;
+            border: 1px dashed var(--cizgi);
+            pointer-events: none;
+        }
+
+        .ozet-kutu .etiket {
+            font-size: 0.62rem;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--murekkep-silik);
+        }
+
+        .ozet-kutu .sayi {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--vurgu);
+            line-height: 1;
+            margin-top: 7px;
+        }
+
+        @media (max-width: 560px) {
+            .ozet-kutulari { gap: 8px; }
+            .ozet-kutu {
+                padding: 12px 5px;
+                box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+            }
+            .ozet-kutu::before { inset: 4px; }
+            .ozet-kutu .etiket { font-size: 0.52rem; letter-spacing: 0.8px; }
+            .ozet-kutu .sayi { font-size: 1.3rem; }
+        }
+    </style>
 </head>
 <body>
 
@@ -57,6 +112,7 @@
 
         <div class="content-container">
             <h1 class="page-title">PROJELER</h1>
+            <div class="ozet-kutulari" id="ozetKutulari"></div>
             
             <div class="projects-grid">
 
@@ -300,5 +356,36 @@
         </div>
     </div>
 
+    <script>
+        // Sayılar sayfanın kendisinden okunur: yeni proje, oyun veya
+        // uygulama eklendiğinde burayı güncellemeye gerek kalmaz.
+        (function () {
+            function menuSay(baslik) {
+                var menuler = document.querySelectorAll('.dropdown');
+                for (var i = 0; i < menuler.length; i++) {
+                    var btn = menuler[i].querySelector('.dropbtn');
+                    if (btn && btn.textContent.trim().indexOf(baslik) === 0) {
+                        return menuler[i].querySelectorAll('.dropdown-content a').length;
+                    }
+                }
+                return 0;
+            }
+
+            var kutular = [
+                ['Toplam Proje', document.querySelectorAll('.project-card').length],
+                ['Oyun',         menuSay('OYUNLAR')],
+                ['Uygulama',     menuSay('ARAÇLAR')]
+            ];
+
+            document.getElementById('ozetKutulari').innerHTML = kutular
+                .map(function (k) {
+                    return '<div class="ozet-kutu">' +
+                           '<div class="etiket">' + k[0] + '</div>' +
+                           '<div class="sayi">' + k[1] + '</div>' +
+                           '</div>';
+                })
+                .join('');
+        })();
+    </script>
 </body>
 </html>
