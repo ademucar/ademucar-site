@@ -18,7 +18,7 @@
         /* Başlık altı özet kutucukları — sayılar sayfadan otomatik okunur */
         .ozet-kutulari {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 14px;
             margin: 0 0 4px;
         }
@@ -57,15 +57,19 @@
             margin-top: 7px;
         }
 
+        /* Dar ekranda dört kutu yan yana sığmaz: ikişerli iki sıra */
         @media (max-width: 560px) {
-            .ozet-kutulari { gap: 8px; }
+            .ozet-kutulari {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 9px;
+            }
             .ozet-kutu {
-                padding: 12px 5px;
+                padding: 13px 6px;
                 box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
             }
             .ozet-kutu::before { inset: 4px; }
-            .ozet-kutu .etiket { font-size: 0.52rem; letter-spacing: 0.8px; }
-            .ozet-kutu .sayi { font-size: 1.3rem; }
+            .ozet-kutu .etiket { font-size: 0.56rem; letter-spacing: 1px; }
+            .ozet-kutu .sayi { font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -357,24 +361,15 @@
     </div>
 
     <script>
-        // Sayılar sayfanın kendisinden okunur: yeni proje, oyun veya
-        // uygulama eklendiğinde burayı güncellemeye gerek kalmaz.
         (function () {
-            function menuSay(baslik) {
-                var menuler = document.querySelectorAll('.dropdown');
-                for (var i = 0; i < menuler.length; i++) {
-                    var btn = menuler[i].querySelector('.dropbtn');
-                    if (btn && btn.textContent.trim().indexOf(baslik) === 0) {
-                        return menuler[i].querySelectorAll('.dropdown-content a').length;
-                    }
-                }
-                return 0;
-            }
-
+            // Kategoriler kartlardan okunamıyor (hangi projenin staj, hangisinin
+            // web olduğu HTML'de yazmıyor), bu yüzden sayılar elle tutuluyor.
+            // YENİ PROJE EKLERKEN buradaki ilgili sayıyı da artır.
             var kutular = [
-                ['Toplam Proje', document.querySelectorAll('.project-card').length],
-                ['Oyun',         menuSay('OYUNLAR')],
-                ['Uygulama',     menuSay('ARAÇLAR')]
+                ['Oyun',            8],
+                ['Staj Projesi',    3],
+                ['Web Uygulaması',  5],
+                ['Yapay Zeka',      1]
             ];
 
             document.getElementById('ozetKutulari').innerHTML = kutular
