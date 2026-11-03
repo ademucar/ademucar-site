@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çark Çevir | Adem Uçar</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#15140f" />
+    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        .content-container { max-width: 880px; }
+
+        .cark-aciklama {
+            text-align: center;
+            font-size: 0.74rem;
+            letter-spacing: 1px;
+            color: var(--murekkep-silik);
+            margin: -14px 0 26px;
+        }
+
+        .cark-duzen {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+            gap: 26px;
+            align-items: start;
+        }
+
+        /* --- Çark tarafı --- */
+        .cark-alan {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .cark-kutu {
+            position: relative;
+            width: 100%;
+            max-width: 360px;
+            aspect-ratio: 1 / 1;
+        }
+
+        #cark {
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Tepedeki işaretçi: aşağı bakan üçgen */
+        .cark-isaretci {
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 11px solid transparent;
+            border-right: 11px solid transparent;
+            border-top: 20px solid var(--vurgu);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .cark-sonuc {
+            position: relative;
+            width: 100%;
+            max-width: 360px;
+            min-height: 58px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            background: var(--zemin-panel);
+            border: 1px solid var(--cizgi-guclu);
+            border-radius: var(--kose);
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.45);
+            padding: 12px;
+            text-align: center;
+        }
+
+        .cark-sonuc::before {
+            content: "";
+            position: absolute;
+            inset: 5px;
+            border: 1px dashed var(--cizgi);
+            pointer-events: none;
+        }
+
+        .cark-sonuc .etiket {
+            font-size: 0.6rem;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--murekkep-silik);
+        }
+
+        .cark-sonuc .kazanan {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--vurgu);
+            word-break: break-word;
+        }
+
+        /* --- Seçenekler tarafı --- */
+        .cark-panel {
+            position: relative;
+            background: var(--zemin-panel);
+            border: 1px solid var(--cizgi-guclu);
+            border-radius: var(--kose);
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.45);
+            padding: 20px 18px;
+        }
+
+        .cark-panel::before {
+            content: "";
+            position: absolute;
+            inset: 5px;
+            border: 1px dashed var(--cizgi);
+            pointer-events: none;
+        }
+
+        .cark-panel h3 {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--vurgu);
+            margin-bottom: 12px;
+            padding-bottom: 9px;
+            border-bottom: 1px solid var(--cizgi);
+        }
+
+        #ogeler {
+            width: 100%;
+            min-height: 190px;
+            resize: vertical;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--cizgi-guclu);
+            border-radius: 2px;
+            color: var(--murekkep);
+            font-family: var(--yazi);
+            font-size: 0.76rem;
+            line-height: 1.85;
+            padding: 11px;
+            outline: none;
+            transition: border-color .18s;
+        }
+
+        #ogeler:focus { border-color: var(--vurgu); }
+
+        .cark-bilgi {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 0.62rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--murekkep-silik);
+        }
+
+        .cark-bilgi b { color: var(--vurgu); font-weight: 700; }
+
+        .cark-onay {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 14px;
+            font-size: 0.66rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--murekkep-orta);
+            cursor: pointer;
+        }
+
+        .cark-onay input { accent-color: var(--vurgu); cursor: pointer; }
+
+        /* --- Butonlar --- */
+        .cark-btn {
+            position: relative;
+            font-family: var(--yazi);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 13px 30px;
+            border-radius: 2px;
+            cursor: pointer;
+            background: var(--vurgu-koyu);
+            border: 1px solid var(--vurgu-koyu);
+            color: var(--murekkep);
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+            transition: transform .12s, box-shadow .12s, background .18s;
+        }
+
+        .cark-btn::before {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            border: 1px dashed rgba(232, 224, 205, 0.25);
+            pointer-events: none;
+        }
+
+        .cark-btn:hover:not(:disabled) {
+            background: var(--vurgu);
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .cark-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+        .cark-btn.ikincil {
+            width: 100%;
+            margin-top: 14px;
+            background: transparent;
+            border-color: var(--cizgi-guclu);
+            color: var(--murekkep-orta);
+            box-shadow: none;
+            padding: 10px 16px;
+            font-size: 0.64rem;
+        }
+
+        .cark-btn.ikincil:hover:not(:disabled) {
+            background: rgba(102, 136, 189, 0.1);
+            border-color: var(--vurgu);
+            color: var(--vurgu);
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 760px) {
+            .cark-duzen { grid-template-columns: 1fr; gap: 20px; }
+            .cark-kutu, .cark-sonuc { max-width: 300px; }
+            .cark-panel { box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45); }
+            #ogeler { min-height: 150px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-wrapper">
+        <header class="top-header">
+
+            <nav class="nav-menu">
+                <a href="/">ANA SAYFA</a>
+                <a href="hakkimda">HAKKIMDA</a>
+                <a href="projeler">PROJELER</a>
+
+                <div class="dropdown">
+                    <button class="dropbtn">ARAÇLAR</button>
+                    <div class="dropdown-content">
+                        <a href="calismaprogramıolustur"><i class="fas fa-calendar-alt"></i> Çalışma Programı Oluştur</a>
+                        <a href="ganohesapla"><i class="fas fa-calculator"></i> Gano Hesapla</a>
+                        <a href="donemsayaci"><i class="fas fa-hourglass-half"></i> Dönem Sayacı</a>
+                        <a href="carkcevir"><i class="fas fa-dharmachakra"></i> Çark Çevir</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">OYUNLAR</button>
+                    <div class="dropdown-content">
+                        <a href="birkelimebirislem"><i class="fas fa-brain"></i> Bir Kelime Bir İşlem</a>
+                        <a href="neonwordle"><i class="fas fa-font"></i> Wordle</a>
+                        <a href="neonflagle"><i class="fas fa-flag"></i> Flagle</a>
+                        <a href="neonsnake"><i class="fas fa-gamepad"></i> Snake</a>
+                        <a href="neonbird"><i class="fas fa-dove"></i> Flappy</a>
+                        <a href="neontetris"><i class="fas fa-cubes"></i> Tetris</a>
+                    </div>
+                </div>
+
+            </nav>
+
+            <div class="social-icons">
+                <a href="https://www.instagram.com/ademucarr_/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/adem-u%C3%A7ar-39501731a/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://medium.com/@ademucarr" target="_blank" aria-label="Medium" class="medium-link">M</a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ucaradem317@gmail.com" target="_blank" rel="noopener" aria-label="E-posta gönder"><i class="far fa-envelope"></i></a>
+            </div>
+        </header>
+
+        <div class="content-container">
+            <h1 class="page-title">ÇARK ÇEVİR</h1>
+            <p class="cark-aciklama">Seçenekleri yaz, çarkı çevir, kararı çark versin.</p>
+
+            <div class="cark-duzen">
+
+                <div class="cark-alan">
+                    <div class="cark-kutu">
+                        <div class="cark-isaretci"></div>
+                        <canvas id="cark" width="720" height="720" role="img" aria-label="Seçenek çarkı"></canvas>
+                    </div>
+
+                    <button id="cevirBtn" class="cark-btn">Çevir</button>
+
+                    <div class="cark-sonuc" aria-live="polite">
+                        <div class="etiket" id="sonucEtiket">Sonuç</div>
+                        <div class="kazanan" id="kazanan">—</div>
+                    </div>
+                </div>
+
+                <div class="cark-panel">
+                    <h3>Seçenekler</h3>
+                    <textarea id="ogeler" spellcheck="false" aria-label="Seçenekler, her satıra bir tane">Matematik
+Algoritma
+Veri Yapıları
+İngilizce
+Proje
+Tekrar
+Mola
+Spor</textarea>
+
+                    <div class="cark-bilgi">
+                        <span><b id="adet">0</b> seçenek</span>
+                        <span>Her satıra bir tane</span>
+                    </div>
+
+                    <label class="cark-onay">
+                        <input type="checkbox" id="cikarOnay">
+                        Kazananı listeden çıkar
+                    </label>
+
+                    <button id="sifirlaBtn" class="cark-btn ikincil">Varsayılana dön</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        var canvas   = document.getElementById('cark');
+        var ctx      = canvas.getContext('2d');
+        var alanOge  = document.getElementById('ogeler');
+        var adetOge  = document.getElementById('adet');
+        var cevirBtn = document.getElementById('cevirBtn');
+        var sifirlaBtn = document.getElementById('sifirlaBtn');
+        var kazananOge = document.getElementById('kazanan');
+        var etiketOge  = document.getElementById('sonucEtiket');
+        var cikarOnay  = document.getElementById('cikarOnay');
+
+        var VARSAYILAN = alanOge.value;
+
+        // Soluk, baskı hissi veren renkler — tema ile uyumlu
+        var RENKLER = [
+            '#7d9fd4', '#e79a5c', '#8cc98a', '#b394d6',
+            '#e0c463', '#7fc7c2', '#e08585', '#a49b85'
+        ];
+
+        var ogeler = [];
+        var aci = 0;          // çarkın anlık açısı (radyan)
+        var donuyor = false;
+
+        function ogeleriOku() {
+            return alanOge.value
+                .split('\n')
+                .map(function (s) { return s.trim(); })
+                .filter(function (s) { return s.length > 0; })
+                .slice(0, 40); // dilimler okunmaz hale gelmesin
+        }
+
+        /* --- Çizim --- */
+        function ciz() {
+            var olcu = canvas.width;
+            var merkez = olcu / 2;
+            var yaricap = merkez - 10;
+
+            ctx.clearRect(0, 0, olcu, olcu);
+
+            if (ogeler.length === 0) {
+                ctx.beginPath();
+                ctx.arc(merkez, merkez, yaricap, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(232, 224, 205, 0.05)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(232, 224, 205, 0.30)';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.fillStyle = '#6b6455';
+                ctx.font = '600 30px "JetBrains Mono", monospace';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('SEÇENEK YOK', merkez, merkez);
+                return;
+            }
+
+            var dilim = (Math.PI * 2) / ogeler.length;
+
+            for (var i = 0; i < ogeler.length; i++) {
+                var bas = aci + i * dilim;
+
+                ctx.beginPath();
+                ctx.moveTo(merkez, merkez);
+                ctx.arc(merkez, merkez, yaricap, bas, bas + dilim);
+                ctx.closePath();
+                ctx.fillStyle = RENKLER[i % RENKLER.length];
+                ctx.fill();
+                ctx.strokeStyle = '#15140f';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Dilim yazısı
+                ctx.save();
+                ctx.translate(merkez, merkez);
+                ctx.rotate(bas + dilim / 2);
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#15140f';
+
+                var punto = ogeler.length > 24 ? 17 : ogeler.length > 14 ? 21 : 26;
+                ctx.font = '700 ' + punto + 'px "JetBrains Mono", monospace';
+
+                var yazi = ogeler[i];
+                var enFazla = Math.floor((yaricap - 46) / (punto * 0.62));
+                if (yazi.length > enFazla) yazi = yazi.slice(0, Math.max(1, enFazla - 1)) + '…';
+
+                ctx.fillText(yazi, yaricap - 20, 0);
+                ctx.restore();
+            }
+
+            // Dış çember
+            ctx.beginPath();
+            ctx.arc(merkez, merkez, yaricap, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(232, 224, 205, 0.30)';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // Göbek
+            ctx.beginPath();
+            ctx.arc(merkez, merkez, 34, 0, Math.PI * 2);
+            ctx.fillStyle = '#1c1a14';
+            ctx.fill();
+            ctx.strokeStyle = '#6688bd';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+
+        /* --- Kazananı bul ---
+           İşaretçi tam tepede (-90°). Çark 'aci' kadar döndüğünde
+           işaretçinin altına denk gelen dilimin sırasını hesaplar. */
+        function kazananIndex() {
+            var n = ogeler.length;
+            if (n === 0) return -1;
+            var dilim = (Math.PI * 2) / n;
+            var a = (-Math.PI / 2 - aci) % (Math.PI * 2);
+            if (a < 0) a += Math.PI * 2;
+            return Math.floor(a / dilim) % n;
+        }
+
+        function listeyiYenile() {
+            ogeler = ogeleriOku();
+            adetOge.textContent = ogeler.length;
+            cevirBtn.disabled = donuyor || ogeler.length < 2;
+            ciz();
+        }
+
+        /* --- Çevirme --- */
+        function cevir() {
+            if (donuyor || ogeler.length < 2) return;
+
+            donuyor = true;
+            cevirBtn.disabled = true;
+            alanOge.disabled = true;
+            etiketOge.textContent = 'Dönüyor';
+            kazananOge.textContent = '…';
+
+            var baslangic = aci;
+            // 4–7 tam tur + rastgele konum
+            var mesafe = (Math.PI * 2) * (4 + Math.random() * 3) + Math.random() * Math.PI * 2;
+            var sure = 4200 + Math.random() * 900;
+            var t0 = null;
+
+            function adim(zaman) {
+                if (t0 === null) t0 = zaman;
+                var t = Math.min((zaman - t0) / sure, 1);
+                // Yavaşlayarak duruş
+                var yumusak = 1 - Math.pow(1 - t, 3);
+                aci = baslangic + mesafe * yumusak;
+                ciz();
+
+                if (t < 1) {
+                    requestAnimationFrame(adim);
+                } else {
+                    aci = aci % (Math.PI * 2);
+                    bitir();
+                }
+            }
+            requestAnimationFrame(adim);
+        }
+
+        function bitir() {
+            donuyor = false;
+            alanOge.disabled = false;
+
+            var i = kazananIndex();
+            var kazanan = ogeler[i];
+
+            etiketOge.textContent = 'Kazanan';
+            kazananOge.textContent = kazanan;
+
+            if (cikarOnay.checked) {
+                // Kazananı metin alanından sil (yalnızca ilk eşleşme)
+                var satirlar = alanOge.value.split('\n');
+                for (var s = 0; s < satirlar.length; s++) {
+                    if (satirlar[s].trim() === kazanan) {
+                        satirlar.splice(s, 1);
+                        break;
+                    }
+                }
+                alanOge.value = satirlar.join('\n');
+            }
+
+            listeyiYenile();
+        }
+
+        /* --- Olaylar --- */
+        cevirBtn.addEventListener('click', cevir);
+        canvas.addEventListener('click', cevir);
+        alanOge.addEventListener('input', listeyiYenile);
+
+        sifirlaBtn.addEventListener('click', function () {
+            if (donuyor) return;
+            alanOge.value = VARSAYILAN;
+            aci = 0;
+            etiketOge.textContent = 'Sonuç';
+            kazananOge.textContent = '—';
+            listeyiYenile();
+        });
+
+        listeyiYenile();
+    })();
+    </script>
+</body>
+</html>
