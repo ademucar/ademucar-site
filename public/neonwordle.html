@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#f2ede3" />
-    <link rel="stylesheet" href="style.css?v=10">
+    <link rel="stylesheet" href="style.css?v=11">
     <script src="tema.js?v=1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -147,6 +147,14 @@
         .key.large {
             flex: 1.5;
             font-size: 0.85rem;
+        }
+
+        /* Dar telefonlar: 11 tuşlu satır sığsın, tuşlar basılabilir genişlikte kalsın */
+        @media (max-width: 400px) {
+            #keyboard { gap: 5px; width: calc(100% + 16px); margin: 0 -8px; }
+            .key-row { gap: 3px; }
+            .key { min-width: 0; padding: 14px 0; font-size: 0.9rem; }
+            .key.large { font-size: 0.6rem; }
         }
 
         .correct { background: #10b981 !important; border-color: #10b981 !important; color: white !important; }

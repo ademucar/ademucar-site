@@ -149,8 +149,6 @@ body, html {
     background-color: var(--zemin);
     position: relative;
     overflow: hidden;
-    /* Üst kenarda kırmızı mürekkep şeridi */
-    border-top: 4px solid var(--ikinci);
 }
 
 /* Rizograf greni: iki kaydırılmış nokta katmanı */
