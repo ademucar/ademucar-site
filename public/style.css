@@ -1,37 +1,105 @@
 /* ============================================================
-   RETRO TERMİNAL / DEFTER TEMASI — koyu sürüm
-   Baştan sona monospace · büyük harf etiketler · keskin köşeler
-   Panellerde kesik çizgili iç çerçeve · kapalı çelik mavisi vurgu
-   Degrade yok, parlama yok, blur yok.
+   RİZOGRAF TEMASI — aydınlık (varsayılan) ve gece
+   İki mürekkep: mavi (metin ve vurgu) + kırmızı (ikinci baskı).
+   Düz yüzeyler, keskin köşeler, kaydırılmış sert gölgeler.
+   Renkler YALNIZCA aşağıdaki değişkenlerden gelir; sayfalar da
+   bu değişkenleri kullanır. Temayı değiştirmek için burası yeter.
    ============================================================ */
 
 :root {
-    /* Zeminler */
-    --zemin:        #15140f;
-    --zemin-panel:  #1c1a14;
-    --zemin-koyu:   #100f0b;
-    --zemin-satir:  #201e17;
+    /* Kağıt */
+    --zemin:        #f2ede3;
+    --zemin-panel:  #f8f4eb;
+    --zemin-koyu:   #e8e1d2;
+    --zemin-satir:  #ece6d9;
 
     /* Mürekkep (metin) */
-    --murekkep:       #e8e0cd;
-    --murekkep-orta:  #a49b85;
-    --murekkep-silik: #6b6455;
+    --murekkep:       #1d2a5a;
+    --murekkep-orta:  #44507c;
+    --murekkep-silik: #5f6585;
 
-    /* Vurgu ve durum renkleri */
-    --vurgu:        #6688bd;
-    --vurgu-parlak: #8aa8d6;
-    --vurgu-koyu:   #2f4a78;
-    --yesil:          #8aa07a;
-    --sari:           #c9a54a;
+    /* Mavi mürekkep: vurgu, kenar, dolgu */
+    --vurgu:        #2b4ea8;
+    --vurgu-parlak: #1f3c8a;
+    --vurgu-koyu:   #2b4ea8;   /* dolgulu düğmelerin zemini */
+    --dolgu-metin:  #f8f4eb;   /* dolgulu düğmelerin yazısı */
 
-    /* Çizgiler */
-    --cizgi:       rgba(232, 224, 205, 0.14);
-    --cizgi-guclu: rgba(232, 224, 205, 0.30);
+    /* Kırmızı mürekkep: ikinci baskı (gölge, kayık başlık, çizgi) */
+    --ikinci:       #ff4f3f;
+    --golge:        rgba(255, 79, 63, 0.55);
 
-    /* Tek yazı ailesi: terminal disiplini */
-    --yazi: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+    /* Durum renkleri (sayaçlar, uyarılar): açık kağıtta okunacak koyulukta */
+    --basari:       #2a6e42;
+    --uyari:        #8f5c06;
+    --tehlike:      #c4321f;
+    --basari-rgb:   42, 110, 66;
+    --uyari-rgb:    143, 92, 6;
+    --tehlike-rgb:  196, 50, 31;
 
-    --kose: 3px;
+    /* Kenar ve çizgi tonları */
+    --kenar:        #d6cdbb;
+    --kenar-guclu:  #c4b9a3;
+    --cizgi:        rgba(29, 42, 90, 0.14);
+    --cizgi-guclu:  rgba(29, 42, 90, 0.30);
+
+    /* Saydamlıklı kullanım için renk kanalları: rgba(var(--x-rgb), .2) */
+    --vurgu-rgb:       43, 78, 168;
+    --murekkep-rgb:    29, 42, 90;
+    --zemin-panel-rgb: 248, 244, 235;
+    --zemin-koyu-rgb:  232, 225, 210;
+    --zemin-satir-rgb: 236, 230, 217;
+    --ikinci-rgb:      255, 79, 63;
+
+    /* Baskı grenı yoğunluğu */
+    --gren: 0.07;
+
+    --yazi: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --kose: 0px;
+
+    color-scheme: light;
+}
+
+/* Gece: aynı iki mürekkep, koyu kağıda basılmış gibi */
+:root[data-tema="gece"] {
+    --zemin:        #14161e;
+    --zemin-panel:  #1b1e29;
+    --zemin-koyu:   #0f1117;
+    --zemin-satir:  #1f2330;
+
+    --murekkep:       #ece5d6;
+    --murekkep-orta:  #b5ae9f;
+    --murekkep-silik: #8a867c;
+
+    --vurgu:        #7f9cf0;
+    --vurgu-parlak: #a6bcf6;
+    --vurgu-koyu:   #3a5bc7;
+    --dolgu-metin:  #f2ede3;
+
+    --ikinci:       #ff6a52;
+    --golge:        rgba(255, 106, 82, 0.5);
+
+    --basari:       #7fbf8f;
+    --uyari:        #e0b04a;
+    --tehlike:      #ff8a75;
+    --basari-rgb:   127, 191, 143;
+    --uyari-rgb:    224, 176, 74;
+    --tehlike-rgb:  255, 138, 117;
+
+    --kenar:        #2a2e3d;
+    --kenar-guclu:  #383d51;
+    --cizgi:        rgba(236, 229, 214, 0.13);
+    --cizgi-guclu:  rgba(236, 229, 214, 0.28);
+
+    --vurgu-rgb:       127, 156, 240;
+    --murekkep-rgb:    236, 229, 214;
+    --zemin-panel-rgb: 27, 30, 41;
+    --zemin-koyu-rgb:  15, 17, 23;
+    --zemin-satir-rgb: 31, 35, 48;
+    --ikinci-rgb:      255, 106, 82;
+
+    --gren: 0.05;
+
+    color-scheme: dark;
 }
 
 * {
@@ -55,7 +123,7 @@ body, html {
     overflow-x: hidden;
 }
 
-/* --- Kaydırma çubuğu: köşesiz, mekanik --- */
+/* --- Kaydırma çubuğu --- */
 * {
     scrollbar-width: thin;
     scrollbar-color: var(--vurgu) var(--zemin-koyu);
@@ -70,10 +138,10 @@ body, html {
 ::-webkit-scrollbar-thumb:hover { background: var(--vurgu-parlak); }
 ::-webkit-scrollbar-button { display: none; }
 
-::selection { background: var(--vurgu-koyu); color: var(--murekkep); }
+::selection { background: var(--vurgu-koyu); color: var(--dolgu-metin); }
 
 /* ============================================================
-   ZEMİN — kağıt dokusu + kenar kararması
+   ZEMİN — kağıt ve baskı greni
    ============================================================ */
 .background-wrapper {
     width: 100%;
@@ -81,34 +149,26 @@ body, html {
     background-color: var(--zemin);
     position: relative;
     overflow: hidden;
-    /* Sayfanın üst kenarındaki ince kırmızı şerit */
-    border-top: 3px solid var(--vurgu);
+    /* Üst kenarda kırmızı mürekkep şeridi */
+    border-top: 4px solid var(--ikinci);
 }
 
-/* İnce lif dokusu ve nokta ızgarası — çok hafif */
+/* Rizograf greni: iki kaydırılmış nokta katmanı */
 .background-wrapper::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 0;
     pointer-events: none;
+    opacity: var(--gren);
     background-image:
-        repeating-linear-gradient(0deg, rgba(232,224,205,.022) 0 1px, transparent 1px 3px),
-        radial-gradient(rgba(232,224,205,.05) 1px, transparent 1px);
-    background-size: auto, 22px 22px;
+        radial-gradient(var(--murekkep) 0.7px, transparent 0.9px),
+        radial-gradient(var(--ikinci) 0.6px, transparent 0.8px);
+    background-size: 4px 4px, 5px 5px;
+    background-position: 0 0, 2px 1px;
 }
 
-/* Kenarlara doğru kararma */
-.background-wrapper::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background: radial-gradient(115% 90% at 50% 40%, transparent 45%, rgba(0,0,0,.55) 100%);
-}
-
-/* İçerik dokunun üstünde kalsın */
+/* İçerik grenin üstünde kalsın */
 .top-header {
     position: relative;
     z-index: 100;
@@ -125,11 +185,9 @@ body, html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
+    padding: 18px 40px;
     background: var(--zemin-koyu);
-    /* Defter satırı gibi çift kural: düz çizgi + altında kesik çizgi */
-    border-bottom: 1px solid var(--cizgi-guclu);
-    box-shadow: 0 2px 0 -1px var(--zemin-koyu), 0 3px 0 -1px var(--cizgi);
+    border-bottom: 2px solid var(--vurgu);
 }
 
 .nav-menu {
@@ -138,39 +196,32 @@ body, html {
     align-items: center;
 }
 
-/* Basılı form kutucukları: keskin köşe, iç kesik çizgi */
+/* Düz baskı kutucukları: mavi kenar, köşesiz */
 .nav-menu a,
 .dropbtn {
     position: relative;
     color: var(--murekkep);
     text-decoration: none;
     font-family: var(--yazi);
-    font-weight: 500;
-    font-size: 0.72rem;
-    letter-spacing: 1.6px;
+    font-weight: 700;
+    font-size: 0.74rem;
+    letter-spacing: 1.4px;
     text-transform: uppercase;
     padding: 10px 16px;
     background: transparent;
-    border: 1px solid var(--cizgi-guclu);
-    border-radius: 2px;
-    transition: color .18s, border-color .18s, background .18s;
+    border: 1.5px solid rgba(var(--vurgu-rgb), 0.45);
+    border-radius: 0;
+    transition: color .15s, border-color .15s, background .15s, box-shadow .15s, transform .15s;
 }
 
-/* Panellerin imzası: içeride ikinci, kesik çerçeve */
-.nav-menu a::before,
-.dropbtn::before {
-    content: "";
-    position: absolute;
-    inset: 3px;
-    border: 1px dashed var(--cizgi);
-    pointer-events: none;
-}
-
+/* Üstüne gelince mavi dolgu + kırmızı ikinci baskı */
 .nav-menu a:hover,
 .dropbtn:hover {
-    color: var(--vurgu-parlak);
-    border-color: var(--vurgu);
-    background: rgba(102, 136, 189, 0.10);
+    color: var(--dolgu-metin);
+    background: var(--vurgu-koyu);
+    border-color: var(--vurgu-koyu);
+    box-shadow: 3px 3px 0 var(--ikinci);
+    transform: translate(-1px, -1px);
 }
 
 /* --- Açılır menü --- */
@@ -186,10 +237,10 @@ body, html {
 
 .dropbtn::after {
     content: '\25BE';
-    font-size: 0.62rem;
+    font-size: 0.66rem;
     margin-left: 8px;
     vertical-align: middle;
-    color: var(--vurgu);
+    color: inherit;
 }
 
 .dropdown-content {
@@ -197,9 +248,9 @@ body, html {
     position: absolute;
     background-color: var(--zemin-panel);
     min-width: 250px;
-    border: 1px solid var(--cizgi-guclu);
-    border-radius: var(--kose);
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+    border: 1.5px solid var(--vurgu);
+    border-radius: 0;
+    box-shadow: 5px 5px 0 var(--golge);
     z-index: 1000;
     top: 100%;
     left: 50%;
@@ -225,37 +276,38 @@ body, html {
     padding: 10px 14px;
     text-decoration: none;
     display: block;
-    font-size: 0.76rem;
-    font-weight: 400;
-    letter-spacing: .8px;
-    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: .4px;
+    text-transform: none;
     border: none;
     border-radius: 0;
     background: transparent;
-    transition: color .18s, background .18s, padding-left .18s;
+    box-shadow: none;
+    transition: color .15s, background .15s, padding-left .15s;
 }
-/* Menü satırlarında iç çerçeve olmasın */
-.dropdown-content a::before { content: none; }
-
-.dropdown-content a i {
-    color: var(--murekkep-silik);
-    width: 18px;
-    margin-right: 8px;
-    transition: color .18s;
-}
-
-.dropdown-content a:last-child { border-bottom: none; }
 
 .dropdown-content a:hover {
     background-color: var(--vurgu-koyu);
-    color: var(--murekkep);
+    color: var(--dolgu-metin);
     padding-left: 18px;
+    box-shadow: none;
+    transform: none;
 }
-.dropdown-content a:hover i { color: #14130f; }
+
+.dropdown-content a i {
+    color: var(--vurgu);
+    width: 18px;
+    margin-right: 8px;
+    transition: color .15s;
+}
+.dropdown-content a:hover i { color: var(--dolgu-metin); }
+
+.dropdown-content a:last-child { border-bottom: none; }
 
 .dropdown:hover .dropdown-content { display: block; }
 
-/* --- Sosyal ikonlar --- */
+/* --- Sosyal ikonlar ve tema düğmesi --- */
 .social-icons {
     display: flex;
     gap: 18px;
@@ -265,11 +317,11 @@ body, html {
 .social-icons a {
     color: var(--murekkep-orta);
     font-size: 1.05rem;
-    transition: color .18s, transform .18s;
+    transition: color .15s, transform .15s;
 }
 
 .social-icons a:hover {
-    color: var(--vurgu-parlak);
+    color: var(--ikinci);
     transform: translateY(-2px);
 }
 
@@ -277,12 +329,41 @@ body, html {
 .social-icons a.medium-link {
     font-family: var(--yazi);
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     line-height: 1;
     text-decoration: none;
     display: inline-block;
     position: relative;
     top: 1px;
+}
+
+/* Gece / gündüz düğmesi */
+.tema-dugme {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--vurgu);
+    border: 1.5px solid rgba(var(--vurgu-rgb), 0.45);
+    border-radius: 0;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: color .15s, background .15s, border-color .15s, box-shadow .15s, transform .15s;
+}
+
+.tema-dugme:hover {
+    color: var(--dolgu-metin);
+    background: var(--vurgu-koyu);
+    border-color: var(--vurgu-koyu);
+    box-shadow: 3px 3px 0 var(--ikinci);
+    transform: translate(-1px, -1px);
+}
+
+.tema-dugme:focus-visible {
+    outline: 2px solid var(--ikinci);
+    outline-offset: 2px;
 }
 
 /* ============================================================
@@ -299,32 +380,34 @@ body, html {
 }
 
 .hero-text h1 {
-    font-size: clamp(1.7rem, 5.5vw, 3.1rem);
+    font-size: clamp(1.9rem, 6vw, 3.4rem);
     font-weight: 700;
-    letter-spacing: clamp(2px, 1.1vw, 8px);
+    letter-spacing: -0.5px;
     text-transform: uppercase;
-    line-height: 1.1;
+    line-height: 1.05;
     margin-bottom: 14px;
+    color: var(--vurgu);
+    text-shadow: 0.06em 0.06em 0 var(--ikinci);
 }
 
 .hero-text p {
-    font-size: clamp(0.78rem, 2.6vw, 0.95rem);
-    color: var(--vurgu);
-    letter-spacing: 1.4px;
+    font-size: clamp(0.82rem, 2.6vw, 1rem);
+    color: var(--murekkep-orta);
+    letter-spacing: 0.4px;
 }
 
 /* ============================================================
    İLETİŞİM
    ============================================================ */
 .contact-title {
-    font-size: clamp(1.5rem, 5vw, 2.6rem) !important;
+    font-size: clamp(1.6rem, 5vw, 2.8rem) !important;
     margin-bottom: 26px !important;
 }
 
 .contact-details p {
     font-size: 0.85rem;
     margin-bottom: 14px;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--murekkep-silik);
@@ -333,7 +416,7 @@ body, html {
 .contact-data {
     color: var(--vurgu);
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 0.4px;
     text-transform: none;
 }
 
@@ -355,40 +438,30 @@ body, html {
     overflow-y: auto;
 }
 
-/* Bölüm başlığı: büyük harf, altında çift kural */
+/* Bölüm başlığı: mavi baskı, kırmızı ikinci baskı hafif kaymış */
 .page-title {
     position: relative;
-    font-size: clamp(1.15rem, 4vw, 1.75rem);
+    font-size: clamp(1.5rem, 5vw, 2.4rem);
     font-weight: 700;
     margin-bottom: 30px;
     text-align: center;
-    letter-spacing: clamp(2px, 0.9vw, 6px);
+    letter-spacing: -0.3px;
     text-transform: uppercase;
-    color: var(--murekkep);
+    color: var(--vurgu);
+    text-shadow: 0.06em 0.06em 0 var(--ikinci);
     padding-bottom: 14px;
-    border-bottom: 1px solid var(--cizgi-guclu);
-}
-
-.page-title::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -4px;
-    height: 0;
-    border-bottom: 1px dashed var(--cizgi);
+    border-bottom: 2px solid var(--vurgu);
 }
 
 /* ============================================================
    HAKKIMDA
    ============================================================ */
 .about-text p {
-    font-size: 0.84rem;
-    line-height: 1.95;
+    font-size: 0.95rem;
+    line-height: 1.8;
     color: var(--murekkep-orta);
     margin-bottom: 15px;
     text-align: justify;
-    letter-spacing: .2px;
 }
 
 .about-details {
@@ -397,60 +470,51 @@ body, html {
     margin-top: 30px;
 }
 
-/* Panel: keskin köşe, iç kesik çerçeve, sert gölge */
+/* Panel: düz kağıt, mavi kenar, kırmızı kaydırılmış gölge */
 .detail-box {
     position: relative;
     flex: 1;
     background: var(--zemin-panel);
     padding: 22px;
-    border-radius: var(--kose);
-    border: 1px solid var(--cizgi-guclu);
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.45);
-}
-
-.detail-box::before {
-    content: "";
-    position: absolute;
-    inset: 5px;
-    border: 1px dashed var(--cizgi);
-    pointer-events: none;
+    border-radius: 0;
+    border: 1.5px solid var(--vurgu);
+    box-shadow: 5px 5px 0 var(--golge);
 }
 
 .detail-box h3 {
     color: var(--vurgu);
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     font-weight: 700;
-    letter-spacing: 2.2px;
+    letter-spacing: 1.8px;
     text-transform: uppercase;
     margin-bottom: 16px;
     padding-bottom: 10px;
-    border-bottom: 1px solid var(--cizgi);
+    border-bottom: 1.5px solid var(--cizgi-guclu);
     display: flex;
     align-items: center;
     gap: 9px;
 }
-.detail-box h3 i { font-size: 0.9rem; }
+.detail-box h3 i { font-size: 0.95rem; }
 
 .detail-box ul { list-style: none; }
 
 .detail-box ul li {
     margin-bottom: 13px;
-    font-size: 0.76rem;
+    font-size: 0.86rem;
     color: var(--murekkep-orta);
-    border-left: 2px solid var(--vurgu);
+    border-left: 3px solid var(--ikinci);
     padding-left: 12px;
     border-radius: 0;
-    line-height: 1.7;
+    line-height: 1.65;
 }
 
 .detail-box ul li strong {
     color: var(--murekkep);
-    font-size: 0.82rem;
+    font-size: 0.9rem;
     font-weight: 700;
-    letter-spacing: .4px;
 }
 
-/* Etiketler: basılı form kutucukları */
+/* Etiketler */
 .skills-tags {
     display: flex;
     flex-wrap: wrap;
@@ -459,14 +523,14 @@ body, html {
 
 .skills-tags span {
     background: transparent;
-    color: var(--murekkep-orta);
+    color: var(--vurgu);
     padding: 5px 11px;
-    border-radius: 2px;
-    font-size: 0.66rem;
-    font-weight: 500;
-    letter-spacing: 1.2px;
+    border-radius: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    border: 1px solid var(--cizgi-guclu);
+    border: 1.5px solid rgba(var(--vurgu-rgb), 0.45);
 }
 
 /* ============================================================
@@ -475,36 +539,27 @@ body, html {
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 20px;
+    gap: 22px;
     margin-top: 26px;
 }
 
 .project-card {
     position: relative;
     background: var(--zemin-panel);
-    border: 1px solid var(--cizgi-guclu);
-    border-radius: var(--kose);
+    border: 1.5px solid var(--vurgu);
+    border-radius: 0;
     padding: 22px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.45);
-    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    box-shadow: 5px 5px 0 var(--golge);
+    transition: transform .15s ease, box-shadow .15s ease;
 }
 
-.project-card::before {
-    content: "";
-    position: absolute;
-    inset: 5px;
-    border: 1px dashed var(--cizgi);
-    pointer-events: none;
-}
-
-/* Basılmış gibi: kart yer değiştirir, gölge küçülür */
+/* Basılınca kart yerine oturur, ikinci baskı belirginleşir */
 .project-card:hover {
-    transform: translate(2px, 2px);
-    border-color: var(--vurgu);
-    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--ikinci);
 }
 
 .project-header {
@@ -513,35 +568,35 @@ body, html {
     align-items: center;
     margin-bottom: 16px;
     padding-bottom: 12px;
-    border-bottom: 1px dashed var(--cizgi);
+    border-bottom: 1.5px solid var(--cizgi-guclu);
 }
 
 .folder-icon {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     color: var(--vurgu);
 }
 
 .github-link {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     color: var(--murekkep-silik);
-    transition: color .18s;
+    transition: color .15s;
 }
 
-.github-link:hover { color: var(--vurgu-parlak); }
+.github-link:hover { color: var(--ikinci); }
 
 .project-title {
-    font-size: 0.92rem;
+    font-size: 1.02rem;
     font-weight: 700;
     color: var(--murekkep);
-    margin-bottom: 12px;
-    letter-spacing: 1.2px;
+    margin-bottom: 10px;
+    letter-spacing: 0.2px;
     text-transform: uppercase;
 }
 
 .project-desc {
-    font-size: 0.75rem;
+    font-size: 0.86rem;
     color: var(--murekkep-orta);
-    line-height: 1.8;
+    line-height: 1.65;
     margin-bottom: 20px;
     flex-grow: 1;
 }
@@ -550,26 +605,27 @@ body, html {
     display: flex;
     align-items: center;
     padding-top: 12px;
-    border-top: 1px dashed var(--cizgi);
+    border-top: 1.5px solid var(--cizgi-guclu);
 }
 
 .language-tag {
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     color: var(--murekkep-silik);
     display: flex;
     align-items: center;
     gap: 8px;
     font-weight: 500;
-    letter-spacing: 1px;
+    letter-spacing: 0.6px;
     text-transform: uppercase;
 }
 
-/* Efsane kutucuğu: daire değil kare */
+/* Efsane kutucuğu: kare + ince kenar (beyaz tonlar kağıtta kaybolmasın) */
 .lang-dot {
     display: inline-block;
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     border-radius: 0;
+    border: 1px solid var(--murekkep-silik);
 }
 
 .html-color { background-color: #e34c26; }
@@ -580,9 +636,8 @@ body, html {
 @media (max-width: 768px) {
     body, html { overflow-y: auto; }
 
-    /* Mobilde ağır dokuları kapat: performans ve tek tip zemin */
-    .background-wrapper::before,
-    .background-wrapper::after { display: none; }
+    /* Mobilde gren kapalı: performans */
+    .background-wrapper::before { display: none; }
 
     .top-header {
         flex-direction: column;
@@ -596,23 +651,20 @@ body, html {
         justify-content: center;
     }
 
-    /* Dokunma hedefi en az ~40px olsun (parmakla rahat basılsın) */
+    /* Dokunma hedefi en az ~40px olsun */
     .nav-menu a,
     .dropbtn {
-        font-size: 0.66rem;
+        font-size: 0.68rem;
         padding: 12px 13px;
         letter-spacing: 1px;
     }
-    /* Küçük kutucukta çift çerçeve kalabalık yapıyor */
-    .nav-menu a::before,
-    .dropbtn::before { inset: 2px; }
 
     .dropdown-content {
         left: 50%;
         transform: translateX(-50%);
         min-width: 220px;
     }
-    .dropdown-content a { font-size: 0.7rem; padding: 13px 13px; }
+    .dropdown-content a { font-size: 0.78rem; padding: 13px 13px; }
 
     .content-container {
         position: relative;
@@ -627,16 +679,15 @@ body, html {
 
     .about-details {
         flex-direction: column;
-        gap: 16px;
+        gap: 18px;
     }
 
-    .detail-box { box-shadow: 3px 3px 0 rgba(0,0,0,.45); }
+    .detail-box,
+    .project-card { box-shadow: 4px 4px 0 var(--golge); }
 
     .projects-grid { grid-template-columns: 1fr; }
 
-    .project-card { box-shadow: 3px 3px 0 rgba(0,0,0,.45); }
+    .about-text p { font-size: 0.9rem; line-height: 1.75; text-align: left; }
 
-    .about-text p { font-size: 0.8rem; line-height: 1.85; text-align: left; }
-
-    .contact-details p { font-size: 0.76rem; }
+    .contact-details p { font-size: 0.78rem; }
 }

@@ -9,18 +9,19 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#15140f" />
-    <link rel="stylesheet" href="style.css?v=9">
+    <meta name="theme-color" content="#f2ede3" />
+    <link rel="stylesheet" href="style.css?v=10">
+    <script src="tema.js?v=1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         .content-container { max-width: 760px; text-align: center; }
 
         .donem-baslik {
-            font-size: 2rem; font-weight: 800; color: #e8e0cd; letter-spacing: 3px;
+            font-size: 2rem; font-weight: 800; color: var(--murekkep); letter-spacing: 3px;
              margin-bottom: 4px;
         }
-        .donem-alt { color: #a49b85; font-size: 0.9rem; margin-bottom: 26px; letter-spacing: 1px; }
+        .donem-alt { color: var(--murekkep-orta); font-size: 0.9rem; margin-bottom: 26px; letter-spacing: 1px; }
 
         .sayac-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -28,68 +29,68 @@
         }
 
         .sayac-card {
-            background: rgba(28, 26, 20, 0.7);
-            border: 1px solid rgba(102, 136, 189, 0.25);
+            background: rgba(var(--zemin-panel-rgb), 0.7);
+            border: 1px solid rgba(var(--vurgu-rgb), 0.25);
             border-radius: 3px; padding: 22px 18px;
             display: flex; flex-direction: column; align-items: center;
             
             transition: border-color 0.3s, box-shadow 0.3s;
         }
         .sayac-card .ust {
-            display: flex; align-items: center; gap: 8px; color: #a49b85;
+            display: flex; align-items: center; gap: 8px; color: var(--murekkep-orta);
             font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 12px;
         }
-        .sayac-card .ust i { color: #6688bd; font-size: 1rem; }
+        .sayac-card .ust i { color: var(--vurgu); font-size: 1rem; }
         .sayac-card .gun {
-            font-size: 3.4rem; font-weight: 800; color: #6688bd; line-height: 1;
+            font-size: 3.4rem; font-weight: 800; color: var(--vurgu); line-height: 1;
             
         }
-        .sayac-card .birim { font-size: 0.7rem; letter-spacing: 3px; color: #6b6455; text-transform: uppercase; margin-top: 2px; }
+        .sayac-card .birim { font-size: 0.7rem; letter-spacing: 3px; color: var(--murekkep-silik); text-transform: uppercase; margin-top: 2px; }
         .sayac-card .alt {
             margin-top: 12px; font-family: var(--yazi); font-size: 0.9rem; font-weight: 600;
-            color: #e8e0cd; letter-spacing: 1px; font-variant-numeric: tabular-nums;
+            color: var(--murekkep); letter-spacing: 1px; font-variant-numeric: tabular-nums;
         }
-        .sayac-card .tarih { margin-top: 12px; font-size: 0.78rem; color: #a49b85; }
-        .sayac-card .tarih i { color: #6b6455; margin-right: 4px; }
+        .sayac-card .tarih { margin-top: 12px; font-size: 0.78rem; color: var(--murekkep-orta); }
+        .sayac-card .tarih i { color: var(--murekkep-silik); margin-right: 4px; }
         .sayac-card .durum {
             margin-top: 12px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px;
             padding: 4px 12px; border-radius: 2px;
-            background: rgba(102, 136, 189, 0.12); color: #6688bd; border: 1px solid rgba(102, 136, 189, 0.25);
+            background: rgba(var(--vurgu-rgb), 0.12); color: var(--vurgu); border: 1px solid rgba(var(--vurgu-rgb), 0.25);
         }
 
         /* Aciliyet durumları */
-        .sayac-card.acil { border-color: rgba(245, 158, 11, 0.5);  }
-        .sayac-card.acil .gun { color: #f59e0b;  }
-        .sayac-card.acil .durum { background: rgba(245, 158, 11, 0.12); color: #f59e0b; border-color: rgba(245, 158, 11, 0.3); }
+        .sayac-card.acil { border-color: rgba(var(--uyari-rgb), 0.5);  }
+        .sayac-card.acil .gun { color: var(--uyari);  }
+        .sayac-card.acil .durum { background: rgba(var(--uyari-rgb), 0.12); color: var(--uyari); border-color: rgba(var(--uyari-rgb), 0.3); }
 
-        .sayac-card.cok-acil { border-color: rgba(239, 68, 68, 0.55);  }
-        .sayac-card.cok-acil .gun { color: #ef4444;  }
-        .sayac-card.cok-acil .durum { background: rgba(239, 68, 68, 0.12); color: #f87171; border-color: rgba(239, 68, 68, 0.3); }
+        .sayac-card.cok-acil { border-color: rgba(var(--tehlike-rgb), 0.55);  }
+        .sayac-card.cok-acil .gun { color: var(--tehlike);  }
+        .sayac-card.cok-acil .durum { background: rgba(var(--tehlike-rgb), 0.12); color: var(--tehlike); border-color: rgba(var(--tehlike-rgb), 0.3); }
 
-        .sayac-card.devam .gun { color: #10b981;  }
-        .sayac-card.devam .durum { background: rgba(16, 185, 129, 0.12); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
+        .sayac-card.devam .gun { color: var(--basari);  }
+        .sayac-card.devam .durum { background: rgba(var(--basari-rgb), 0.12); color: var(--basari); border-color: rgba(var(--basari-rgb), 0.3); }
 
         .sayac-card.bitti { opacity: 0.55; }
-        .sayac-card.bitti .gun { color: #10b981; font-size: 2.6rem; }
-        .sayac-card.bitti .durum { background: rgba(148, 163, 184, 0.12); color: #a49b85; border-color: rgba(148, 163, 184, 0.3); }
+        .sayac-card.bitti .gun { color: var(--basari); font-size: 2.6rem; }
+        .sayac-card.bitti .durum { background: rgba(var(--murekkep-rgb), 0.12); color: var(--murekkep-orta); border-color: rgba(var(--murekkep-rgb), 0.3); }
 
         /* Tatil listesi */
         .tatil-bolum { text-align: left; }
         .tatil-baslik {
             display: flex; align-items: center; gap: 10px; justify-content: center;
-            color: #a49b85; font-size: 1rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 16px;
+            color: var(--murekkep-orta); font-size: 1rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 16px;
         }
-        .tatil-baslik i { color: #6688bd; }
+        .tatil-baslik i { color: var(--vurgu); }
         .tatil-liste { display: flex; flex-direction: column; gap: 8px; }
         .tatil-item {
             display: grid; grid-template-columns: 130px 1fr auto; gap: 12px; align-items: center;
-            background: rgba(30, 41, 59, 0.6); border: 1px solid #2e2b22;
-            border-left: 3px solid #6688bd; border-radius: 2px; padding: 10px 14px;
+            background: rgba(var(--zemin-satir-rgb), 0.6); border: 1px solid var(--kenar);
+            border-left: 3px solid var(--vurgu); border-radius: 2px; padding: 10px 14px;
         }
-        .tatil-item .t-tarih { font-weight: 700; color: #e8e0cd; font-size: 0.88rem; }
-        .tatil-item .t-ad { color: #a49b85; font-size: 0.85rem; }
+        .tatil-item .t-tarih { font-weight: 700; color: var(--murekkep); font-size: 0.88rem; }
+        .tatil-item .t-ad { color: var(--murekkep-orta); font-size: 0.85rem; }
         .tatil-item .t-gun {
-            font-size: 0.72rem; color: #6688bd; font-weight: 600; background: rgba(102, 136, 189, 0.1);
+            font-size: 0.72rem; color: var(--vurgu); font-weight: 600; background: rgba(var(--vurgu-rgb), 0.1);
             padding: 3px 10px; border-radius: 2px; white-space: nowrap;
         }
 
@@ -138,6 +139,7 @@
                 <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="https://medium.com/@ademucarr" target="_blank" aria-label="Medium" class="medium-link">M</a>
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ucaradem317@gmail.com" target="_blank" rel="noopener" aria-label="E-posta gönder"><i class="far fa-envelope"></i></a>
+                <button type="button" class="tema-dugme" id="temaDugme" aria-label="Gece moduna geç" title="Gece moduna geç"><i class="fas fa-moon" aria-hidden="true"></i></button>
             </div>
         </header>
 

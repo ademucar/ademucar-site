@@ -9,10 +9,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#15140f" />
-    <link rel="stylesheet" href="style.css?v=9">
+    <meta name="theme-color" content="#f2ede3" />
+    <link rel="stylesheet" href="style.css?v=10">
+    <script src="tema.js?v=1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         .content-container {
             max-width: 600px;
@@ -33,8 +34,8 @@
         }
 
         .score-box {
-            background: rgba(28, 26, 20, 0.7);
-            border: 1px solid rgba(102, 136, 189, 0.25);
+            background: rgba(var(--zemin-panel-rgb), 0.7);
+            border: 1px solid rgba(var(--vurgu-rgb), 0.25);
             border-radius: 3px;
             padding: 8px 24px;
             text-align: center;
@@ -43,7 +44,7 @@
 
         .score-box-label {
             font-size: 0.68rem;
-            color: #6b6455;
+            color: var(--murekkep-silik);
             text-transform: uppercase;
             letter-spacing: 0.08em;
             font-weight: 600;
@@ -52,7 +53,7 @@
         .score-box-value {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #6688bd;
+            color: var(--vurgu);
             line-height: 1.2;
         }
 
@@ -66,9 +67,9 @@
         }
         
         .difficulty-btn {
-            background: rgba(28, 26, 20, 0.8);
-            border: 2px solid #6688bd;
-            color: #6688bd;
+            background: rgba(var(--zemin-panel-rgb), 0.8);
+            border: 2px solid var(--vurgu);
+            color: var(--vurgu);
             padding: 15px 30px;
             font-size: 1.2rem;
             font-weight: 800;
@@ -79,8 +80,8 @@
         }
 
         .difficulty-btn:hover {
-            background: #2f4a78;
-            color: #e8e0cd;
+            background: var(--vurgu-koyu);
+            color: var(--dolgu-metin);
             
             transform: translateY(-2px);
         }
@@ -102,13 +103,13 @@
         .tile {
             width: 50px;
             height: 50px;
-            border: 2px solid #2e2b22;
+            border: 2px solid var(--kenar);
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 2rem;
             font-weight: 800;
-            color: #e8e0cd;
+            color: var(--murekkep);
             text-transform: uppercase;
             border-radius: 2px;
             transition: transform 0.4s ease;
@@ -130,9 +131,9 @@
         }
 
         .key {
-            background: #201e17;
-            border: 1px solid #2e2b22;
-            color: #e8e0cd;
+            background: var(--zemin-satir);
+            border: 1px solid var(--kenar);
+            color: var(--murekkep);
             padding: 12px 0;
             flex: 1;
             border-radius: 2px;
@@ -150,8 +151,8 @@
 
         .correct { background: #10b981 !important; border-color: #10b981 !important; color: white !important; }
         .present { background: #f59e0b !important; border-color: #f59e0b !important; color: white !important; }
-        .absent { background: #2e2b22 !important; border-color: #2e2b22 !important; color: #a49b85 !important; }
-        .active { border-color: #6688bd !important; }
+        .absent { background: var(--kenar) !important; border-color: var(--kenar) !important; color: var(--murekkep-orta) !important; }
+        .active { border-color: var(--vurgu) !important; }
         
         .pop { animation: pop 0.1s ease-in-out; }
         @keyframes pop { 50% { transform: scale(1.1); } }
@@ -164,8 +165,8 @@
         .notification {
             position: fixed;
             top: 20px;
-            background: #e8e0cd;
-            color: #15140f;
+            background: var(--murekkep);
+            color: var(--zemin);
             padding: 12px 24px;
             border-radius: 2px;
             font-weight: 800;
@@ -181,8 +182,8 @@
             margin-top: 18px;
             padding: 14px 26px;
             border-radius: 3px;
-            border: 1px solid #3a362b;
-            background: rgba(28, 26, 20, 0.85);
+            border: 1px solid var(--kenar-guclu);
+            background: rgba(var(--zemin-panel-rgb), 0.85);
             text-align: center;
             animation: revealIn 0.35s ease;
         }
@@ -190,7 +191,7 @@
             font-size: 0.8rem;
             font-weight: 600;
             letter-spacing: 1px;
-            color: #a49b85;
+            color: var(--murekkep-orta);
             text-transform: uppercase;
         }
         #answer-reveal .answer-word {
@@ -198,7 +199,7 @@
             font-size: 1.9rem;
             font-weight: 800;
             letter-spacing: 4px;
-            color: #6688bd;
+            color: var(--vurgu);
             
         }
         #answer-reveal.win .answer-word { color: #22c55e;  }
@@ -214,8 +215,8 @@
         .back-btn {
             margin-top: 25px;
             background: transparent;
-            border: 1px solid #3a362b;
-            color: #a49b85;
+            border: 1px solid var(--kenar-guclu);
+            color: var(--murekkep-orta);
             padding: 10px 20px;
             border-radius: 2px;
             font-family: var(--yazi);
@@ -226,9 +227,9 @@
         }
 
         .back-btn:hover {
-            background: #2e2b22;
-            color: #e8e0cd;
-            border-color: #6b6455;
+            background: var(--kenar);
+            color: var(--murekkep);
+            border-color: var(--murekkep-silik);
         }
 
         /* Süre kutusu uyarı durumları */
@@ -273,6 +274,7 @@
                 <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="https://medium.com/@ademucarr" target="_blank" aria-label="Medium" class="medium-link">M</a>
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ucaradem317@gmail.com" target="_blank" rel="noopener" aria-label="E-posta gönder"><i class="far fa-envelope"></i></a>
+                <button type="button" class="tema-dugme" id="temaDugme" aria-label="Gece moduna geç" title="Gece moduna geç"><i class="fas fa-moon" aria-hidden="true"></i></button>
             </div>
         </header>
 

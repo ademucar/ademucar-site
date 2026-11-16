@@ -9,10 +9,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#15140f" />
-    <link rel="stylesheet" href="style.css?v=9">
+    <meta name="theme-color" content="#f2ede3" />
+    <link rel="stylesheet" href="style.css?v=10">
+    <script src="tema.js?v=1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
         /* EKRAMA SIĞMASI İÇİN BOŞLUKLAR DARALTILDI */
@@ -23,13 +24,13 @@
             margin-top: 15px;
             padding-bottom: 20px;
             animation: fadeIn 0.8s ease-out;
-            color: #e8e0cd;
+            color: var(--murekkep);
         }
 
         .game-title {
             font-size: 2rem;
             font-weight: 800;
-            color: #e8e0cd;
+            color: var(--murekkep);
             
             margin-bottom: 10px;
             letter-spacing: 2px;
@@ -44,8 +45,8 @@
         }
 
         .score-box {
-            background: rgba(28, 26, 20, 0.4);
-            border: 1px solid rgba(102, 136, 189, 0.3);
+            background: rgba(var(--zemin-panel-rgb), 0.4);
+            border: 1px solid rgba(var(--vurgu-rgb), 0.3);
             border-radius: 2px;
             padding: 6px 20px;
             text-align: center;
@@ -53,7 +54,7 @@
         }
 
         .score-title {
-            color: #a49b85;
+            color: var(--murekkep-orta);
             font-size: 0.75rem;
             font-weight: 600;
             letter-spacing: 1px;
@@ -61,13 +62,13 @@
         }
 
         .score-value {
-            color: #6688bd;
+            color: var(--vurgu);
             font-size: 1.5rem;
             font-weight: 800;
         }
 
         .subtitle {
-            color: #a49b85;
+            color: var(--murekkep-orta);
             margin-bottom: 15px;
             text-align: center;
             font-size: 0.85rem;
@@ -78,12 +79,12 @@
             width: 285px;
             height: 190px;
             position: relative;
-            border: 2px solid rgba(102, 136, 189, 0.5);
+            border: 2px solid rgba(var(--vurgu-rgb), 0.5);
             
             border-radius: 2px;
             overflow: hidden;
             margin-bottom: 15px;
-            background-color: #15140f;
+            background-color: var(--zemin);
         }
 
         .flag-bg {
@@ -106,8 +107,8 @@
         }
 
         .flag-piece {
-            background-color: #201e17;
-            box-shadow: inset 0 0 0 1px #15140f;
+            background-color: var(--zemin-satir);
+            box-shadow: inset 0 0 0 1px var(--zemin);
             transition: background-color 0.4s ease, box-shadow 0.4s ease;
         }
 
@@ -132,9 +133,9 @@
 
         .neon-input {
             flex-grow: 1;
-            background: rgba(32, 30, 23, 0.5);
-            border: 1px solid #2e2b22;
-            color: #e8e0cd;
+            background: rgba(var(--zemin-satir-rgb), 0.5);
+            border: 1px solid var(--kenar);
+            color: var(--murekkep);
             padding: 8px 12px;
             border-radius: 2px;
             font-family: var(--yazi);
@@ -144,14 +145,14 @@
         }
 
         .neon-input:focus {
-            border-color: #6688bd;
+            border-color: var(--vurgu);
             
-            background: rgba(28, 26, 20, 1);
+            background: rgba(var(--zemin-panel-rgb), 1);
         }
 
         .btn-guess {
-            background: #2f4a78;
-            color: #e8e0cd;
+            background: var(--vurgu-koyu);
+            color: var(--dolgu-metin);
             border: none;
             padding: 0 15px;
             border-radius: 2px;
@@ -176,8 +177,8 @@
         .autocomplete-list {
             position: absolute;
             top: 100%; left: 0; right: 0;
-            background: #201e17;
-            border: 1px solid #6688bd;
+            background: var(--zemin-satir);
+            border: 1px solid var(--vurgu);
             border-top: none;
             border-radius: 0 0 2px 2px;
             z-index: 100;
@@ -189,8 +190,8 @@
         .autocomplete-item {
             padding: 8px 12px;
             cursor: pointer;
-            border-bottom: 1px solid #2e2b22;
-            color: #e8e0cd;
+            border-bottom: 1px solid var(--kenar);
+            color: var(--murekkep);
             font-size: 0.9rem;
         }
 
@@ -199,8 +200,8 @@
         }
 
         .autocomplete-item:hover {
-            background: rgba(102, 136, 189, 0.2);
-            color: #6688bd;
+            background: rgba(var(--vurgu-rgb), 0.2);
+            color: var(--vurgu);
         }
 
         /* SONUÇLAR - DAHA KOMPAKT YAPI */
@@ -216,8 +217,8 @@
             display: grid;
             grid-template-columns: 1fr auto auto;
             gap: 8px;
-            background: rgba(32, 30, 23, 0.8);
-            border: 1px solid #3a362b;
+            background: rgba(var(--zemin-satir-rgb), 0.8);
+            border: 1px solid var(--kenar-guclu);
             padding: 8px 12px;
             border-radius: 2px;
             align-items: center;
@@ -225,11 +226,11 @@
         }
 
         .result-name { font-weight: 600; font-size: 0.9rem; }
-        .result-dist { color: #a49b85; font-size: 0.85rem; white-space: nowrap; }
+        .result-dist { color: var(--murekkep-orta); font-size: 0.85rem; white-space: nowrap; }
 
         .result-dir {
-            background: rgba(102, 136, 189, 0.2);
-            color: #6688bd;
+            background: rgba(var(--vurgu-rgb), 0.2);
+            color: var(--vurgu);
             width: 28px;
             height: 28px;
             display: flex;
@@ -260,10 +261,10 @@
             top: 24px;
             left: 50%;
             transform: translateX(-50%) translateY(-12px);
-            background: rgba(28, 26, 20, 0.95);
-            border: 1px solid #6688bd;
+            background: rgba(var(--zemin-panel-rgb), 0.95);
+            border: 1px solid var(--vurgu);
             
-            color: #e8e0cd;
+            color: var(--murekkep);
             padding: 12px 24px;
             border-radius: 3px;
             font-weight: 700;
@@ -338,6 +339,7 @@
                 <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="https://medium.com/@ademucarr" target="_blank" aria-label="Medium" class="medium-link">M</a>
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ucaradem317@gmail.com" target="_blank" rel="noopener" aria-label="E-posta gönder"><i class="far fa-envelope"></i></a>
+                <button type="button" class="tema-dugme" id="temaDugme" aria-label="Gece moduna geç" title="Gece moduna geç"><i class="fas fa-moon" aria-hidden="true"></i></button>
             </div>
         </header>
 

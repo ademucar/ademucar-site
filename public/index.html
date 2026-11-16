@@ -9,10 +9,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#15140f" />
-    <link rel="stylesheet" href="style.css?v=9">
+    <meta name="theme-color" content="#f2ede3" />
+    <link rel="stylesheet" href="style.css?v=10">
+    <script src="tema.js?v=1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
         /* Ana Sayfa Özel Tasarımları */
@@ -32,36 +33,35 @@
         .hero-content h1 {
             font-family: var(--yazi);
             /* Ekranla orantılı ölçek: her cihaz ve tarayıcıda aynı oran */
-            font-size: clamp(1.6rem, 6.5vw, 3.4rem);
+            font-size: clamp(2rem, 8vw, 4.4rem);
             font-weight: 700;
-            color: var(--murekkep);
-            letter-spacing: clamp(3px, 1.4vw, 12px);
+            /* Rizograf: mavi baskı + hafif kaymış kırmızı ikinci baskı */
+            color: var(--vurgu);
+            text-shadow: 0.06em 0.06em 0 var(--ikinci);
+            letter-spacing: -1px;
             text-transform: uppercase;
-            line-height: 1.15;
+            line-height: 1;
             margin-bottom: 14px;
         }
 
         /* Terminal satırı: başına komut istemi işareti gelir */
         .typing-container {
             font-family: var(--yazi);
-            font-size: clamp(0.72rem, 2.7vw, 0.92rem);
-            color: var(--vurgu);
+            font-size: clamp(0.85rem, 3vw, 1.08rem);
+            color: var(--murekkep-orta);
             font-weight: 500;
-            letter-spacing: 1.2px;
+            letter-spacing: 0.3px;
             margin-bottom: 30px;
             min-height: 30px;
         }
 
-        .typing-container::before {
-            content: "> ";
-            color: var(--murekkep-silik);
-        }
+        /* İmleç: ince, kırmızı mürekkep */
 
         /* Blok imleç: eski terminallerdeki gibi */
         .cursor {
             display: inline-block;
-            width: 8px;
-            background-color: var(--vurgu);
+            width: 3px;
+            background-color: var(--ikinci);
             margin-left: 2px;
             animation: blink 1s step-end infinite;
         }
@@ -102,8 +102,8 @@
         .btn-primary {
             background: var(--vurgu-koyu);
             border: 1px solid var(--vurgu);
-            color: var(--murekkep);
-            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+            color: var(--dolgu-metin);
+            box-shadow: 4px 4px 0 var(--golge);
         }
 
         /* Panellerdeki kesik iç çerçevenin aynısı */
@@ -112,14 +112,13 @@
             position: absolute;
             inset: 3px;
             border: 1px dashed rgba(20, 19, 15, 0.45);
-            pointer-events: none;
-        }
+            pointer-events: none; display: none; }
 
         /* Basılınca gerçekten aşağı iner, gölge küçülür */
         .btn-primary:hover {
             background: var(--vurgu-parlak);
             transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+            box-shadow: 2px 2px 0 var(--golge);
         }
 
         .hero-skills {
@@ -154,7 +153,7 @@
         .skill-badge:hover {
             border-color: var(--vurgu);
             color: var(--vurgu);
-            background: rgba(102, 136, 189, 0.08);
+            background: rgba(var(--vurgu-rgb), 0.08);
         }
 
         /* Kırılma noktası site geneliyle (style.css) aynı: 768px.
@@ -204,6 +203,7 @@
                 <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="https://medium.com/@ademucarr" target="_blank" aria-label="Medium" class="medium-link">M</a>
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ucaradem317@gmail.com" target="_blank" rel="noopener" aria-label="E-posta gönder"><i class="far fa-envelope"></i></a>
+                <button type="button" class="tema-dugme" id="temaDugme" aria-label="Gece moduna geç" title="Gece moduna geç"><i class="fas fa-moon" aria-hidden="true"></i></button>
             </div>
         </header>
 

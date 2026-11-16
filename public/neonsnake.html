@@ -9,10 +9,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#15140f" />
-    <link rel="stylesheet" href="style.css?v=9">
+    <meta name="theme-color" content="#f2ede3" />
+    <link rel="stylesheet" href="style.css?v=10">
+    <script src="tema.js?v=1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
     .content-container {
         max-width: 520px;
@@ -39,8 +40,8 @@
 
     .score-box {
         flex: 1;
-        background: rgba(28, 26, 20, 0.7);
-        border: 1px solid rgba(102, 136, 189, 0.2);
+        background: rgba(var(--zemin-panel-rgb), 0.7);
+        border: 1px solid rgba(var(--vurgu-rgb), 0.2);
         border-radius: 3px;
         padding: 8px 12px;
         text-align: center;
@@ -48,7 +49,7 @@
 
     .score-box-label {
         font-size: 0.68rem;
-        color: #6b6455;
+        color: var(--murekkep-silik);
         text-transform: uppercase;
         letter-spacing: 0.08em;
         font-weight: 600;
@@ -57,14 +58,14 @@
     .score-box-value {
         font-size: 1.45rem;
         font-weight: 800;
-        color: #6688bd;
+        color: var(--vurgu);
         line-height: 1.1;
     }
 
     /* Canvas */
     #gameCanvas {
-        background-color: rgba(16, 15, 11, 0.97);
-        border: 1px solid rgba(102, 136, 189, 0.25);
+        background-color: rgba(var(--zemin-koyu-rgb), 0.97);
+        border: 1px solid rgba(var(--vurgu-rgb), 0.25);
         border-radius: 3px;
         
         display: block;
@@ -87,10 +88,10 @@
     .dpad-btn {
         width: 40px;
         height: 40px;
-        background: rgba(28, 26, 20, 0.8);
-        border: 1px solid rgba(102, 136, 189, 0.25);
+        background: rgba(var(--zemin-panel-rgb), 0.8);
+        border: 1px solid rgba(var(--vurgu-rgb), 0.25);
         border-radius: 2px;
-        color: #6688bd;
+        color: var(--vurgu);
         font-size: 14px;
         display: flex;
         align-items: center;
@@ -102,7 +103,7 @@
     }
 
     .dpad-btn:active {
-        background: rgba(102, 136, 189, 0.15);
+        background: rgba(var(--vurgu-rgb), 0.15);
         transform: scale(0.93);
     }
 
@@ -113,8 +114,8 @@
 
     .btn-restart {
         padding: 9px 22px;
-        background: #2f4a78;
-        color: #e8e0cd;
+        background: var(--vurgu-koyu);
+        color: var(--dolgu-metin);
         border: none;
         border-radius: 2px;
         font-weight: 800;
@@ -125,7 +126,7 @@
     }
 
     .btn-restart:hover {
-        background: #8aa8d6;
+        background: var(--vurgu-parlak);
     }
 
     .btn-restart:active {
@@ -134,7 +135,7 @@
 
     .game-hint {
         font-size: 0.72rem;
-        color: #3a362b;
+        color: var(--murekkep-silik);
         text-align: center;
     }
 
@@ -182,6 +183,7 @@
                 <a href="https://github.com/ademucar" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="https://medium.com/@ademucarr" target="_blank" aria-label="Medium" class="medium-link">M</a>
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ucaradem317@gmail.com" target="_blank" rel="noopener" aria-label="E-posta gönder"><i class="far fa-envelope"></i></a>
+                <button type="button" class="tema-dugme" id="temaDugme" aria-label="Gece moduna geç" title="Gece moduna geç"><i class="fas fa-moon" aria-hidden="true"></i></button>
             </div>
         </header>
 
